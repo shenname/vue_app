@@ -16,6 +16,7 @@ export default new Router({
 			meta: {
 				title: '首页',
 				keepAlive: true,
+				keepheaderAlive: true,
 			}
 		},
 		{
@@ -25,6 +26,7 @@ export default new Router({
 			meta: {
 				title: '我的',
 				keepAlive: true,
+				keepheaderAlive: true,
 			}
 		},
 		{
@@ -34,6 +36,7 @@ export default new Router({
 			meta: {
 				title: '代办',
 				keepAlive: true,
+				keepheaderAlive: true,
 			}
 		},
 		{
@@ -43,6 +46,7 @@ export default new Router({
 			meta: {
 				title: '登录',
 				keepAlive: false,
+				keepheaderAlive: true,
 			}
 		},
 		{
@@ -51,7 +55,8 @@ export default new Router({
 			component: () => import('@/view/404.vue'),
 			meta: {
 				title: '404',
-				keepAlive: false,
+				keepAlive: true,
+				keepheaderAlive: false,
 			}
 		},
 		{
