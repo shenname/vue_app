@@ -23,7 +23,6 @@ router.beforeEach((to, from, next) => {
         next('/login');
     } else {
         next();
-        
     }
     localStorage.setItem('routers',from.path)
 });
