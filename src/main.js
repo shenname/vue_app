@@ -24,7 +24,12 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
+    localStorage.setItem('routers',from.path)
 });
+
+// router.beforeEach((to, from, next) => {
+//    localStorage.setItem('routers',to)
+// });
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -29,7 +29,8 @@ export default {
     returnF(){
       this.loadings=true
       setTimeout(()=>{
- this.$router.go(-1);
+        let aast=localStorage.getItem('routers')
+ this.$router.push(aast);
       },1000)
      
     }
