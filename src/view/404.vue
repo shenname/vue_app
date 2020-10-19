@@ -30,7 +30,8 @@ export default {
       this.loadings=true
       setTimeout(()=>{
         let aast=localStorage.getItem('routers')
- this.$router.push(aast);
+        this.$router.push(aast);
+        // window.history.back();
       },1000)
      
     }
