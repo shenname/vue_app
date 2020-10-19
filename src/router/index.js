@@ -43,6 +43,26 @@ export default new Router({
 			}
 		},
 		{
+			path: '/phoneChange',
+			name:"phoneChange",
+			component: () => import('@/view/users/phoneChange.vue'),
+			meta: {
+				title: '修改手机号',
+				keepAlive: true,
+				keepheaderAlive: true,    
+			}
+		},
+		{
+			path: '/passwordChange',
+			name:"passwordChange",
+			component: () => import('@/view/users/passwordChange.vue'),
+			meta: {
+				title: '修改密码',
+				keepAlive: true,
+				keepheaderAlive: true,    
+			}
+		},
+		{
 			path: '/agency',
 			name:　"agency",
 			component: () => import('@/view/agency.vue'),

@@ -13,31 +13,44 @@
             </template>
          </van-cell>
           <van-cell title="姓名" :value="names" />
-          <van-cell title="手机号" :value="names" is-link to="#"/>
-          <van-cell title="单位名称" :value="names" />
-           <van-cell title="所属部门" :value="names" />
+          <van-cell title="手机号" :value="mobilePhone" is-link to="phoneChange"/>
+          <van-cell title="单位名称" :value="companyName" />
+           <van-cell title="所属部门" :value="deptName"/>
       </van-cell-group>
   </div>
 </template>
 
 <script>
+
 export default {
   components:{},
   props:{},
   data(){
     return {
-       names:"张三",
-        img:'https://img.yzcdn.cn/vant/cat.jpeg'
+       names:"",
+        img:'',
+        deptName:"",
+        mobilePhone:"",
+        roleName:"",
+        companyName:""
     }
   },
   watch:{},
   computed:{},
   methods:{},
   created(){},
-  mounted(){}
+  mounted(){
+       let users=JSON.parse(localStorage.getItem('userInfo')) 
+      this.names=users.userName;
+      this.img=users.logoUrl;
+      this.deptName=users.deptName;
+      this.mobilePhone=users.mobilePhone;
+      this.companyName=users.companyName
+  }
 }
 </script>
 <style lang="less" scoped>
+
 .parent{
   display: flex;
   justify:center;
