@@ -5,6 +5,7 @@
         <van-sidebar-item title="标签名称" badge="5" />
         <van-sidebar-item title="标签名称" badge="99+" />
       </van-sidebar>
+     
     </div>
 </template>
 
@@ -18,9 +19,13 @@ export default {
     };
   },
   methods: {
+   
     onClick(key) {
       this.activeKey = key;
     }
   },
+  mounted(){
+ 
+  }
 }
 </script>
