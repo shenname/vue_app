@@ -27,6 +27,19 @@ export default new Router({
 				title: '我的',
 				keepAlive: true,
 				keepheaderAlive: true,
+			},
+			children: [
+				
+			]
+		},
+		{
+			path: '/personalInformations',
+			name:"personalInformations",
+			component: () => import('@/view/users/personalInformations.vue'),
+			meta: {
+				title: '个人信息',
+				keepAlive: true,
+				keepheaderAlive: true,    
 			}
 		},
 		{
