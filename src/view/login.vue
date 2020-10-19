@@ -43,21 +43,22 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      // this.$json({
-      //   url: `/mhj/login`,
-      //   method: "post",
-      //   data: {
-      //     userName: this.username,
-      //     password: this.password,
-      //     loginTime: (new Date().getTime() / 1000).toFixed(0),
-      //   }
-      // }).then(res => {
-      //   console.log(res)
-      // })
-      localStorage.setItem('username', this.username);
-      Notify({ type: 'success', message: '登录成功' });
-      this.$router.push('/');
-      console.log('submit', values);
+      this.$json({
+        url: `/mhj/login`,
+        method: "post",
+        data: {
+          userName: this.username,
+          password: this.password,
+          type: 2,
+          loginTime: (new Date().getTime() / 1000).toFixed(0),
+        }
+      }).then(res => {
+        localStorage.setItem('token', res.resp.token);
+        localStorage.setItem('username', this.username);
+        localStorage.setItem('userInfo', JSON.stringify(res.resp));
+        Notify({ type: 'success', message: '登录成功' });
+        this.$router.push('/');
+      })
     },
   },
 };
