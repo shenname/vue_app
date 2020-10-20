@@ -27,6 +27,39 @@ export default new Router({
 				title: '我的',
 				keepAlive: true,
 				keepheaderAlive: true,
+			},
+			children: [
+				
+			]
+		},
+		{
+			path: '/personalInformations',
+			name:"personalInformations",
+			component: () => import('@/view/users/personalInformations.vue'),
+			meta: {
+				title: '个人信息',
+				keepAlive: true,
+				keepheaderAlive: true,    
+			}
+		},
+		{
+			path: '/phoneChange',
+			name:"phoneChange",
+			component: () => import('@/view/users/phoneChange.vue'),
+			meta: {
+				title: '修改手机号',
+				keepAlive: true,
+				keepheaderAlive: true,    
+			}
+		},
+		{
+			path: '/passwordChange',
+			name:"passwordChange",
+			component: () => import('@/view/users/passwordChange.vue'),
+			meta: {
+				title: '修改密码',
+				keepAlive: true,
+				keepheaderAlive: true,    
 			}
 		},
 		{
