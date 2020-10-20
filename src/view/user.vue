@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { Dialog } from 'vant';
 import Vue from 'vue';
 import { Toast } from 'vant';
 
@@ -61,16 +62,26 @@ export default {
   computed:{},
   methods:{
       outUser(){
-        this.$json({
-                 url: `/mhj//loginOut`,
-                 method: "post",
-        }).then(res=>{
-            this.names='未登录';
-            Toast({ type: 'success', message: '退出成功' });
-          this.$router.push('/login')
-        
-          
+       Dialog.confirm({
+        title: '退出登录提示',
+        message: '您确定要退出登录',
         })
+        .then(() => {
+            this.$json({
+                        url: `/mhj//loginOut`,
+                        method: "post",
+                }).then(res=>{
+                    this.names='未登录';
+                    Toast({ type: 'success', message: '退出成功' });
+                this.$router.push('/login')
+                
+                
+                })
+        })
+        .catch(() => {
+            // on cancel
+        });
+       
       }
   },
   created(){},

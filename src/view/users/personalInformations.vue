@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-     <van-cell-group>
+  <van-form >
          <van-cell class="parent">
            <template #title>
              <p style="height:100%;line-height:50px ;">
@@ -16,7 +16,7 @@
           <van-cell title="手机号" :value="mobilePhone" is-link to="phoneChange"/>
           <van-cell title="单位名称" :value="companyName" />
            <van-cell title="所属部门" :value="deptName"/>
-      </van-cell-group>
+  </van-form>
   </div>
 </template>
 

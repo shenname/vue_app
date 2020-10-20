@@ -1,10 +1,14 @@
 <template>
   <div class="wrapper">
-      <van-cell-group>
-  <van-field v-model="value" label="原手机号" disabled />
-   <van-field v-model="valueChange" label="新手机号" placeholder="请输入新手机号" required />
-</van-cell-group>
-<van-button round type="info" class="tij" @click="submit">提交</van-button>
+    <van-form @submit="onSubmit">  
+      <van-field v-model="value" label="原手机号" name="122" disabled />
+      <van-field v-model="valueChange" label="新手机号" placeholder="请输入新手机号"  name="111" required :rules="[{ pattern, message: '' }]"/>
+      <div style="margin: 16px;">
+        <van-button round block type="info" native-type="submit">
+          提交
+        </van-button>
+      </div>
+    </van-form>
   </div>
 </template>
 
@@ -17,24 +21,22 @@ export default {
         users:{},
         valueChange:"",
         value:"",
+        pattern:/^1\d{10}/,
     }
   },
   watch:{},
   computed:{},
   methods:{
-      submit(){
-          let params={
-              companyId:this.users.companyName,
-              userAccount:this.users.userAccount
-          }
-            this.$json({
-                        url: '/mhj/addOrModifyUser',
-                        data: params
-                    }).then(res => {
-                        this.$message({ type: 'success', message: '修改成功!'});
+       onSubmit(values) {
+      console.log('submit', values);
+        // this.$json({
+            //             url: '/mhj/addOrModifyUser',
+            //             data: values
+            //         }).then(res => {
+            //             this.$message({ type: 'success', message: '修改成功!'});
                       
-                    })
-      }
+            //         })
+    },
   },
   created(){},
   mounted(){
