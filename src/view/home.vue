@@ -4,8 +4,8 @@
 			  <van-collapse-item title="养殖" name="1">
 					<van-row>
 					  <router-link to=''><van-col span="8"><van-icon name="todo-list" />称重记录</van-col></router-link>
-						<router-link to=''><van-col span="8"><van-icon name="balance-list" />转舍记录</van-col></router-link>
-						<router-link to=''><van-col span="8"><van-icon name="shop-collect" />出售牛只</van-col></router-link>
+						<router-link to=''><van-col span="8"><van-icon name="balance-list"/>转舍记录</van-col></router-link>
+						<router-link to='sellingCattle'><van-col span="8"><van-icon name="shop-collect" />出售牛只</van-col></router-link>
 						<router-link to=''><van-col span="8"><van-icon name="gift-card" />新增病情</van-col></router-link>
 						<router-link to=''><van-col span="8"><van-icon name="invition" />治疗用药</van-col></router-link>
 						<router-link to=''><van-col span="8"><van-icon name="graphic" />电子耳标管理</van-col></router-link>

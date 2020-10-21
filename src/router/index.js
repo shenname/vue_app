@@ -20,6 +20,16 @@ export default new Router({
 			}
 		},
 		{
+			path: '/sellingCattle',
+			name:　"sellingCattle",
+			component: () => import('@/view/sellingCattle.vue'),
+			meta: {
+				title: '出售牛只单',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/user',
 			name:　"user",
 			component: () => import('@/view/user.vue'),

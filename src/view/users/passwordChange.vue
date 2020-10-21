@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper">
       <van-form @submit="onSubmit">
-          <van-field v-model="value" label="原密码" name='aaa' disabled />
-          <van-field v-model="valueChange" label="新密码"  name="222" placeholder="请输入新密码" required :rules="[{ pattern, message: '' }]"/>
-          <van-field v-model="valueChanges" label="确认新密码" placeholder="请输再次入新密码" name="222" required :rules="[{ pattern, message: '' }]"/>
+          <van-field v-model="value" label="原密码"  disabled />
+          <van-field v-model="valueChange" label="新密码"  name="password" placeholder="请输入新密码" required :rules="[{ pattern, message: '' }]"/>
+          <van-field v-model="valueChanges" label="确认新密码" placeholder="请输再次入新密码" name="password" required :rules="[{ pattern, message: '' }]"/>
          <div style="margin: 16px;">
-          <van-button round block type="info" native-type="submit">
+          <van-button round block type="info" native-type="submit" class="tij">
             提交
           </van-button>
         </div>
@@ -39,18 +39,18 @@ export default {
               Toast.fail('两次密码不相同');
               return
           } 
-        //   let params={
-        //       companyId:this.users.companyName,
-        //       userAccount:this.users.userAccount
-        //   }
-            // this.$json({
-            //             url: '/mhj/addOrModifyUser',
-            //             data: params
-            //         }).then(res => {
-            //                 Toast({ type: 'success', message: '修改成功' });
+          let params={
+              password:values.password
+          }
+            this.$json({
+                        url: '/mhj/updatePassword',
+                        data: params,
+                        method: "post",
+                    }).then(res => {
+                            Toast({ type: 'success', message: '密码修改成功' });
                       
-            //         })
-            console.log(values)
+                    })
+           
       }
   },
   created(){},
@@ -61,6 +61,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.wrapper{}
+.wrapper{padding-top: 5%;height: 100vh;}
 .tij{position: absolute;bottom: 20%;width: 60%;left: 20%;}
 </style>
