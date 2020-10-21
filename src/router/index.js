@@ -93,6 +93,26 @@ export default new Router({
 			}
 		},
 		{
+			path: '/weighRecord',
+			name:　"weighRecord",
+			component: () => import('@/view/cultivation/weighRecord.vue'),
+			meta: {
+				title: '称重管理',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/cattleWeighing',
+			name:　"cattleWeighing",
+			component: () => import('@/view/cultivation/cattleWeighing.vue'),
+			meta: {
+				title: '牛只称重',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/404',
 			name:　"404",
 			component: () => import('@/view/404.vue'),
