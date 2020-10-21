@@ -10,6 +10,26 @@ export default new Router({
 			redirect: '/home'
 		},
 		{
+			path: '/transfer',
+			name:　"transfer",
+			component: () => import('@/view/transfer/index.vue'),
+			meta: {
+				title: '转舍记录',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/transferInfo',
+			name:　"transferInfo",
+			component: () => import('@/view/transfer/info.vue'),
+			meta: {
+				title: '新增转舍',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/home',
 			name:　"home",
 			component: () => import('@/view/home.vue'),
