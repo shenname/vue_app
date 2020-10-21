@@ -40,6 +40,16 @@ export default new Router({
 			}
 		},
 		{
+			path: '/sellingCattle',
+			name:　"sellingCattle",
+			component: () => import('@/view/sellingCattle.vue'),
+			meta: {
+				title: '出售牛只单',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/user',
 			name:　"user",
 			component: () => import('@/view/user.vue'),
@@ -47,6 +57,39 @@ export default new Router({
 				title: '我的',
 				keepAlive: true,
 				keepheaderAlive: true,
+			},
+			children: [
+				
+			]
+		},
+		{
+			path: '/personalInformations',
+			name:"personalInformations",
+			component: () => import('@/view/users/personalInformations.vue'),
+			meta: {
+				title: '个人信息',
+				keepAlive: true,
+				keepheaderAlive: true,    
+			}
+		},
+		{
+			path: '/phoneChange',
+			name:"phoneChange",
+			component: () => import('@/view/users/phoneChange.vue'),
+			meta: {
+				title: '修改手机号',
+				keepAlive: true,
+				keepheaderAlive: true,    
+			}
+		},
+		{
+			path: '/passwordChange',
+			name:"passwordChange",
+			component: () => import('@/view/users/passwordChange.vue'),
+			meta: {
+				title: '修改密码',
+				keepAlive: true,
+				keepheaderAlive: true,    
 			}
 		},
 		{
@@ -66,6 +109,26 @@ export default new Router({
 			meta: {
 				title: '登录',
 				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/weighRecord',
+			name:　"weighRecord",
+			component: () => import('@/view/cultivation/weighRecord.vue'),
+			meta: {
+				title: '称重管理',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/cattleWeighing',
+			name:　"cattleWeighing",
+			component: () => import('@/view/cultivation/cattleWeighing.vue'),
+			meta: {
+				title: '牛只称重',
+				keepAlive: true,
 				keepheaderAlive: true,
 			}
 		},
