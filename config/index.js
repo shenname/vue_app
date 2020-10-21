@@ -19,7 +19,7 @@ module.exports = {
     //     }
     // }
     // Various Dev Server settings
-    host: 'localhost', // 本地访问路径
+    host: '172.16.39.0', // 本地访问路径
     port: 8080, // // 端口号
     autoOpenBrowser: false,// 是否自动打开浏览器
     errorOverlay: true,

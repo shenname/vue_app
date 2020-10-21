@@ -10,6 +10,46 @@ export default new Router({
 			redirect: '/home'
 		},
 		{
+			path: '/earMarkers',
+			name:　"earMarkers",
+			component: () => import('@/view/earMarkers/index.vue'),
+			meta: {
+				title: "电子耳标",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/earMarkersInfo',
+			name:　"earMarkersInfo",
+			component: () => import('@/view/earMarkers/info.vue'),
+			meta: {
+				title: "关联详情",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/transfer',
+			name:　"transfer",
+			component: () => import('@/view/transfer/index.vue'),
+			meta: {
+				title: '转舍记录',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/transferInfo',
+			name:　"transferInfo",
+			component: () => import('@/view/transfer/info.vue'),
+			meta: {
+				title: '新增转舍',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/home',
 			name:　"home",
 			component: () => import('@/view/home.vue'),
@@ -138,6 +178,26 @@ export default new Router({
 			component: () => import('@/view/cultivation/cattleWeighing.vue'),
 			meta: {
 				title: '牛只称重',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/diseaseManagement',
+			name:　"diseaseManagement",
+			component: () => import('@/view/cultivation/diseaseManagement.vue'),
+			meta: {
+				title: '病情管理',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/addDisease',
+			name:　"addDisease",
+			component: () => import('@/view/cultivation/addDisease.vue'),
+			meta: {
+				title: '新增病情',
 				keepAlive: true,
 				keepheaderAlive: true,
 			}
