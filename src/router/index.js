@@ -103,6 +103,26 @@ export default new Router({
 			}
 		},
 		{
+			path: '/diseaseManagement',
+			name:　"diseaseManagement",
+			component: () => import('@/view/cultivation/diseaseManagement.vue'),
+			meta: {
+				title: '病情管理',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/addDisease',
+			name:　"addDisease",
+			component: () => import('@/view/cultivation/addDisease.vue'),
+			meta: {
+				title: '新增病情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/404',
 			name:　"404",
 			component: () => import('@/view/404.vue'),
