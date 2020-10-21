@@ -30,6 +30,36 @@ export default new Router({
 			}
 		},
 		{
+			path: '/sellingCattleAdd',
+			name:　"sellingCattleAdd",
+			component: () => import('@/view/sellingCattleAdd.vue'),
+			meta: {
+				title: '新增出售单',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/sellingCattleEdit',
+			name:　"sellingCattleEdit",
+			component: () => import('@/view/sellingCattleEdit.vue'),
+			meta: {
+				title: '编辑出售单',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/eartDetails',
+			name:　"eartDetails",
+			component: () => import('@/view/eartDetails.vue'),
+			meta: {
+				title: '牛只详情信息',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/user',
 			name:　"user",
 			component: () => import('@/view/user.vue'),
