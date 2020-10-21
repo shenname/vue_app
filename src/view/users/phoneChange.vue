@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
     <van-form @submit="onSubmit">  
-      <van-field v-model="value" label="原手机号" name="122" disabled />
-      <van-field v-model="valueChange" label="新手机号" placeholder="请输入新手机号"  name="111" required :rules="[{ pattern, message: '' }]"/>
+      <van-field v-model="value" label="原手机号" disabled />
+      <van-field v-model="valueChange" label="新手机号" placeholder="请输入新手机号"  name="mobilePhone" required :rules="[{ pattern, message: '' }]"/>
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
+        <van-button round block type="info" native-type="submit" class="tij">
           提交
         </van-button>
       </div>
@@ -28,14 +28,17 @@ export default {
   computed:{},
   methods:{
        onSubmit(values) {
-      console.log('submit', values);
-        // this.$json({
-            //             url: '/mhj/addOrModifyUser',
-            //             data: values
-            //         }).then(res => {
-            //             this.$message({ type: 'success', message: '修改成功!'});
+    
+      let parems={
+        mobilePhone:values.mobilePhone
+      }
+        this.$json({
+                        url: '/mhj/updateMobilePhone',
+                        data: parems
+                    }).then(res => {
+                        this.$message({ type: 'success', message: '手机号修改成功!'});
                       
-            //         })
+                    })
     },
   },
   created(){},
@@ -46,6 +49,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.wrapper{}
+.wrapper{padding-top: 5%;}
 .tij{position: absolute;bottom: 20%;width: 60%;left: 20%;}
 </style>

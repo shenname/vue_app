@@ -41,12 +41,14 @@ export default {
       this.$router.go(-1)
     },
   },
+  updated(){
+	 
+	  if(this.$route.name=='home'){
+        this.active=0
+	  }
+  }
 }
 </script>
-<style scoped>
-
-</style>
-
 <style lang="less" scoped>
 	.header{
 		height: 45px;
@@ -59,5 +61,9 @@ export default {
 		-webkit-user-select: none;
 		user-select: none;
 		border-bottom: 1px solid #ebedf0;
+	}
+	#app{
+		height: calc(100vh - 100px) !important;
+		overflow-y: scroll;
 	}
 </style>

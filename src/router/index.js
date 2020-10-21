@@ -10,11 +10,41 @@ export default new Router({
 			redirect: '/home'
 		},
 		{
+			path: '/transfer',
+			name:　"transfer",
+			component: () => import('@/view/transfer/index.vue'),
+			meta: {
+				title: '转舍记录',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/transferInfo',
+			name:　"transferInfo",
+			component: () => import('@/view/transfer/info.vue'),
+			meta: {
+				title: '新增转舍',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/home',
 			name:　"home",
 			component: () => import('@/view/home.vue'),
 			meta: {
 				title: '首页',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/sellingCattle',
+			name:　"sellingCattle",
+			component: () => import('@/view/sellingCattle.vue'),
+			meta: {
+				title: '出售牛只单',
 				keepAlive: true,
 				keepheaderAlive: true,
 			}

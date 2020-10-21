@@ -1,15 +1,19 @@
 <template>
+ <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
   <div class="wrapper">
+     
+       <van-skeleton title avatar :row="3" v-if="ssta==true?false:true" style="background:#ffffff;height:100%" animate avatar-size="50"/>
+       <div class="aast" v-if="ssta">
       <van-row type="flex" justify="space-around" style="background:#ffffff;padding: 3% 5%;"> 
           <van-col span="18" type="flex" justify="space-around">
-              <van-row gutter="5" >
+              <van-row gutter="20" >
                   <van-col span="8"> <van-image width="70" height="70" :src="img" /></van-col>
                   
                   <van-col span="6">  <p style="line-height: 30px;">{{names}}</p></van-col>
-                  <van-col span="10"  style="line-height: 30px;"><van-icon name="replay" /></van-col>
+                
               </van-row>
           </van-col>
-          <van-col span="6" style=""><van-icon name="exchange" style="float:right;line-height: 50px;" @click="outUser"/></van-col>
+          <van-col span="6" style=""><van-icon name="exchange" style="float:right;line-height: 50px;font-size: 150%;" @click="outUser"/></van-col>
       </van-row>
       <van-row style="margin-top:5%">
           <van-col span="24">
@@ -38,12 +42,19 @@
           </van-col>
           <van-col span="12"></van-col>
       </van-row>
+      </div>
+      
   </div>
+   </van-pull-refresh>
 </template>
 
 <script>
-import { Dialog } from 'vant';
 import Vue from 'vue';
+import { PullRefresh } from 'vant';
+
+Vue.use(PullRefresh);
+import { Dialog } from 'vant';
+
 import { Toast } from 'vant';
 
 Vue.use(Toast);
@@ -53,6 +64,9 @@ export default {
   props:{},
   data(){
     return {
+        ssta:true,
+       count: 0,
+      isLoading: false,
         names:"",
         img:''
 
@@ -61,6 +75,15 @@ export default {
   watch:{},
   computed:{},
   methods:{
+       onRefresh() {
+           this.ssta=false
+      setTimeout(() => {
+        this.ssta=true;
+        Toast('刷新成功');
+        this.isLoading = false;
+        
+      }, 1000);
+    },
       outUser(){
        Dialog.confirm({
         title: '退出登录提示',
@@ -93,8 +116,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
 .wrapper{
+  
+  height: 100vh;
   background: #F8F8F8;
 }
 </style>

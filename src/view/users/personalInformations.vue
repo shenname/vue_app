@@ -4,7 +4,7 @@
          <van-cell class="parent">
            <template #title>
              <p style="height:100%;line-height:50px ;">
-              头像
+              <b> 头像</b>
              </p>
           </template>
             <!-- 使用 title 插槽来自定义标题 -->
@@ -57,7 +57,6 @@ export default {
   align-items:center;
   display:-webkit-flex
 }
-.wrapper{
-  
-}
+.wrapper{padding-top: 2%;}
+
 </style>
