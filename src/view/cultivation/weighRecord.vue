@@ -1,5 +1,6 @@
 <template>
 	<div class="record">
+		<van-pull-refresh v-model="refreshing"   @refresh="onRefresh">
 		<van-row>
 		  <van-col span="24" >
 			<van-field label="牛耳号:" value="GN0301190001" readonly />
@@ -10,7 +11,10 @@
 			</van-col>
 		 
 		</van-row>
-		<van-icon name="add-o" size="4rem" @click='iconClick'/>
+		</van-pull-refresh>
+		<div class="addList">
+			<van-icon name="add-o" size="3rem" @click='iconClick'/>
+		</div>
 	</div>
 </template>
 
@@ -18,17 +22,24 @@
 	import { Col, Row } from 'vant';
 	import { Cell, CellGroup } from 'vant';
 	import { Field } from 'vant';
+	import { PullRefresh } from 'vant';
+	import { Toast } from 'vant';
 	export default {
 	  // 数据
 	  data() {
 	    return {
-				
+				refreshing:false,
 	    };
 	  },
 	  methods: {
 	    iconClick(){
 				 this.$router.push('/cattleWeighing');
 			},
+			onRefresh() {
+				setTimeout(() => {
+       this.refreshing = false;
+      }, 1000);
+        },
 	  },
 	  mounted(){
 	 
@@ -38,10 +49,10 @@
 <style>
 </style>
 <style scoped="scoped">
-	.record .van-icon{
+	.addList .van-icon{
 		position: fixed;
-		bottom: 8rem;
-		right: 4rem;
+		bottom: 6rem;
+		right: 2rem;
 	}
 	.record .van-col{
 		border: 1px solid #e4e4e4;

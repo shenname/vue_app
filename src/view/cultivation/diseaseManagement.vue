@@ -1,18 +1,22 @@
 <template>
   <div class="disease">
     	<van-row>
-		  <van-col span="18" >
-			<van-field label="牛耳号:" label-width='4rem' value="GN0301190001" readonly />
-			<van-field label="牛舍:" label-width='4rem' value="S308" readonly />
-			<van-field label="重量:" label-width='4rem' value="1680.69KG" readonly />
-			<van-field label="称重时间:" label-width='4rem' value="2020-10-15 11:59:38" readonly />
-			<van-field label="备注:" label-width='4rem' value="批量称重" readonly />
+		  <van-col span="20" >
+			<van-field :border="false" label="牛耳号:" label-width='4rem' value="210100170565" readonly />
+			<van-field :border="false" label="健康情况:" label-width='4rem' value="生病" readonly />
+			<van-field :border="false" label="发病日期:" label-width='4rem' value="2020-10-08" readonly />
+			<van-field :border="false" label="系统:" label-width='4rem' value="呼吸系统" readonly />
+			<van-field :border="false" label="症状:" label-width='4rem' value="肺炎" readonly />
 			</van-col>
-		  <van-col span="4" style="border:none">
-          
+		  <van-col span="1" style="border:none" class="vanCOl">
+				<van-icon name="edit" size="2rem" />
+          <van-icon name="close" size="2rem" @click="deleteList"/>
         </van-col>
 		</van-row>
-    <van-icon name="add-o" size="4rem" @click='iconClick'/>
+		
+    <div class="addList">
+			<van-icon name="add-o" size="3rem" @click='iconClick'/>
+		</div>
   </div>
 </template>
 <script>
@@ -26,21 +30,30 @@ export default {
       iconClick(){
 				 this.$router.push('/addDisease');
 			},
+			deleteList(){
+         
+			},
     },  
 }
 </script>
 <style lang="less" scoped>
-.disease .van-icon{
+.addList .van-icon{
 		position: fixed;
-		bottom: 8rem;
-		right: 4rem;
+		bottom: 6rem;
+		right: 2rem;
 	}
 	.disease .van-col{
 		border: 1px solid #e4e4e4;
 		margin-top: 0.9375rem;
 		margin-left: 0.625rem;
 	}
-	.disease .van-cell{
-		position: static;
+	.disease .van-row{
+		display: flex;
+    align-items: stretch;
+	}
+	.vanCOl{
+		 display: flex;
+		 flex-wrap: wrap;
+		 align-content: space-around;
 	}
 </style>

@@ -3,10 +3,10 @@
 			<van-collapse v-model="activeNames">
 			  <van-collapse-item title="养殖" name="1">
 					<van-row>
-					  <router-link to='/weighRecord'><van-col span="8"><van-icon name="todo-list" size="2rem" />称重记录</van-col></router-link>
-						<router-link to=''><van-col span="8"><van-icon name="balance-list" size="2rem"/>转舍记录</van-col></router-link>
+					  <router-link to='weighRecord'><van-col span="8"><van-icon name="todo-list" size="2rem" />称重记录</van-col></router-link>
+						<router-link to='transfer'><van-col span="8"><van-icon name="balance-list" size="2rem"/>转舍记录</van-col></router-link>
 						<router-link to='sellingCattle'><van-col span="8"><van-icon name="shop-collect" size="2rem"/>出售牛只</van-col></router-link>
-						<router-link to='/diseaseManagement'><van-col span="8"><van-icon name="gift-card" size="2rem"/>新增病情</van-col></router-link>
+						<router-link to='diseaseManagement'><van-col span="8"><van-icon name="gift-card" size="2rem"/>新增病情</van-col></router-link>
 						<router-link to=''><van-col span="8"><van-icon name="invition" size="2rem"/>治疗用药</van-col></router-link>
 						<router-link to=''><van-col span="8"><van-icon name="graphic" size="2rem"/>电子耳标管理</van-col></router-link>
 						
