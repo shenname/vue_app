@@ -15,6 +15,7 @@
                     v-model="item.earTradeNo" 
                     placeholder="请输入或扫码"
                     :rules="[{ required: true, message: '' }]" 
+                    @blur="getEarTradeNo"
                 />
                 <template #right>
                     <van-button square text="删除" type="danger" class="delete-button" @click="deleteFun(index)" />
@@ -62,6 +63,7 @@ import {
     SwipeCell,
     Form,
     Dialog,
+    Notify
 } from 'vant';
 Vue
     .use(PullRefresh)
@@ -70,6 +72,7 @@ Vue
     .use(SwipeCell)
     .use(Form)
     .use(Dialog)
+    .use(Notify)
 export default {
     data() {
         return {
@@ -99,12 +102,33 @@ export default {
         onSubmit(values) {
             console.log('submit', values);
         },
+        // 根据牛耳号获取数据
+        getEarTradeNo(){
+            
+        },
         // 获取牛标
         getCowByEarTag(){
             this.$json({
                 url: `/mhj/getCowByEarTag?earTag=${this.value}`,
                 method: "get"
             }).then(res => {
+                 let type = false,htype = false;
+                for(let item of this.eaList){
+                    if(item.earTradeNo == res.resp.earTradeNo){
+                        type = true;
+                    }
+                    if(res.resp.cowHouse != item.oldCowHouse){
+                        htype = true
+                    }
+                }
+                if(type){
+                    Notify({ type: 'warning', message: '改编码已存在!' });
+                    return;
+                }
+                if(type){
+                    Notify({ type: 'warning', message: '不支持不同的牛舍的牛只!' });
+                    return;
+                }
                 this.eaList.push({
                     earTradeNo: res.resp.earTradeNo,
                     oldCowHouse: res.resp.cowHouse,
@@ -116,6 +140,7 @@ export default {
         },
         // 获取转入舍
         getEaName(event){
+            if(this.form.cowHouse != null && this.form.cowHouse != "")
             this.$json({
                 url: `/mhj/getByCowHouse?cowHouse=${this.form.cowHouse}`,
                 method: "get"

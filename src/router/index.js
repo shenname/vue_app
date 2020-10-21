@@ -10,6 +10,26 @@ export default new Router({
 			redirect: '/home'
 		},
 		{
+			path: '/earMarkers',
+			name:　"earMarkers",
+			component: () => import('@/view/earMarkers/index.vue'),
+			meta: {
+				title: "电子耳标",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/earMarkersInfo',
+			name:　"earMarkersInfo",
+			component: () => import('@/view/earMarkers/info.vue'),
+			meta: {
+				title: "关联详情",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/transfer',
 			name:　"transfer",
 			component: () => import('@/view/transfer/index.vue'),

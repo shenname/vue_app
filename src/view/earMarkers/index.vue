@@ -2,13 +2,13 @@
 <div>
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <div class="listDiv" v-for="(item, index) of list" :key="index">
+            <van-empty v-if="list.length <= 0" description="暂无数据" />
+            <div v-else class="listDiv" v-for="(item, index) of list" :key="index">
                 <van-cell-group>
-                    <van-field label="牛耳号" value="GN0301190001、GN0301190001" readonly />
-                    <van-field label="原牛舍" value="S308南" readonly />
-                    <van-field label="转入舍" value="S309北" readonly />
-                    <van-field label="转入时间" value="2020-10-10" readonly />
-                    <van-field label="备注" value="牛舍分配" readonly />
+                    <van-field label="耳标编号" :value="item.earTag" readonly />
+                    <van-field label="牛耳号" :value="item.earTradeNo" readonly />
+                    <van-field label="关联时间" :value="item.relevanceTime" readonly />
+                    <van-field label="关联人" :value="item.relevanceUserName" readonly />
                 </van-cell-group>
             </div>
         </van-list>
@@ -42,29 +42,16 @@ export default {
         onLoad() {
             this.current += 1;
             this.$json({
-                url: `/mhj/getMvCowHouseList?size=4&current=${this.current}`,
+                url: `/mhj/earTag/getList?size=4&current=${this.current}`,
                 method: "get",
             }).then(res => {
-                let list = [1,2,3],arr = [4,5,6];
-                list.push.apply(list,arr);
-                console.log(list)
-            })
-
-            setTimeout(() => {
-                if (this.refreshing) {
-                    this.list = [];
-                    this.refreshing = false;
-                }
-
-                for (let i = 0; i < 10; i++) {
-                this.list.push(this.list.length + 1);
-                }
+                this.list.push.apply(this.list,res.resp.records);
                 this.loading = false;
-
-                if (this.list.length >= 40) {
+                this.refreshing = false;
+                if (this.list.length >= res.resp.total) {
                     this.finished = true;
                 }
-            }, 1000);
+            })
         },
         onRefresh() {
             this.finished = false;
@@ -72,7 +59,7 @@ export default {
             this.onLoad();
         },
         add(){
-            this.$router.push({path: '/transferInfo'})
+            this.$router.push({path: '/earMarkersInfo'})
         }
     },
 }

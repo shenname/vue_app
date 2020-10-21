@@ -5,6 +5,7 @@ import Vant from 'vant';	//加载Vant文件
 import Public from './utils/public.js' //加载公用js方法文件
 import 'vant/lib/index.css';	//加载Vant样式文件
 import './assets/index.less';	//	加载less文件
+import './assets/css/index.css';	//	加载css文件
 Vue.use(Vant);
 
 // axios 请求
@@ -14,6 +15,10 @@ Vue.prototype.$api = baseUrl;
 
 Vue.prototype.$public = Public;
 Vue.config.productionTip = false
+
+// 空状态
+import { Empty } from 'vant';
+Vue.use(Empty);
 
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
