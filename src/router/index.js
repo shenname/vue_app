@@ -60,6 +60,56 @@ export default new Router({
 			}
 		},
 		{
+			path: '/weighRecord',
+			name:　"weighRecord",
+			component: () => import('@/view/cultivation/weighRecord.vue'),
+			meta: {
+				title: '称重管理',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/cattleWeighing',
+			name:　"cattleWeighing",
+			component: () => import('@/view/cultivation/cattleWeighing.vue'),
+			meta: {
+				title: '牛只称重',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/diseaseManagement',
+			name:　"diseaseManagement",
+			component: () => import('@/view/cultivation/diseaseManagement.vue'),
+			meta: {
+				title: '病情管理',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/addDisease',
+			name:　"addDisease",
+			component: () => import('@/view/cultivation/addDisease.vue'),
+			meta: {
+				title: '新增病情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/editDisease',
+			name:　"editDisease",
+			component: () => import('@/view/cultivation/editDisease.vue'),
+			meta: {
+				title: '编辑病情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/sellingCattle',
 			name:　"sellingCattle",
 			component: () => import('@/view/sellingcattles/sellingCattle.vue'),
@@ -159,46 +209,6 @@ export default new Router({
 			meta: {
 				title: '登录',
 				keepAlive: false,
-				keepheaderAlive: true,
-			}
-		},
-		{
-			path: '/weighRecord',
-			name:　"weighRecord",
-			component: () => import('@/view/cultivation/weighRecord.vue'),
-			meta: {
-				title: '称重管理',
-				keepAlive: true,
-				keepheaderAlive: true,
-			}
-		},
-		{
-			path: '/cattleWeighing',
-			name:　"cattleWeighing",
-			component: () => import('@/view/cultivation/cattleWeighing.vue'),
-			meta: {
-				title: '牛只称重',
-				keepAlive: true,
-				keepheaderAlive: true,
-			}
-		},
-		{
-			path: '/diseaseManagement',
-			name:　"diseaseManagement",
-			component: () => import('@/view/cultivation/diseaseManagement.vue'),
-			meta: {
-				title: '病情管理',
-				keepAlive: true,
-				keepheaderAlive: true,
-			}
-		},
-		{
-			path: '/addDisease',
-			name:　"addDisease",
-			component: () => import('@/view/cultivation/addDisease.vue'),
-			meta: {
-				title: '新增病情',
-				keepAlive: true,
 				keepheaderAlive: true,
 			}
 		},

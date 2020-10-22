@@ -47,7 +47,9 @@ export default {
             }).then(res => {
                 this.list.push.apply(this.list,res.resp.records);
                 this.loading = false;
-                this.refreshing = false;
+                setTimeout(()=>{
+                    this.refreshing = false;
+                },500)
                 if (this.list.length >= res.resp.total) {
                     this.finished = true;
                 }

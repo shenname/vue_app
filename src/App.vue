@@ -10,7 +10,7 @@
 		  @click-left="onClickLeft"
 		  />
 		<p class="header" v-else>{{$route.meta.title}}</p>
-	  </form>
+	</form>
     <div id="app">
       <router-view></router-view>
     </div>
@@ -63,7 +63,8 @@ export default {
 		border-bottom: 1px solid #ebedf0;
 	}
 	#app{
-		height: calc(100vh - 100px) !important;
+		height: calc(100vh - 94px) !important;
 		overflow-y: scroll;
+		background-color: #f5f5f5;
 	}
 </style>

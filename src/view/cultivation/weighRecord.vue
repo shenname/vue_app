@@ -35,8 +35,8 @@
 				list:[],
 				loading: false,
         finished: false,
-        refreshing: false,
-        current: 0,
+				refreshing: false,
+				current: 0,
 	    };
 	  },
 	  methods: {
@@ -44,12 +44,13 @@
 				 this.$router.push('/cattleWeighing');
 			},
 			onSearch() {
-            this.current += 1;
+				this.current += 1;
             this.$json({
                 url: `/mhj/getCowWeighLogList?size=4&current=${this.current}`,
                 method: "get",
             }).then(res => {
-                this.list.push.apply(this.list,res.resp);
+								// this.list.push.apply(this.list,res.resp);
+								this.list=res.resp;
                 this.loading = false;
 								this.refreshing = false;
                 if (this.list.length >= res.totalCount) {
