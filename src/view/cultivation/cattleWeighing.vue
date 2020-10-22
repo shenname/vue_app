@@ -3,20 +3,15 @@
 	<van-cell title="牛只信息" center >
 	 
 	  <template #right-icon>
-			<van-icon name="plus" size="2rem"/>
-	    <van-icon name="scan"  size="2rem"/>
+			<van-icon name="plus" size="2rem" @click="add"/>
+	    <van-icon name="scan"  size="2rem" @click="show = true;" />
 	  </template>
 	</van-cell>
 	<van-row type="flex" justify="center">
 		<van-col span="22">
-	<van-cell-group>
-	  <van-field v-model="text1"  label="牛耳号" required  placeholder="请选择牛耳号或扫描电子耳标获取">
-		<template #button>
-		    <van-button size="small" type="primary">发送验证码</van-button>
-		  </template>
+	<van-cell-group v-for="(item, index) of eaList" :key="index">
+	  <van-field v-model="item.earTradeNo" center  label="牛耳号" required  placeholder="请选择牛耳号或扫描电子耳标获取">
 			</van-field>
-		<van-field v-model="text" label="牛耳号" required  placeholder="请选择牛耳号或扫描电子耳标获取"/>
-		<van-field v-model="text" label="牛耳号" required  placeholder="请选择牛耳号或扫描电子耳标获取"/>
 	</van-cell-group>
 	</van-col>
 	</van-row>
@@ -37,6 +32,9 @@
 	<van-button type="info" round  block @click='buttonClick'>提交</van-button>
 	</van-col>
 		</van-row>
+		<van-dialog v-model="show" title="扫码" show-cancel-button @confirm="getCowByEarTag">
+        <van-field label="耳标号" v-model="value" placeholder="请输入耳标号" />
+    </van-dialog>
 	</div>
 </template>
 
@@ -44,15 +42,26 @@
 	import { Field } from 'vant';
 	import { Toast } from 'vant';
 	import { Button } from 'vant';
+	import { Dialog } from 'vant';
 	export default {
 	  // 数据
 	  data() {
 	    return {
 				text: '',
 				text1:'',
+				show:false,
+				value:'',
+				eaList:[],
 	    };
 	  },
 	  methods: {
+			add(){
+            this.eaList.push({
+                earTradeNo: '',
+                // oldCowHouse: '',
+                // oldcowHouseId: '',
+            })
+        },
 			buttonClick(){
 				 Toast({
 				   message: '单据保存成功',
