@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-     <van-form >
+     <van-form v-if="cjian">
   <van-field
     v-model="list.earTradeNo"
     disabled
@@ -82,28 +82,34 @@ export default {
   props:['lists'],
   data(){
     return {
+        cjian:false,
         tradeNo:"",
         sellStatus:"",
         formes:{},
-        list:{}
+        list:{
+       
+        }
     }
   },
   watch:{},
   computed:{},
   methods:{
         onSearch(){
-         this.list=this.lists
+          console.log(this.lists,'牛耳号明细')
+         this.list=this.lists;
+         this.cjian=true
           if (this.list.sellStatus==0) {
                   this.sellStatus="正常出售"
                   }else{
                   this.sellStatus="非正常出售"
             }
+          this.$forceUpdate()
       }
   },
   created(){},
   mounted(){
           this.tradeNo=this.$route.query.tradeNo;
-          console.log(this.$route.query,11111111)
+      
       this.onSearch()
   }
 }
