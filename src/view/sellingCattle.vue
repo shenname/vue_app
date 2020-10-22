@@ -1,6 +1,7 @@
 <template>
-  <div class="wrapper">
-    <van-pull-refresh v-model="refreshing" @refresh="">
+  <div class="wrappers">
+    <div class="addCattle"><van-icon name="add-o" @click="onAddCattle(1)"/></div>
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
   v-model="loading"
   :finished="finished"
@@ -59,7 +60,7 @@
 <template #right v-solt="{index,item}">
     <van-row class="bianj">
       <van-col span="24" class="xuanZ">
-        <van-icon name="edit" @click="operation(index,item,1)" />
+        <van-icon name="edit" @click="onAddCattle(2,item)" />
         <!-- <p class="xigTitile">修改</p> -->
       </van-col>
       <van-col span="24" class="xuanZ">
@@ -105,7 +106,19 @@ export default {
   watch:{},
   computed:{},
   methods:{
-    onsarch(){
+    //新增牛只
+    onAddCattle(type,item){
+      if (type==1) {
+         this.$router.push('/sellingCattleAdd')
+      } else  if(type==2) {
+         this.$router.push({path:'/sellingCattleEdit',query:{
+           tradeNo:item.tradeNo,
+      }});
+      }
+     
+    },
+    //加载牛只
+    onsarch(type){
         this.page.current += 1;
         this.loading = false;
         let params =
@@ -114,6 +127,15 @@ export default {
                 url: `/mhj/cowSellBills/getBillList?${params}`,
                 method: 'get'
             }).then((res) => {
+             
+               setTimeout(() => {
+                 console.log(type)
+                 if (type==1) {
+                      Toast('已刷新');
+                 }
+             
+              this.refreshing=false
+              },500);
               for(let item of res.resp.records){
                 this.list.push(item);
               }
@@ -123,57 +145,73 @@ export default {
                 }
             });
     },
-    operation(aast,ssta,type){
-      if (type==1) {
-        
-      }else{
+    //删除牛只
+    operation(aast,ssta){
+    
+        if (this.list[aast].status==2||this.list[aast].status==3) {
+          Toast.fail('此数据已经审核不能删除');
+          return;
+        }
         Dialog.confirm({
           title: '确认删除此数据',
           message: '此数据已经删除无法找回是否删除？',
         })
           .then(() => {
-               this.list.splice(aast,1)
-                Toast.success('已成功删除');
+           
+                this.$json({
+                    url: `/mhj/cowSellBills/delBill?tradeNo=${this.list[aast].tradeNo}`,
+                    method: 'delete',
+                }).then((res) => {
+                  
+                    console.log(this.list.length)
+                    Toast.success('已成功删除');
+                  this.onsarch()
+                });
+             
             // on confirm
           })
           .catch(() => {
             // on cancel
           });
        
-      }
+      
      
      
     },
       onSubmit(values){
           console.log(values)
       },
-      onLoad() {
-        console.log(123)
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-        setTimeout(() => {
-        this.page.current += 1;
-        // this.page.size=(Number(this.page.size)+1)
-        // console.log(this.page.size)
+    //   onLoad() {
+    //     console.log(123)
+    //   // 异步更新数据
+    //   // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+    //     setTimeout(() => {
+    //     this.page.current += 1;
+    //     // this.page.size=(Number(this.page.size)+1)
+    //     // console.log(this.page.size)
        
-          this.loading = false;
+    //       this.loading = false;
           
-          if (this.list.length>=10) {
-              this.finished = true;
-              return
-          }else{
-            this.onsarch()
-          }
-        }, 1000);
-    },
+    //       if (this.list.length>=10) {
+    //           this.finished = true;
+    //           return
+    //       }else{
+    //         this.onsarch()
+    //       }
+    //     }, 1000);
+    // },
+
+    //下拉加载
     onRefresh() {
+  
       // 清空列表数据
-      this.finished = false;
+       this.finished = false;
 
       // 重新加载数据
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
-      this.onLoad();
+      this.onsarch(1);
+    
     },
   
   },
@@ -184,6 +222,13 @@ export default {
 }
 </script>
 <style lang="less" >
+.addCattle{
+  font-size: 35px;
+  position: absolute;
+  z-index: 3;bottom: 8%;right: 4%;
+  border-radius:10px ;
+  // background: rgba(150, 150, 150, 0.3);
+}
 .xigTitile{
   font-size: 15px;
 }
@@ -212,7 +257,7 @@ export default {
         
     }
 }
-.wrapper{
+.wrappers{
   background: #F8F8F8;
 }
 </style>
