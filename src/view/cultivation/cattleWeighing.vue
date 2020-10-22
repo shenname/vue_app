@@ -43,10 +43,11 @@
   :min-date="minDate"
 />
  </van-popup>
-		<van-dialog v-model="show" title="扫码" show-cancel-button @confirm="getCowByEarTag">
+	
+		</van-form>
+			<van-dialog v-model="show" title="扫码" show-cancel-button @confirm="getCowByEarTag">
         <van-field label="耳标号" v-model="value" placeholder="请输入耳标号" />
     </van-dialog>
-		</van-form>
 	</div>
 </template>
 

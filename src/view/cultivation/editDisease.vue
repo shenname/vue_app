@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-form @submit="onSubmit">
+    <van-form ref="formData" @submit="onSubmit">
     <van-cell title="单据信息" center ></van-cell>
     <van-row type="flex" justify="center">
 		<van-col span="22"  class="col">
@@ -63,7 +63,7 @@ import { Field } from 'vant';
 export default {
   data(){
     return{
-      minDate: new Date(2020, 0, 1),
+ minDate: new Date(2020, 0, 1),
       currentDate: new Date(),
      text:'',
      text1:'',
@@ -79,9 +79,23 @@ export default {
     }
   },
   mounted(){
+    this.ruleForm.earTradeNo=this.$route.query.tradeNo;
+    this.getInfo();
 	 this.ruleForm.userName = JSON.parse(localStorage.getItem("userInfo")).userName;
 	  },
   methods: {
+    getInfo(){
+            this.$json({
+                url: `/mhj/getCowDiseaseLogList`,
+                method: "get",
+            }).then(res => {
+               for(let i in res.resp){
+                   if (this.ruleForm.earTradeNo==res.resp[i].earTradeNo) {
+                     this.ruleForm=res.resp[i]
+                   }
+               }
+            })
+    },
     confirm() {
       this.show2 = false;
       this.ruleForm.oncomeTime=
@@ -101,8 +115,8 @@ export default {
     buttonClick(){
          let params=this.ruleForm;
 				this.$json({
-                url: `/mhj/addCowDiseaseLog`,
-								method: `put`,
+                url: `/mhj/modifyCowDiseaseLog`,
+								method: `post`,
 								 data: params,
             }).then(res => {
                 	 Toast({
@@ -127,7 +141,7 @@ export default {
       this.show = false;
       this.ruleForm.oncomeTime = this.formatDate(date);
     },
-  },  
+  },
 }
 </script>
 <style lang="less" scoped>
