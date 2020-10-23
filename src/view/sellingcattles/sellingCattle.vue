@@ -1,27 +1,7 @@
 <template>
  <!--出售牛只-->
   <div class="wrappers">
-    <div>
-      <van-search
-  v-model="aasts"
-  show-action
-  placeholder="请输入搜索关键词"
-  @search="aastst"
->
-  <template slot= 'action'>
-    <div @click="aastst" style="font-size:25px;"><van-icon name="scan" style="padding-top:20%;"/></div>
-  </template>
-</van-search>
-
-  <van-overlay :show="zhezhaoc" @click="zhezhaoc = false">
-    <div class="zhez" @click.stop>
-      <div class="block" >
-          <van-loading class="zhez"/>
-     </div>
    
-    </div>
-  </van-overlay>
-    </div>
     <div class="addCattle"><van-icon name="add-o" @click="onAddCattle(1)"/></div>
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
@@ -30,66 +10,90 @@
   finished-text="没有更多了"
   @load="onsarch"
 >
-<van-swipe-cell right-width	="50"	v-for="(item,index) in list" :key="index">
-  <div  @click="formesDetails(item)">
-     <van-form class="forms">
-  <van-field
+ <div class="topsearch">
+      <van-search
+        v-model="aasts"
+        show-action
+        placeholder="请输入搜索关键词"
+        @search="aastst"
+      >
+          <template slot= 'action'>
+            <div @click="aastst" style="font-size:25px;"><van-icon name="scan" style="padding-top:20%;"/></div>
+          </template>
+      </van-search>
 
-    colon 
-    disabled
-    label-width="22%"
-    v-model="item.tradeNo"
-    name="2"
-    label="单据编号"
-  />
-  <van-field
-    colon
-    disabled
-  label-width="22%"
-    v-model="item.sellTime"
-    name="1"
-    label="出售日期" 
-  />
-  <van-field
-    colon
-    disabled
-  label-width="22%"
-    v-model="item.sellFactoryName"
-    name="1"
-    label="出售场名" 
-  />
-  <van-field
-    colon
-    disabled
-  label-width="20%"
-    v-model="item.sellType"
-    name="1"
-    label="出售方" 
-  />
-  <van-field
-  label-width="22%"
-    colon
-    disabled
-    :value="item.status==0?'未提交':item.status==1?'审核中':item.status==2?'已审核':'已退回'"
-    name="1"
-    label="单据状态" 
-  />
-  
-</van-form>
-</div>
-<template slot="right" v-solt="{index,item}">
-    <van-row class="bianj">
-      <van-col span="24" class="xuanZ">
-        <van-icon name="edit" @click="onAddCattle(2,item)" />
-        <!-- <p class="xigTitile">修改</p> -->
-      </van-col>
-      <van-col span="24" class="xuanZ">
-        <van-icon name="close" @click="operation(index,item,2)"/>
-        <!-- <p class="xigTitile">删除</p> -->
-      </van-col>
-    </van-row>
-  </template>
-</van-swipe-cell>
+      <van-overlay :show="zhezhaoc" @click="zhezhaoc = false">
+        <div class="zhez" @click.stop>
+          <div class="block" >
+              <van-loading class="zhez"/>
+        </div>
+      
+        </div>
+      </van-overlay>
+    </div>
+    <div style="padding-top:20%">
+        <van-swipe-cell right-width	="50"	v-for="(item,index) in list" :key="index">
+          <div  @click="formesDetails(item)">
+            
+            <van-form class="forms">
+          <van-field
+
+            colon 
+            disabled
+            label-width="22%"
+            v-model="item.tradeNo"
+            name="2"
+            label="单据编号"
+          />
+          <van-field
+            colon
+            disabled
+          label-width="22%"
+            v-model="item.sellTime"
+            name="1"
+            label="出售日期" 
+          />
+          <van-field
+            colon
+            disabled
+          label-width="22%"
+            v-model="item.sellFactoryName"
+            name="1"
+            label="出售场名" 
+          />
+          <van-field
+            colon
+            disabled
+          label-width="20%"
+            v-model="item.sellType"
+            name="1"
+            label="出售方" 
+          />
+          <van-field
+          label-width="22%"
+            colon
+            disabled
+            :value="item.status==0?'未提交':item.status==1?'审核中':item.status==2?'已审核':'已退回'"
+            name="1"
+            label="单据状态" 
+          />
+          
+        </van-form>
+        </div>
+        <template slot="right" v-solt="{index,item}">
+            <van-row class="bianj">
+              <van-col span="24" class="xuanZ">
+                <van-icon name="edit" @click="onAddCattle(2,item)" />
+                <!-- <p class="xigTitile">修改</p> -->
+              </van-col>
+              <van-col span="24" class="xuanZ">
+                <van-icon name="close" @click="operation(index,item,2)"/>
+                <!-- <p class="xigTitile">删除</p> -->
+              </van-col>
+            </van-row>
+          </template>
+        </van-swipe-cell>
+    </div>
 </van-list>
   </van-pull-refresh>
   </div>
@@ -243,6 +247,12 @@ export default {
 }
 </script>
 <style lang="less" >
+.topsearch{
+  position: fixed;
+  top: 20;
+  z-index: 5;
+  width: 100%;
+}
   .block {
     width: 120px;
     height: 120px;
@@ -272,8 +282,10 @@ export default {
     color: #646566;
 }
 .forms{ 
+ 
     width: 96%;
     margin: 3% auto;
+   
     font-size: 15px;
     border: 1px #DEE1E6 solid;
     border-radius:5px;
