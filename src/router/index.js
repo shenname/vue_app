@@ -41,6 +41,46 @@ export default new Router({
 			}
 		},
 		{
+			path: '/pFproducts',
+			name:　"pFproducts",
+			component: () => import('@/view/PackingofFinishedProducts/pFproducts.vue'),
+			meta: {
+				title: "装箱单列表",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/addPfproducts',
+			name:　"addPfproducts",
+			component: () => import('@/view/PackingofFinishedProducts/addPfproducts.vue'),
+			meta: {
+				title: "新增装箱单",
+				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/editpFproducts',
+			name:　"editpFproducts",
+			component: () => import('@/view/PackingofFinishedProducts/editpFproducts.vue'),
+			meta: {
+				title: "修改装箱单",
+				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/chakpFproducts',
+			name:　"chakpFproducts",
+			component: () => import('@/view/PackingofFinishedProducts/chakpFproducts.vue'),
+			meta: {
+				title: "装箱单详情",
+				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/earMarkers',
 			name:　"earMarkers",
 			component: () => import('@/view/earMarkers/index.vue'),
@@ -164,7 +204,7 @@ export default new Router({
 		{
 			path: '/sellingCattle',
 			name:　"sellingCattle",
-			component: () => import('@/view/sellingCattle.vue'),
+			component: () => import('@/view/sellingcattles/sellingCattle.vue'),
 			meta: {
 				title: '出售牛只单',
 				keepAlive: true,
@@ -174,30 +214,30 @@ export default new Router({
 		{
 			path: '/sellingCattleAdd',
 			name:　"sellingCattleAdd",
-			component: () => import('@/view/sellingCattleAdd.vue'),
+			component: () => import('@/view/sellingcattles/sellingCattleAdd.vue'),
 			meta: {
 				title: '新增出售单',
-				keepAlive: true,
+				keepAlive: false,
 				keepheaderAlive: true,
 			}
 		},
 		{
 			path: '/sellingCattleEdit',
 			name:　"sellingCattleEdit",
-			component: () => import('@/view/sellingCattleEdit.vue'),
+			component: () => import('@/view/sellingcattles/sellingCattleEdit.vue'),
 			meta: {
 				title: '编辑出售单',
-				keepAlive: true,
+				keepAlive: false,
 				keepheaderAlive: true,
 			}
 		},
 		{
-			path: '/eartDetails',
-			name:　"eartDetails",
-			component: () => import('@/view/eartDetails.vue'),
+			path: '/sellingDDetails',
+			name:　"sellingDDetails",
+			component: () => import('@/view/sellingcattles/sellingDDetails.vue'),
 			meta: {
-				title: '牛只详情信息',
-				keepAlive: true,
+				title: '出售牛只单详情',
+				keepAlive: false,
 				keepheaderAlive: true,
 			}
 		},
