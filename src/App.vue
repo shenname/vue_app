@@ -38,15 +38,10 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1)
+		let routers = localStorage.getItem('routers');
+		this.$router.push({path: routers})
     },
   },
-  updated(){
-	 
-	  if(this.$route.name=='home'){
-        this.active=0
-	  }
-  }
 }
 </script>
 <style lang="less" scoped>
@@ -65,6 +60,6 @@ export default {
 	#app{
 		height: calc(100vh - 94px) !important;
 		overflow-y: scroll;
-		background-color: #f5f5f5;
+		background-color: #FFF;
 	}
 </style>

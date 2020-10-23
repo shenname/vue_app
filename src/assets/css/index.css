@@ -1,3 +1,6 @@
 .van-empty{
     height: 65vh !important;
 }
+.van-cell{
+    padding: 5px 16px !important;
+}

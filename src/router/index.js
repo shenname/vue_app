@@ -9,12 +9,53 @@ export default new Router({
         	path: '/',
 			redirect: '/home'
 		},
+		// 治疗用药
+		{
+			path: '/treatment',
+			name:　"treatment",
+			component: () => import('@/view/treatment/index.vue'),
+			meta: {
+				title: "治疗用药",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/treatmentAdd',
+			name:　"treatmentAdd",
+			component: () => import('@/view/treatment/add.vue'),
+			meta: {
+				title: "新增用药",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/treatmentInfo',
+			name:　"treatmentInfo",
+			component: () => import('@/view/treatment/info.vue'),
+			meta: {
+				title: "用药记录",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
 		{
 			path: '/earMarkers',
 			name:　"earMarkers",
 			component: () => import('@/view/earMarkers/index.vue'),
 			meta: {
 				title: "电子耳标",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/earMarkersAdd',
+			name:　"earMarkersAdd",
+			component: () => import('@/view/earMarkers/add.vue'),
+			meta: {
+				title: "新增关联",
 				keepAlive: true,
 				keepheaderAlive: true,
 			}
@@ -43,6 +84,17 @@ export default new Router({
 			path: '/transferInfo',
 			name:　"transferInfo",
 			component: () => import('@/view/transfer/info.vue'),
+			meta: {
+				title: '转舍详情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		
+		{
+			path: '/transferAdd',
+			name:　"transferAdd",
+			component: () => import('@/view/transfer/add.vue'),
 			meta: {
 				title: '新增转舍',
 				keepAlive: true,
