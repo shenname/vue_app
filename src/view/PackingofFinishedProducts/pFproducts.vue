@@ -49,27 +49,27 @@
             colon
             disabled
           label-width="22%"
-            v-model="item.sellTime"
+            v-model="item.packingTime"
             name="1"
-            label="出售日期" 
+            label="装箱时间" 
           />
           <van-field
             colon
             disabled
           label-width="22%"
-            v-model="item.sellFactoryName"
+            v-model="item.materialName"
             name="1"
-            label="出售场名" 
+            label="包材" 
           />
           <van-field
             colon
             disabled
           label-width="20%"
-            v-model="item.sellType"
+            v-model="item.totalWeight"
             name="1"
-            label="出售方" 
+            label="总重" 
           />
-          <van-field
+            <van-field
           label-width="22%"
             colon
             disabled
@@ -140,12 +140,13 @@ export default {
   methods:{
     aastst(){
       this.zhezhaoc=true;
-      console.log(11111111111111111111111111111111)
+     
     },
     //牛只详情
     formesDetails(item){
-         this.$router.push({path:'/sellingDDetails',query:{
+         this.$router.push({path:'/chakpFproducts',query:{
            tradeNo:item.tradeNo,
+           materialName:item.materialName
       }});
      
     },
@@ -153,26 +154,27 @@ export default {
     onAddCattle(type,item){
      
       if (type==1) {
-         this.$router.push('/sellingCattleAdd')
+         this.$router.push('/editpFproducts')
       } else  if(type==2) {
            if (item.status!==0) {
         Toast.fail("该数据已不能编辑")
         return
       }
-         this.$router.push({path:'/sellingCattleEdit',query:{
+         this.$router.push({path:'/editpFproducts',query:{
            tradeNo:item.tradeNo,
+           materialName:item.materialName
       }});
       }
      
     },
-    //加载牛只
+    //加载产品列表
     onsarch(type){
         this.page.current += 1;
         this.loading = false;
         let params =
                 `current=${this.page.current}&size=${this.page.size}` 
             this.$json({
-                url: `/mhj/cowSellBills/getBillList?${params}`,
+                url: `/mhj/PackingList/getBillList?${params}`,
                 method: 'get'
             }).then((res) => {
                setTimeout(() => {

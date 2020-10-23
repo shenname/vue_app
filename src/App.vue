@@ -11,10 +11,10 @@
 		  />
 		<p class="header" v-else>{{$route.meta.title}}</p>
 	</form>
-    <div id="app">
+    <div :id="$route.meta.keepAlive ? 'app' : 'app1'">
       <router-view></router-view>
     </div>
-    <van-tabbar v-model="active" v-if="$route.meta.keepAlive">
+    <van-tabbar v-model="active" v-if="$route.meta.keepheaderAlive">
 	  	<van-tabbar-item icon="wap-home" replace to="/home">首页</van-tabbar-item>
 	  	<van-tabbar-item icon="add-square" replace to="/agency">代办</van-tabbar-item>
 	  	<van-tabbar-item icon="manager" replace to="/user">我的</van-tabbar-item>
@@ -50,6 +50,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+	@heights: 44px;
 	.header{
 		height: 45px;
 		line-height: 45px;
@@ -63,7 +64,12 @@ export default {
 		border-bottom: 1px solid #ebedf0;
 	}
 	#app{
-		height: calc(100vh - 94px) !important;
+		height: calc(100vh - 50px - @heights) !important;
+		overflow-y: scroll;
+		background-color: #f5f5f5;
+	}
+	#app1{
+		height: calc(100vh - 50px) !important;
 		overflow-y: scroll;
 		background-color: #f5f5f5;
 	}

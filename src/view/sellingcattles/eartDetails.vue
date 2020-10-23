@@ -115,5 +115,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.wrapper{}
+.wrapper{        border: 1px #F0F0F0 solid; 
+width: 95%;
+margin: 0 auto;
+border-radius:10px ;
+}
 </style>

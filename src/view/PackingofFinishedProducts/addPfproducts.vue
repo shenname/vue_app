@@ -1,15 +1,16 @@
 <template>
-<div class=" height: 100%;margin: 0;background: white;">
- <navTopS :types="typest" v-if="navtop" class="navtopst"></navTopS> 
+<div>
+  <!-- <navTopS :types="typest" v-if="navtop"></navTopS> -->
   <div class="wrappers">
-  
-    <div v-if="onVif">
-      
+   
+    <div v-if="onVif">  
+         
+       
         <div class="documentInformation">
         <van-form @submit="onSubmit">
             <div class="formes_top">
             <van-field label="单据编号" label-width="22%"	 required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="出售日期"  name="sellTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.sellTime"/>
+            <van-field label="装箱日期"  name="packingTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.packingTime"/>
                  <van-popup v-model="timeC" round position="bottom">
                      <div class="times">
                         <van-datetime-picker
@@ -24,7 +25,8 @@
                         />
                     </div>
                 </van-popup>
-            <van-field label="出售牧场"  name="sellFactoryName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.sellFactoryName" />
+             <van-field label="装箱产品" label-width="22%" required colon v-model="formes.tradeNo" disabled placeholder=""/>
+            <van-field label="包材"  name="sellFactoryName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.sellFactoryName" />
                  <van-popup v-model="showPopup" round position="bottom">
                   <van-picker
                    
@@ -35,41 +37,45 @@
                     
                     />
                 </van-popup>
-            <van-field label="出售方" required label-width="22%" colon v-model="formes.sellType"/>
-            <van-field label="备注" required label-width="22%" colon v-model="formes.remark"/>
+             <van-field label="包材重量" label-width="22%"	name="materialWeight" required colon v-model="formes.materialWeight" disabled placeholder=""/>
+            <van-field label="总重"  name="totalWeight" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.totalWeight"/>
+            <van-field label="备注"  name="remark" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.remark"/>
+
+        
             </div>
             <van-row style="margin: 2% auto;width: 96%;">
-                <van-col span="12"><p style="  line-height: 30px;">牛只信息</p></van-col>
+                <van-col span="12"><p style="  line-height: 30px;">产品信息</p></van-col>
                 <van-col span="12" style="font-size:30px ;text-align: right;"><van-icon name="scan" @click="addEarts"/></van-col>
             </van-row>
-            
+           
             <!--牛只信息-->
             <ul>
                 <li v-for="(item,index) in formes.details" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
-                    <span>{{item.earTradeNo}}</span>
-                    &nbsp;<span>{{item.chusfs}}</span>
-                    &nbsp;<span>{{item.illness}}</span>
-                    &nbsp;<span>{{item.sellWeight}}KG</span>
+                    <span>{{item.labelCode}}</span>
+                    &nbsp;<span>{{item.bpCode}}</span>
+                    &nbsp;<span>{{item.bpName}}</span>
+                    &nbsp;<span>{{item.weight}}KG</span>
                     </div>
                     <div style="font-size:30px;line-height: 40px;padding-top:2%">
                 <span  ><van-icon name="close" @click="onEart(item,index)"/></span>
                 </div>
                 </li>
             </ul>
-        </van-form>
-        <div class="tijn"  v-if="!timeC">
-                <van-button round block type="info" @click="ssst(0)" >
-                    保存
-                </van-button>
-                <van-button round block type="info"  @click="ssst(1)" >
+              <div style="margin: 16px;">
+                    <van-button round block type="info" native-type="submit">
                     提交
-                </van-button>
-            </div>
+                    </van-button>
+                </div>
+        
+        </van-form>
+           
         </div>
+    
+        
         <van-overlay :show="show" @click="show = false">
-        <div class="niuerhzt" @click.stop>
-      <div class="niurblock" >
+        <div class="wrapper" @click.stop>
+      <div class="block" >
           <p style="line-height: 40px;">牛耳号1234568</p>
           <van-form @submit="onSubmits" class="niuerCss">
                 <van-field
@@ -78,23 +84,23 @@
                     placeholder="请输入出场重"
                 
                 />
-                <van-field
+                <!-- <van-field
                         readonly
                         clickable
                           name="chusfs"
                         :value="value"
                         
-                        placeholder="点击选择出售状态"
+                        placeholder="点击选择出售方式"
                         @click="showPicker = true"
                         />
                         <van-popup v-model="showPicker" position="bottom">
-                        <van-picker
-                            show-toolbar
-                            :columns="columns"
-                            @confirm="onConfirm"
-                            @cancel="showPicker = false"
-                        />
-                </van-popup>
+                            <van-picker
+                                show-toolbar
+                                :columns="columns"
+                                @confirm="onConfirm"
+                                @cancel="showPicker = false"
+                            />
+                        </van-popup>
                 <van-field
                 v-if="jbmc"
                   name="illness"
@@ -116,62 +122,62 @@
                      <div class="anniu"  @click="cancelEaret">
                     取消
                     </div>
-                </div>
+                </div> -->
          </van-form>
         
       </div>
        </div>
        </van-overlay>
     </div>
-    <div v-if="!onVif">
+    
+    <!-- <div v-if="!onVif">
        <eartDetails :lists="list">  </eartDetails> 
-    </div>
+    </div> -->
   </div>
   </div>
 </template>
 
 <script>
-import eartDetails from './eartDetails'
-import navTopS from '../navTopS'
+// import navTopS from './navTopS'
 
-import Vue from 'vue';
-import { Overlay } from 'vant';
 import { Toast } from 'vant';
 
 Vue.use(Toast);
+// import eartDetails from './eartDetails'
+import Vue from 'vue';
+import { Overlay } from 'vant';
+
 Vue.use(Overlay);
 export default {
-  components:{
-      eartDetails,
-      navTopS
-  },
+//   components:{
+//       eartDetails,
+//       navTopS
+//   },
   props:{},
   data(){
     return {
-        navtop:true,
-            typest:1,
-      list:{},
-      jbmc:false,
-      onVif:true,
-      erform:{},
-      value: '',
+      navtop:true,
+      typest:1,
+      showPopup:false,
+        jbmc:false,
+        onVif:true,
+        erform:{},
+       value: '',
       columns: ['正常', '非正常'],
       showPicker: false,
-      show: false,
-      timeC:false,
-      time:new Date,
-      formes:{
-          tradeNo:"",
-          sellTime:"",
-          sellFactoryName:"",
-          sellType:"",
-          remark:"",
-          details:[]
-      },
+       show: false,
+        timeC:false,
+        time:new Date,
+        formes:{
+        tradeNo:"",
+        sellTime:"",
+        sellFactoryName:"",
+        sellType:"",
+        remark:"",
+        details:[]
+        },
       factorylist:[],
-      muc:[],
-      showPopup:false,
-
+        muc:[],
         
 
     }
@@ -179,16 +185,14 @@ export default {
   watch:{},
   computed:{},
   methods:{
-    guanb(){
+     guanb(){
       this.onVif=true;
       this.typest=1;
     },
-     getMuc(values){
+    getMuc(values){
       this.formes.sellFactoryName=values
       this.showPopup=false;
-   
-      this.formes.sellFactoryId=this.muc.filter(item=>item.name==values)[0].id
-   
+      this.formes.sellFactoryId=this.muc.filter(item=>item.name==values)[0].id;
     },
     //牧场选择
     onMuc(){
@@ -205,13 +209,14 @@ export default {
                   console.log(res)
             });
     },
+   
+     //提交表单
       ssst(types){
-       
         if (this.formes.sellTime==""||this.formes.sellFactoryName==""||this.formes.sellType=="") {
           Toast.fail('请确保数据的完整性');
           return
         }
-          this.formes.status=types
+          this.formes.status=Number(types) 
           console.log(this.formes,'另外提交')
             this.$json({
                 url: `/mhj/cowSellBills/addOrUpdateBill`,
@@ -226,11 +231,14 @@ export default {
             });
       },
       onSubmits(valuest){
-           console.log(valuest,'小表单')
+     
+          
+        
             this.$json({
                 url: `/mhj/cowSellBills/getCowDetail?earTradeNo=GN0WL200001`,
                 method: 'get'
             }).then((res) => {
+               
                  this.list=res.resp;
                  if (valuest.chusfs=="正常") {
                       this.list.sellStatus=0
@@ -254,7 +262,6 @@ export default {
      //选择牛耳号健康状态
        onConfirm(value) {
       this.value = value;
-      console.log(value)
       if (value=="非正常") {
           this.jbmc=true;
       }
@@ -269,63 +276,39 @@ export default {
       },
       //进入牛耳号详情
       eartDetails(item){
-
-          this.list= this.formes.details.filter(ite=>ite.earTradeNo==item.earTradeNo)[0]
+        //   let aast= this.formes.details.filter(ite=>ite.tradeNo==item.tradeNo)[0]
+        //   console.log(aast)
           this.onVif=false;
-            this.typest=2;
+          this.typest=2;
           this.navtop=false;
           this.navtop=true;
-      
-          //  this.$json({
-          //       url: `/mhj/cowSellBills/getCowDetail?earTradeNo=${item.tradeNo}`,
-          //       method: 'get'
-          //   }).then((res) => {
-          //        this.list=res.resp;
-               
-          //        this.onVif=false;
-          //        this.show=false
-          //   });
       },
       //删除牛耳号
       onEart(item,index){
-         console.log(item)
          this.formes.details.splice(index,1)
-       
       },
       onSubmit(values){
-      
       },
       //时间控件
       editTime(){
            this.timeC=true;
       },
-      outTime(){
-            this.timeC=false;
-      },
+    
       addTime(){
          this.timeC=false;
          this.formes.sellTime=`${this.time.getFullYear()}-${(this.time.getMonth() + 1).toString().padStart(2, "0")}-${(this.time.getDate()).toString().padStart(2, "0")} `+
      `${(this.time.getHours()).toString().padStart(2, "0")}:${(this.time.getMinutes()).toString().padStart(2, "0")}:${(this.time.getSeconds()).toString().padStart(2, "0")}`;
-     console.log( this.formes.sellTime)
       },
       //查询
-      onSearch(){
-        this.$json({
-            url: `/mhj/cowSellBills/getBillDetail?tradeNo=${this.formes.tradeNo}`,
-            method: 'get',
-        }).then((res) => {
-            this.formes=res.resp
-            console.log(this.formes)
-             for(let i in this.formes.details){
-               if (this.formes.details[i].sellStatus==0) {
-                   this.formes.details[i].chusfs='正常'
-               }else{
-                    this.formes.details[i].chusfs='非正常'
-               }
-            }
+    //   onSearch(){
+    //     this.$json({
+    //         url: `/mhj/cowSellBills/getBillDetail?tradeNo=${this.formes.tradeNo}`,
+    //         method: 'get',
+    //     }).then((res) => {
+    //         this.formes=res.resp
           
-        });
-      }
+    //     });
+    //   }
   },
  
   created(){
@@ -333,14 +316,16 @@ export default {
   },
 
   mounted(){
-      this.formes.tradeNo=this.$route.query.tradeNo;
-      this.onSearch()
-      this.onMuc()
+    this.onMuc();
+    //   this.onSearch();
   }
 }
 </script>
 <style lang="less" scoped>
-.navtopst{position: absolute;top: 0;}
+.pasture{
+  width: 100%;
+  position: absolute;bottom: 0;
+}
 .anniu{width: 40%;background: #1989FA;color:#FFFFFF;height:100%;text-align: center;line-height: 6vh;font-size: 15px;border-radius:20px ;}
 .niuerCss{
          border: 1px #F0F0F0 solid; 
@@ -348,7 +333,6 @@ export default {
          margin: 5% auto;
 }
 .eartCss{
-        background: white;
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
@@ -356,11 +340,9 @@ export default {
         width: 96%;
         line-height: 40px;
         padding: 0 2%;
+        background: white;
 }
-.tijn{display: flex;justify-content: space-around;
-  
-    margin: 12% 0 6% 0;
-}
+
 .formes_top{
   border: 1px #F0F0F0 solid;
 }
@@ -377,21 +359,20 @@ export default {
 }
 .wrappers{
     position: relative;
-      padding-top: 16%;
-       
-
+     padding-top: 16%;
+      
 }
-  .niuerhzt {
- display: flex;
+ .wrapper {
+   display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
    
   }
 
-  .niurblock {
-    width: 90%;
-    padding: 2%;
+  .block {
+    width: 95%;
+    height: 45%;
     background-color: #fff;
   }
 </style>

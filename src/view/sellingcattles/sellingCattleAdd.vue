@@ -1,6 +1,6 @@
 <template>
 <div>
-  <navTopS :types="typest" v-if="navtop"></navTopS>
+  <navTopS :types="typest" v-if="navtop" class="navtopst"></navTopS>
   <div class="wrappers">
    
     <div v-if="onVif">  
@@ -49,7 +49,7 @@
                 <li v-for="(item,index) in formes.details" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
                     <span>{{item.earTradeNo}}</span>
-                    &nbsp;<span>{{item.health}}</span>
+                    &nbsp;<span>{{item.chusfs}}</span>
                     &nbsp;<span>{{item.illness}}</span>
                     &nbsp;<span>{{item.sellWeight}}KG</span>
                     </div>
@@ -73,8 +73,8 @@
     
         
         <van-overlay :show="show" @click="show = false">
-        <div class="wrapper" @click.stop>
-      <div class="block" >
+        <div class="niuerhzt" @click.stop>
+      <div class="niurblock" >
           <p style="line-height: 40px;">牛耳号1234568</p>
           <van-form @submit="onSubmits" class="niuerCss">
                 <van-field
@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import navTopS from './navTopS'
+import navTopS from '../navTopS'
 
 import { Toast } from 'vant';
 
@@ -321,6 +321,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.navtopst{position: absolute;top: 0;}
+
 .pasture{
   width: 100%;
   position: absolute;bottom: 0;
@@ -361,21 +363,20 @@ export default {
 }
 .wrappers{
     position: relative;
-      padding-top: 5%;
-       height: 83vh;
-          background: white;
-
+    padding-top: 16%;
+      
 }
- .wrapper {
-    display: flex;
+ .niuerhzt {
+ display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
    
   }
 
-  .block {
-    width: 95%;
-    height: 45%;
+  .niurblock {
+    width: 90%;
+    padding: 2%;
     background-color: #fff;
   }
 </style>

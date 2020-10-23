@@ -10,6 +10,46 @@ export default new Router({
 			redirect: '/home'
 		},
 		{
+			path: '/pFproducts',
+			name:　"pFproducts",
+			component: () => import('@/view/PackingofFinishedProducts/pFproducts.vue'),
+			meta: {
+				title: "装箱单列表",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/addPfproducts',
+			name:　"addPfproducts",
+			component: () => import('@/view/PackingofFinishedProducts/addPfproducts.vue'),
+			meta: {
+				title: "新增装箱单",
+				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/editpFproducts',
+			name:　"editpFproducts",
+			component: () => import('@/view/PackingofFinishedProducts/editpFproducts.vue'),
+			meta: {
+				title: "修改装箱单",
+				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/chakpFproducts',
+			name:　"chakpFproducts",
+			component: () => import('@/view/PackingofFinishedProducts/chakpFproducts.vue'),
+			meta: {
+				title: "装箱单详情",
+				keepAlive: false,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/earMarkers',
 			name:　"earMarkers",
 			component: () => import('@/view/earMarkers/index.vue'),

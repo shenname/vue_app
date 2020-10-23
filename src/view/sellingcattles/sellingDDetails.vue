@@ -1,6 +1,6 @@
 <template>
 <div>
-  <navTopS :types="typest" v-if="navtop"></navTopS>
+  <navTopS :types="typest" v-if="navtop" class="navtopst"></navTopS>
   <div class="wrappers">
  
    <div v-if="onVif">
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import navTopS from './navTopS'
+import navTopS from '../navTopS'
 
 import eartDetails from './eartDetails'
 import Vue from 'vue';
@@ -119,6 +119,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.navtopst{position: absolute;top: 0;}
 .documentInformation{
   
     margin: 0 auto;
@@ -129,9 +130,7 @@ export default {
 .wrapper{width: 98%;}
 .wrappers{
     position: relative;
-      padding-top: 5%;
-       height: 83vh;
-          background: white;
+ padding-top: 16%;     
 
 }
 .eartCss{
