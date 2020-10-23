@@ -13,7 +13,7 @@
 			</van-col>
 		  <van-col span="1" style="border:none" class="vanCOl">
 				<van-icon name="edit" size="2rem" @click="updateList(item.earTradeNo)"/>
-          <van-icon name="close" size="2rem" @click="deleteList"/>
+          <van-icon name="close" size="2rem" @click="deleteList(item.diseaseId)"/>
         </van-col>
 		</van-row>
 		 	</van-list>
@@ -74,13 +74,22 @@ export default {
       iconClick(){
 				 this.$router.push('/addDisease');
 			},
-			deleteList(){
+			deleteList(val){
          Dialog.confirm({
   title: '删除确认',
   message: '确定删除吗？？？',
 })
   .then(() => {
-    console.log('确认本次删除')
+    this.$json({
+                url: `/mhj/deleteCowDiseaseLog?diseaseId=${val}`,
+                method: `post`,
+            }).then(res => {
+							Toast({
+				   message: '单据删除成功',
+				   icon: 'success',
+				 });
+             this.onSearch();
+            })
   })
   .catch(() => {
     console.log('取消本次删除')
