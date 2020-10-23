@@ -80,7 +80,8 @@ export default {
   computed:{},
   methods:{
        guanb(){
-      this.onVif=true
+      this.onVif=true;
+      this.typest=1;
     },
       //牛耳号详情
           eartDetails(item){
@@ -126,7 +127,13 @@ export default {
     border-radius:5px ;
 }
 .wrapper{width: 98%;}
-.wrappers{background: white;}
+.wrappers{
+    position: relative;
+      padding-top: 5%;
+       height: 83vh;
+          background: white;
+
+}
 .eartCss{
         background: white;
         display: flex;

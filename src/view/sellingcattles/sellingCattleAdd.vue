@@ -185,7 +185,8 @@ export default {
   computed:{},
   methods:{
      guanb(){
-      this.onVif=true
+      this.onVif=true;
+      this.typest=1;
     },
     getMuc(values){
       this.formes.sellFactoryName=values

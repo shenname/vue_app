@@ -179,7 +179,8 @@ export default {
   computed:{},
   methods:{
     guanb(){
-      this.onVif=true
+      this.onVif=true;
+      this.typest=1;
     },
      getMuc(values){
       this.formes.sellFactoryName=values
@@ -370,7 +371,9 @@ export default {
 .wrappers{
     position: relative;
       padding-top: 5%;
-   background: white;
+       height: 83vh;
+          background: white;
+
 }
  .wrapper {
     display: flex;
