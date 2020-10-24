@@ -14,7 +14,7 @@
 			  <van-collapse-item title="屠宰" name="2" style="margin-top: 1rem;">
 					<van-row>
 						<router-link to='/pFproducts'><van-col span="8">产成品装箱</van-col></router-link>
-						<router-link to=''><van-col span="8">产成品入库</van-col></router-link>
+						<router-link to='/fgWarehousing'><van-col span="8">产成品入库</van-col></router-link>
 						<router-link to=''><van-col span="8">货位调拨</van-col></router-link>
 						<router-link to=''><van-col span="8">销售出库</van-col></router-link>
 					</van-row>

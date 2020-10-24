@@ -49,25 +49,25 @@
             colon
             disabled
           label-width="22%"
-            v-model="item.packingTime"
+            v-model="item.storageTime"
             name="1"
-            label="装箱时间" 
+            label="入库日期" 
           />
           <van-field
             colon
             disabled
           label-width="22%"
-            v-model="item.materialName"
+            v-model="item.warehouseName"
             name="1"
-            label="包材" 
+            label="仓库" 
           />
           <van-field
             colon
             disabled
           label-width="20%"
-            v-model="item.totalWeight"
+            v-model="item.dname"
             name="1"
-            label="总重" 
+            label="部门" 
           />
             <van-field
           label-width="22%"
@@ -114,23 +114,22 @@ export default {
   props:{},
   data(){
     return {
-      zhezhaoc:false,
-      aasts:"",
+        zhezhaoc:false,
+        aasts:"",
         page: {
-                size: 4,
-                current: 0,
-                total: 0
-            },
-      reluform:{
-         username:"",
-        password:"",
-      },
-      
-         list: [],
-           refreshing: false,
-      loading: false,
-      totalCount: 0,
-      finished: false,
+            size: 4,
+            current: 0,
+            total: 0
+        },
+        reluform:{
+            username:"",
+            password:"",
+        },
+        list: [],
+        refreshing: false,
+        loading: false,
+        totalCount: 0,
+        finished: false,
     }
   },
   watch:{},
@@ -144,7 +143,8 @@ export default {
     formesDetails(item){
          this.$router.push({path:'/chakpFproducts',query:{
            tradeNo:item.tradeNo,
-           materialName:item.materialName
+           warehouseName:item.warehouseName,
+           dname:item.dname
       }});
      
     },
@@ -158,9 +158,10 @@ export default {
         Toast.fail("该数据已不能编辑")
         return
       }
-         this.$router.push({path:'/editpFproducts',query:{
+         this.$router.push({path:'/fgWarehousingEdit',query:{
            tradeNo:item.tradeNo,
-           materialName:item.materialName
+           warehouseName:item.warehouseName,
+           dname:item.dname
       }});
       }
      
@@ -172,7 +173,7 @@ export default {
         let params =
                 `current=${this.page.current}&size=${this.page.size}` 
             this.$json({
-                url: `/mhj/PackingList/getBillList?${params}`,
+                url: `/mhj/warehouseWarrant/getBillList?${params}`,
                 method: 'get'
             }).then((res) => {
                setTimeout(() => {
@@ -205,7 +206,7 @@ export default {
           .then(() => {
            
                 this.$json({
-                    url: `/mhj/PackingList/delBill?tradeNo=${this.list[aast].tradeNo}`,
+                    url: `/mhj/warehouseWarrant/delBill?tradeNo=${this.list[aast].tradeNo}`,
                     method: 'delete',
                 }).then((res) => {
                   

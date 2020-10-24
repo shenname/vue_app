@@ -32,7 +32,7 @@
       </van-overlay>
     </div>
     <div style="padding-top:20%">
-        <van-swipe-cell right-width	="50"	v-for="(item,index) in list" :key="index">
+        <van-swipe-cell right-width	="65"	v-for="(item,index) in list" :key="index">
           <div  @click="formesDetails(item)">
             
             <van-form class="forms">
@@ -83,11 +83,13 @@
         <template slot="right" v-solt="{index,item}">
             <van-row class="bianj">
               <van-col span="24" class="xuanZ">
-                <van-icon name="edit" @click="onAddCattle(2,item)" />
+             
+                  <van-button type="info" icon="edit" size="small" @click="onAddCattle(2,item)">修改</van-button>
                 <!-- <p class="xigTitile">修改</p> -->
               </van-col>
               <van-col span="24" class="xuanZ">
-                <van-icon name="close" @click="operation(index,item,2)"/>
+            
+                      <van-button type="danger" icon="close" size="small" @click="operation(index,item,2)">删除</van-button>
                 <!-- <p class="xigTitile">删除</p> -->
               </van-col>
             </van-row>
@@ -118,18 +120,17 @@ export default {
     return {
       zhezhaoc:false,
       aasts:"",
-        page: {
-                size: 4,
-                current: 0,
-                total: 0
-            },
+      page: {
+        size: 4,
+        current: 0,
+        total: 0
+      },
       reluform:{
-         username:"",
+        username:"",
         password:"",
       },
-      
-         list: [],
-           refreshing: false,
+      list: [],
+      refreshing: false,
       loading: false,
       totalCount: 0,
       finished: false,
@@ -140,7 +141,7 @@ export default {
   methods:{
     aastst(){
       this.zhezhaoc=true;
-      console.log(11111111111111111111111111111111)
+    
     },
     //牛只详情
     formesDetails(item){
@@ -269,7 +270,8 @@ export default {
   font-size: 15px;
 }
 .xuanZ{
-  padding: 30%;
+  width: 100%;
+  padding: 20% 0;
 }
 .bianj{
   font-size: 25px;

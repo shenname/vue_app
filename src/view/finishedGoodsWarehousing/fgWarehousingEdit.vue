@@ -10,7 +10,7 @@
         <van-form @submit="onSubmit">
             <div class="formes_top">
             <van-field label="单据编号" label-width="22%"	 required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="装箱日期"  name="packingTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.packingTime"/>
+            <van-field label="入库日期"  name="storageTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.storageTime"/>
                  <van-popup v-model="timeC" round position="bottom">
                      <div class="times">
                         <van-datetime-picker
@@ -25,8 +25,7 @@
                         />
                     </div>
                 </van-popup>
-             <van-field label="装箱产品" label-width="22%" required colon v-model="zhuangxcp" disabled placeholder=""/>
-            <van-field label="包材"  name="materialName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.materialName" />
+            <van-field label="仓库"  name="warehouseName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.warehouseName" />
                  <van-popup v-model="showPopup" round position="bottom">
                   <van-picker
                    
@@ -37,9 +36,21 @@
                     
                     />
                 </van-popup>
-              <van-field label="包材重量" label-width="22%"	name="materialWeight" placeholder="" v-model="formes.materialWeight"/>
-            <van-field label="总重"  name="totalWeight"  label-width="22%" colon v-model="formes.totalWeight"/>
-            <van-field label="备注"  name="remark" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.remark"/>
+                <van-field label="部门"  name="dname" label-width="22%" @focus="showPopupBm=true" colon v-model="formes.dname" />
+                 <van-popup v-model="showPopupBm" round position="bottom">
+                  <van-picker
+                   
+                      show-toolbar
+                      :columns="bumen"
+                      @confirm="getBum"
+                      @cancel="showPopup=false"
+                    
+                    />
+                </van-popup>
+                   <van-field label="巷道" label-width="22%"  colon v-model="formes.roadway" disabled placeholder="请选择巷道"/>
+              <van-field label="入库类别" label-width="22%"	name="storageType" placeholder="请选择入库类别" v-model="formes.storageType"/>
+       
+            <van-field label="备注"  name="remark" label-width="22%" colon v-model="formes.remark"/>
 
         
             </div>
@@ -62,14 +73,18 @@
                 </div>
                 </li>
             </ul>
-              <div style="margin: 16px;">
-                    <van-button round block type="info" native-type="submit">
-                    提交
-                    </van-button>
-                </div>
+             
         
         </van-form>
-           
+            <div class="tijn"  v-if="!timeC">
+                <van-button round block type="info" @click="ssst(0)" >
+                    保存
+                </van-button>
+                <van-button round block type="info"  @click="ssst(1)" >
+                    提交
+                </van-button>
+            </div>
+        </div>
         </div>
     
         
@@ -105,7 +120,7 @@
        <pFproductsDetails :lists="list">  </pFproductsDetails> 
     </div>
   </div>
-  </div>
+  
 </template>
 
 <script>
@@ -114,39 +129,38 @@ import navTopS from '../navTopS'
 import { Toast } from 'vant';
 
 Vue.use(Toast);
-import pFproductsDetails from './pFproductsDetails'
+// import pFproductsDetails from './pFproductsDetails'
 import Vue from 'vue';
 import { Overlay } from 'vant';
 
 Vue.use(Overlay);
 export default {
   components:{
-      pFproductsDetails,
+    //   pFproductsDetails,
       navTopS
   },
   props:{},
   data(){
     return {
-      zhuangxcp:"",
-      navtop:true,
-      typest:1,
-      showPopup:false,
-      
+        bumen:[],
+        zhuangxcp:"",
+        navtop:true,
+        typest:1,
+        showPopup:false,
+        showPopupBm:false,
         onVif:true,
-
-    
-
-       show: false,
+        show: false,
         timeC:false,
         time:new Date,
         formes:{
-        
+
         },
-      factorylist:[],
+        factorylist:[],
         muc:[],
         context:"",
         list:{},
         tableData1:[],
+        onbMen:[],
     }
   },
   watch:{},
@@ -157,26 +171,53 @@ export default {
       this.onVif=true;
       this.typest=1;
     },
-    //包材下拉框
+    //仓库下拉框确认
+
     getMuc(values){
-      this.formes.materialName=values
+      this.formes.warehouseName=values
       this.showPopup=false;
-      this.formes.materialId=this.muc.filter(item=>item.name==values)[0].id;
+      this.formes.warehouseId=this.muc.filter(item=>item.warehouseName==values)[0].warehouseId;
+      this.formes.roadway=this.muc.filter(item=>item.warehouseName==values)[0].roadway;
+      this.formes.gmId=this.muc.filter(item=>item.warehouseName==values)[0].gmId;
+       console.log(this.formes)
     },
-    //包材选择
+    //仓库选择
     onMuc(){
          this.$json({
-                url: `/mhj/getPackingMaterialsBox`,
+                url: `/mhj/warehouseWarrant/getWarehouseBox`,
                 method: 'get'
             }).then((res) => {
               this.muc=res.resp;
               console.log(this.muc)
               for( let i in res.resp){
-                    this.factorylist.push(res.resp[i].name)
+                    this.factorylist.push(res.resp[i].warehouseName)
               }
                 //  this.factorylist=res.resp;  
                
                   console.log(this.factorylist)
+            });
+    },
+    //部门确认
+    getBum(values){
+         console.log(values)
+         this.formes.did=this.onbMen.filter(item=>item.name==values)[0].id
+         console.log(this.formes.did);
+         this.showPopupBm=false
+    },
+    //部门选择
+     onBmen(){
+         this.$json({
+                url: `/mhj/getAllDept`,
+                method: 'get'
+            }).then((res) => {
+              this.onbMen=res.resp;
+              console.log(this.onbMen)
+              for( let i in res.resp){
+                    this.bumen.push(res.resp[i].name)
+              }
+                //  this.factorylist=res.resp;  
+               
+                  console.log(this.onbMen)
             });
     },
    
@@ -229,21 +270,21 @@ export default {
       },
       //提交表单
       onSubmit(values){
-         if (this.formes.packingTime==""||this.formes.zhuangxcp==""||this.formes.materialName=="") {
-          Toast.fail('请确保数据的完整性');
-          return
-        }
-          this.formes.status=0; 
-          this.formes.bpId=38;
-          console.log(this.formes,'表单提交')
-          let arrys=[]
-          for (let i in this.formes.detailVoList) {
-            arrys.push({
-              lplId:this.formes.detailVoList[i].lplId
-              })
+        //  if (this.formes.packingTime==""||this.formes.zhuangxcp==""||this.formes.materialName=="") {
+        //   Toast.fail('请确保数据的完整性');
+        //   return
+        // }
+        //   this.formes.status=0; 
+        //   this.formes.bpId=38;
+        //   console.log(this.formes,'表单提交')
+        //   let arrys=[]
+        //   for (let i in this.formes.detailVoList) {
+        //     arrys.push({
+        //       lplId:this.formes.detailVoList[i].lplId
+        //       })
             
-          }
-          console.log(arrys)
+        //   }
+        //   console.log(arrys)
    
             // this.$json({
             //     url: `/mhj/PackingList/addOrUpdateBill`,
@@ -257,6 +298,26 @@ export default {
             
             // });
       },
+         ssst(types){
+       
+        if (this.formes.sellTime==""||this.formes.sellFactoryName==""||this.formes.sellType=="") {
+          Toast.fail('请确保数据的完整性');
+          return
+        }
+          this.formes.status=types
+          console.log(this.formes,'另外提交')
+            this.$json({
+                url: `/mhj/cowSellBills/addOrUpdateBill`,
+                method: 'post',
+                data:this.formes
+            }).then((res) => {
+                Toast.success('提交成功');
+                setTimeout(()=>{
+                          this.$router.push('/sellingCattle')
+                },1000)
+            
+            });
+      },
       //时间控件
       editTime(){
            this.timeC=true;
@@ -264,19 +325,20 @@ export default {
     
       addTime(){
          this.timeC=false;
-         this.formes.packingTime=`${this.time.getFullYear()}-${(this.time.getMonth() + 1).toString().padStart(2, "0")}-${(this.time.getDate()).toString().padStart(2, "0")} `+
+         this.formes.storageTime=`${this.time.getFullYear()}-${(this.time.getMonth() + 1).toString().padStart(2, "0")}-${(this.time.getDate()).toString().padStart(2, "0")} `+
      `${(this.time.getHours()).toString().padStart(2, "0")}:${(this.time.getMinutes()).toString().padStart(2, "0")}:${(this.time.getSeconds()).toString().padStart(2, "0")}`;
       },
       //查询
       onSearch(){
         this.$json({
-            url: `/mhj/PackingList/getBillListDetail?tradeNo=${this.formes.tradeNo}`,
+            url: `/mhj/warehouseWarrant/getBillDetail?tradeNo=${this.formes.tradeNo}`,
             method: 'get',
         }).then((res) => {
             this.formes=res.resp
-              this.formes.materialName= this.$route.query.materialName;
+              this.formes.warehouseName= this.$route.query.warehouseName;
+            this.formes.dname= this.$route.query.dname;
               this.list= this.formes.detailVoList;
-              this.zhuangxcp=this.list[0].bpCode+this.list[0].bpName;
+            //   this.zhuangxcp=this.list[0].bpCode+this.list[0].bpName;
               this.formes.detailList=[];
           
         });
@@ -288,6 +350,7 @@ export default {
   },
 
   mounted(){
+      this.onBmen();
     this.onMuc();
     this.formes.tradeNo=this.$route.query.tradeNo;
   
@@ -298,12 +361,23 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.tijn{display: flex;justify-content: space-around;
+  
+    margin: 12% 0 6% 0;
+}
 .navtops{position: absolute;top: 0;}
 .pasture{
   width: 100%;
   position: absolute;bottom: 0;
 }
-.anniu{width: 40%;background: #1989FA;color:#FFFFFF;height:100%;text-align: center;line-height: 6vh;font-size: 15px;border-radius:20px ;}
+.anniu{
+    width: 40%;
+    background: #1989FA;color:#FFFFFF;
+    height:100%;text-align: center;
+    line-height: 6vh;
+    font-size: 15px;
+    border-radius:20px ;
+  }
 .niuerCss{
          border: 1px #F0F0F0 solid; 
          width: 90%;height: 70%;

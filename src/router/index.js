@@ -50,6 +50,26 @@ export default new Router({
 			}
 		},
 		{
+			path: '/fgWarehousing',
+			name:　"fgWarehousing",
+			component: () => import('@/view/finishedGoodsWarehousing/fgWarehousing.vue'),
+			meta: {
+				title: "产成品入库单",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/fgWarehousingEdit',
+			name:　"fgWarehousingEdit",
+			component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingEdit.vue'),
+			meta: {
+				title: "编辑入库单",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/earMarkers',
 			name:　"earMarkers",
 			component: () => import('@/view/earMarkers/index.vue'),
