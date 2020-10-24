@@ -1,10 +1,10 @@
 <template>
 <!-- 病情详情 -->
   <div>
-    <van-cell title="牛只信息" center style="background-color:#f5f5f5;height:2.8rem">
+    <van-cell title="牛只信息" center style="height:2.8rem">
 	</van-cell>
   <van-row type="flex" justify="center">
-		<van-col span="22" style="border:1px solid #cccccc">
+		<van-col span="22" >
 	<van-cell-group >
 	  <van-field v-model="ruleForm.earTradeNo"  center  label="牛耳号"  readonly ></van-field>
     <van-field v-model="ruleForm.oncomeTime"  center  label="发病日期"  readonly />
@@ -13,9 +13,9 @@
 	</van-cell-group>
 	</van-col>
 	</van-row>
-  <van-cell title="体重信息"  center  style="background-color:#f5f5f5;height:2.8rem"/>
+  <van-cell title="体重信息"  center  style="height:2.8rem"/>
 	<van-row type="flex" justify="center">
-		<van-col span="22" style="border:1px solid #cccccc">
+		<van-col span="22" >
 	<van-cell-group>
 	 	<van-field label="场别" label-width='4rem' :value="ruleForm.fname" readonly />
 			<van-field label="牛舍名" label-width='4rem' :value="ruleForm.cowHouse" readonly />

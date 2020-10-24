@@ -2,7 +2,7 @@
   <div>
     <!--  新增病情 -->
     <van-form @submit="onSubmit">
-    <van-cell title="单据信息" center style="background-color:#f5f5f5;height:2.8rem" ></van-cell>
+    <van-cell title="单据信息" center style="height:2.8rem" ></van-cell>
     <van-row type="flex" justify="center">
 		<van-col span="22"  class="col">
 	<van-cell-group>
@@ -16,7 +16,7 @@
 	</van-cell-group>
 	</van-col>
 	</van-row>
-  	<van-cell title="牛只信息" center style="background-color:#f5f5f5;height:2.8rem"></van-cell>
+  	<van-cell title="牛只信息" center style="height:2.8rem"></van-cell>
   	<van-row type="flex" justify="center">
 		  <van-col span="21" >
 			<van-field label="场别" label-width='4rem' :value="ruleForm.fname" readonly />

@@ -17,7 +17,7 @@
 			 <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onSearch">
             <van-empty v-if="list.length <= 0" description="暂无数据" />
 		<van-row>
-		  <van-col  span="24" v-for="(item, index) of list" :key="index" @click="getInfo(item.earTradeNo,item.cwlId)">
+		  <van-col class="listDiv"  v-for="(item, index) of list" :key="index" @click="getInfo(item.earTradeNo,item.cwlId)">
 			<van-field :border="false" label-width='4rem' label="牛耳号:" :value="item.earTradeNo" readonly />
 			<van-field :border="false" label-width='4rem' label="牛舍:" :value="item.cowHouse" readonly />
 			<van-field :border="false" label-width='4rem' label="重量:" :value="item.weight" readonly />
@@ -28,8 +28,8 @@
 		</van-row>
 		</van-list>
 		</van-pull-refresh>
-<van-overlay :show="show" @click="show = false" >
- <div :show="show" z-index="100"  class="jiazai">
+<van-overlay :show="show" z-index="100">
+ <div   class="jiazai">
 	 <van-loading type="circular" />
  </div>
  </van-overlay>
@@ -117,11 +117,12 @@
 		bottom: 6rem;
 		right: 2rem;
 	}
-	.record .van-col{
-		border: 1px solid #e4e4e4;
-		margin-top: 0.6rem;
-		margin-left: 0.625rem;
-	}
+	.listDiv{
+    width: 94vw;
+    margin: 6px 3vw;
+    border: 1px solid rgba(228, 228, 228, 1);
+    border-radius: 5px;
+}
 	.jiazai{
 		display: flex;
     align-items: center;

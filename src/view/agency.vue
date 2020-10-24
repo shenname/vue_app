@@ -3,27 +3,24 @@
 			<!-- <van-pull-refresh style="min-height: 90vh;" v-model="isLoading" @refresh="onRefresh">
 			  <p>刷新次数: {{ count }}</p>
 			</van-pull-refresh> -->
-			<van-cell-group>
-			<van-field
-  v-model="sms"
-  center
-  clearable
-  label="短信验证码"
-  placeholder="请输入短信验证码"
->
-  <template #button>
-    <van-button size="small" type="primary">发送验证码</van-button>
+		<van-swipe-cell>
+  <van-cell :border="false" title="单元格" value="内容" />
+  <template slot="right">
+    <van-button square type="danger" text="删除" />
+    <van-button square type="primary" text="收藏" />
   </template>
-</van-field>
-</van-cell-group>
+</van-swipe-cell>
     </div>
 </template>
 <script>
+import Vue from 'vue';
 	import { Cell, CellGroup } from 'vant';
 	import { PullRefresh } from 'vant';
 	import { Toast } from 'vant';
 	import { Field } from 'vant';
 	import { Button } from 'vant';
+	import { SwipeCell } from 'vant';
+	Vue.use(SwipeCell);
 	export default {
 		data(){
 			return{

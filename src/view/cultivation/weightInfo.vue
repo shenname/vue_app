@@ -1,19 +1,19 @@
 <template>
 <!-- 牛只称重详情 -->
   <div>
-    <van-cell title="牛只信息" center style="background-color:#f5f5f5;height:2.8rem">
+    <van-cell title="牛只信息" center style="height:2.8rem">
 	</van-cell>
   <van-row type="flex" justify="center">
-		<van-col span="22" style="border:1px solid #cccccc">
-	<van-cell-group v-for="(item, index) of eaList" :key="index">
+		<van-col span="22" >
+	<van-cell-group v-for="(item, index) of eaList" :key="index" >
 	  <van-field v-model="item.earTradeNo"  center  label="牛耳号"  readonly >
 			</van-field>
 	</van-cell-group>
 	</van-col>
 	</van-row>
-  <van-cell title="体重信息"  center  style="background-color:#f5f5f5;height:2.8rem"/>
+  <van-cell title="体重信息"  center  style="height:2.8rem"/>
 	<van-row type="flex" justify="center">
-		<van-col span="22" style="border:1px solid #cccccc">
+		<van-col span="22" >
 	<van-cell-group>
 	  <van-field v-model="ruleForm.cowHouse" label="牛舍"  readonly />
 		<van-field v-model="ruleForm.weight" label="重量" readonly/>
@@ -68,5 +68,4 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
 </style>

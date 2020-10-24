@@ -2,7 +2,7 @@
 <!--  牛只称重 -->
 	<div>
 		<van-form @submit="onSubmit">
-	<van-cell title="牛只信息" center style="background-color:#f5f5f5">
+	<van-cell title="牛只信息" center >
 	 
 	  <template #right-icon>
 			<van-icon name="plus" size="2rem" @click="add"/>
@@ -12,15 +12,17 @@
 	<van-row type="flex" justify="center">
 		<van-col span="22" style="border:1px solid #cccccc">
 	<van-cell-group v-for="(item, index) of eaList" :key="index">
+		<van-swipe-cell>
 	  <van-field v-model="item.earTradeNo"  center  label="牛耳号" @blur="getEaName(item.earTradeNo,index)" clearable  required :rules="[{ required: true, message: '' }]"  placeholder="请选择牛耳号或扫描电子耳标获取">
 			</van-field>
 			<template #right>
-                   <van-button square text="删除" type="danger" class="delete-button" @click="deleteFun(index)" />
-      </template>
+                    <van-button square text="删除" type="danger" class="delete-button" @click="deleteFun(index)" />
+                </template>
+			</van-swipe-cell>
 	</van-cell-group>
 	</van-col>
 	</van-row>
-	<van-cell title="体重信息"  center  style="background-color:#f5f5f5;height:2.8rem"/>
+	<van-cell title="体重信息"  center  style="height:2.8rem"/>
 	<van-row type="flex" justify="center">
 		<van-col span="22" style="border:1px solid #cccccc">
 	<van-cell-group>
@@ -63,6 +65,7 @@
 	import { Notify } from 'vant';
 	import { DatetimePicker } from 'vant';
 	import { Form } from 'vant';
+	import { SwipeCell } from 'vant';
 	export default {
 	  // 数据
 	  data() {
