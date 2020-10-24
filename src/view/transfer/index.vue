@@ -13,8 +13,8 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
             <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
                 <van-empty v-if="list.length <= 0" description="暂无数据" />
-                <div v-else class="listDiv" v-for="(item, index) of list" :key="index">
-                    <van-cell-group @click="getItem(item)">
+                <div v-else class="listDiv" v-for="(item, index) of list" :key="index" @click="getItem(item)">
+                    <van-cell-group>
                         <van-field label="牛耳号" :value="item.earTradeNo" readonly />
                         <van-field label="原牛舍" :value="item.oldCowHouse" readonly />
                         <van-field label="转入舍" :value="item.cowHouse" readonly />
@@ -89,7 +89,7 @@ export default {
         },
         add(){
             this.$router.push({
-                path: '/transferAdd',
+                path: '/transferInfo',
                 query: {
                     type: "add"
                 }
@@ -100,7 +100,7 @@ export default {
                 path: '/transferInfo',
                 query: {
                     type: "info",
-                    data: JSON.stringify(row),
+                    data: row,
                 }
             })
         },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-form ref="formData" @submit="onSubmit">
-    <van-cell title="单据信息" center ></van-cell>
+    <van-cell title="单据信息" center style="background-color:#f5f5f5;height:2.8rem"></van-cell>
     <van-row type="flex" justify="center">
 		<van-col span="22"  class="col">
 	<van-cell-group>
@@ -15,7 +15,7 @@
 	</van-cell-group>
 	</van-col>
 	</van-row>
-  	<van-cell title="牛只信息" center ></van-cell>
+  	<van-cell title="牛只信息" center style="background-color:#f5f5f5;height:2.8rem"></van-cell>
   	<van-row type="flex" justify="center">
 		  <van-col span="21" >
 			<van-field label="场别" label-width='4rem' :value="ruleForm.fname" readonly />
@@ -30,8 +30,8 @@
 		 
 		</van-row>
     	<van-row type="flex" justify="center">
-	<van-col span="22" style='margin-top: 0.625rem;'>
-	<van-button type="info" round  block native-type="submit">提交</van-button>
+	<van-col span="22" style='margin-top: 1rem;'>
+	<van-button type="info" round  block native-type="submit">保存</van-button>
 	</van-col>
 		</van-row>
     <van-popup v-model="show2" position="bottom">
@@ -151,8 +151,5 @@ export default {
 	.van-cell-group .van-field{
 		position: static;
 		border-bottom: 1px solid #E4E4E4;
-  }
-  .van-field{
-    position: static;
   }
 </style>
