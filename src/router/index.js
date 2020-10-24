@@ -25,7 +25,7 @@ export default new Router({
 			name:　"treatmentAdd",
 			component: () => import('@/view/treatment/add.vue'),
 			meta: {
-				title: "新增用药",
+				title: "用药记录",
 				keepAlive: true,
 				keepheaderAlive: true,
 			}

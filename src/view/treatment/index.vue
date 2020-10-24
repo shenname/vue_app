@@ -17,10 +17,11 @@
                 <div v-else class="listDiv" v-for="(item, index) of list" :key="index">
                     <van-swipe-cell>
                         <van-cell-group @click="getInfo(item)">
-                            <van-field label="耳标编号" :value="item.earTag" readonly />
                             <van-field label="牛耳号" :value="item.earTradeNo" readonly />
-                            <van-field label="关联时间" :value="item.relevanceTime" readonly />
-                            <van-field label="关联人" :value="item.relevanceUserName" readonly />
+                            <van-field label="治疗日期" :value="item.cureTime" readonly />
+                            <van-field label="治疗药物" :value="item.cureMedicine" readonly />
+                            <van-field label="症状" :value="item.symptom" readonly />
+                            <van-field label="休药期截止" :value="item.withdrawalTime" readonly />
                         </van-cell-group>
                         <template #right>
                             <div style="height: 50%;">
@@ -35,7 +36,6 @@
             </van-list>
         </van-pull-refresh>
     </div>
-    <van-icon class="addDiv" name="add-o" size="4rem" @click="add" />
     <van-overlay :show="show" z-index="100">
         <div class="wrapper">
             <van-loading type="spinner" color="#FFF" size="50px" />
@@ -75,16 +75,16 @@ export default {
         onLoad() {
             this.current += 1;
             this.$json({
-                url: `/mhj/earTag/getList?size=4&current=${this.current}`,
+                url: `/mhj/getCowDiseaseLogList?size=4&current=${this.current}&status=1`,
                 method: "get",
             }).then(res => {
-                this.list.push.apply(this.list,res.resp.records);
+                this.list.push.apply(this.list,res.resp);
                 this.loading = false;
                 setTimeout(()=>{
                     this.refreshing = false;
                     this.show = false;
                 },200)
-                if (this.list.length >= res.resp.total) {
+                if (this.list.length >= res.totalCount) {
                     this.finished = true;
                 }
             })
@@ -95,9 +95,6 @@ export default {
             this.finished = false;
             this.loading = false;
             this.onLoad();
-        },
-        add(){
-            this.$router.push({path: '/earMarkersAdd'})
         },
         getInfo(row){
             this.$router.push({

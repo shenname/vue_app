@@ -14,8 +14,12 @@
                     label="牛耳号"
                     placeholder="请输入或扫码"
                     :rules="[{ required: true, message: '' }]"
-                    readonly
-                />
+                    @blur="getInfo"
+                >
+                    <template #button>
+                        <van-icon :name="require('../../assets/img/scan.png')" size="20" style="margin-top: 7px;" />
+                    </template>
+                </van-field>
                 <van-field 
                     autocomplete="off"
                     label="治疗时间" 
@@ -47,13 +51,13 @@
         </div>
         <div>
             <van-cell-group>
-                <van-field label="场名" :value="info.oldFName || ''" readonly />
-                <van-field label="牛舍名" :value="info.cowHouse || ''" readonly />
-                <van-field label="发病日期" :value="info.oncomeTime || ''" readonly />
-                <van-field label="发病月龄" :value="info.oncomeMoonAge || ''" readonly />
-                <van-field label="症状" :value="info.symptom || ''" readonly />
-                <van-field label="所属系统" :value="info.organ || ''" readonly />
-                <van-field label="症状备注" :value="info.symptomRemark || ''" readonly />
+                <van-field label="场名" :value="info.oldFName || '根据牛耳号获取'" readonly />
+                <van-field label="牛舍名" :value="info.cowHouse || '根据牛耳号获取'" readonly />
+                <van-field label="发病日期" :value="info.oncomeTime || '根据牛耳号获取'" readonly />
+                <van-field label="发病月龄" :value="info.oncomeMoonAge || '根据牛耳号获取'" readonly />
+                <van-field label="症状" :value="info.symptom || '根据牛耳号获取'" readonly />
+                <van-field label="所属系统" :value="info.organ || '根据牛耳号获取'" readonly />
+                <van-field label="症状备注" :value="info.symptomRemark || '根据牛耳号获取'" readonly />
             </van-cell-group>
         </div>
         <div style="margin: 16px;">
@@ -120,17 +124,7 @@ export default {
         };
     },
     mounted(){
-        let data = JSON.parse(this.$route.query.data);
-        // this.form = {
-        //     earTradeNo: data.earTradeNo,
-        //     cureTime: data.cureTime,
-        //     cureMedicine: data.cureMedicine,
-        //     cureCourse: data.cureCourse,
-        //     cureRemark: data.cureRemark,
-        // }
-        this.form = data;
         this.getMaterialBox();
-        this.getInfo(data.earTradeNo);
     },
     methods: {
         formatter(type, val) {
@@ -149,9 +143,10 @@ export default {
             this.showPicker = false;
         },
         // 获取详情
-        getInfo(earTradeNo){
+        getInfo(){
+            if(this.form.earTradeNo == "") return;
             this.$json({
-                url: `/mhj/getCowDiseaseLogDetailByEarTradeNo?earTradeNo=${earTradeNo}`,
+                url: `/mhj/getCowDiseaseLogDetailByEarTradeNo?earTradeNo=${this.form.earTradeNo}`,
                 method: "get",
             }).then(res => {
                 this.info = res.resp[0] || {};
@@ -186,14 +181,18 @@ export default {
             this.showMaterial = false;
             console.log(list[0].withdrawalTime, list[0].materialName, str.substr(1), str)
         },
+
         onSubmit(values) {
             this.$json({
-                url: `/mhj/modifyCowDiseaseLog`,
+                url: `/mhj/earTag/bind`,
                 method: "post",
-                data: this.form,
+                data: {
+                    earTag: this.form.earTag,
+                    earTradeNo: this.form.earTradeNo,
+                }
             }).then(res => {
                 Toast.success("单据保存成功!");
-                this.$router.push({path: '/treatment'})
+                this.$router.push({path: '/earMarkers'})
             }).catch(err => {
                 Toast.fail(err);
             })

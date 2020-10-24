@@ -61,11 +61,11 @@ export default {
 	#app{
 		height: calc(100vh - 50px - @heights) !important;
 		overflow-y: scroll;
-		background-color: #f5f5f5;
+		background-color: #FFF;
 	}
 	#app1{
 		height: calc(100vh - 50px) !important;
 		overflow-y: scroll;
-		background-color: #FFF;
+		background-color: rgb(73, 65, 65);
 	}
 </style>
