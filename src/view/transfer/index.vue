@@ -88,8 +88,9 @@ export default {
             this.onLoad();
         },
         add(){
+            console.log(123)
             this.$router.push({
-                path: '/transferInfo',
+                path: '/transferAdd',
                 query: {
                     type: "add"
                 }
@@ -100,7 +101,7 @@ export default {
                 path: '/transferInfo',
                 query: {
                     type: "info",
-                    data: row,
+                    data: JSON.stringify(row),
                 }
             })
         },

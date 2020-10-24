@@ -22,11 +22,7 @@
                 label="转入舍"
                 placeholder="请输入或扫码"
                 :rules="[{ required: true, message: '' }]"
-            >
-                <template #button>
-                    <van-icon :name="require('../../assets/img/scan.png')" size="20" style="margin-top: 7px;" />
-                </template>
-            </van-field>
+            />
             <van-field label="备注" name="remark" v-model="form.remark" placeholder="请输入备注" readonly />
         </van-swipe-cell>
     </div>
