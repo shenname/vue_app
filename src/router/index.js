@@ -9,6 +9,37 @@ export default new Router({
         	path: '/',
 			redirect: '/home'
 		},
+		// 治疗用药
+		{
+			path: '/treatment',
+			name:　"treatment",
+			component: () => import('@/view/treatment/index.vue'),
+			meta: {
+				title: "治疗用药",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/treatmentAdd',
+			name:　"treatmentAdd",
+			component: () => import('@/view/treatment/add.vue'),
+			meta: {
+				title: "用药记录",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/treatmentInfo',
+			name:　"treatmentInfo",
+			component: () => import('@/view/treatment/info.vue'),
+			meta: {
+				title: "用药记录",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
 		{
 			path: '/pFproducts',
 			name:　"pFproducts",
@@ -80,6 +111,16 @@ export default new Router({
 			}
 		},
 		{
+			path: '/earMarkersAdd',
+			name:　"earMarkersAdd",
+			component: () => import('@/view/earMarkers/add.vue'),
+			meta: {
+				title: "新增关联",
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/earMarkersInfo',
 			name:　"earMarkersInfo",
 			component: () => import('@/view/earMarkers/info.vue'),
@@ -100,9 +141,30 @@ export default new Router({
 			}
 		},
 		{
+			path: '/diseaseInfo',
+			name:　"diseaseInfo",
+			component: () => import('@/view/cultivation/diseaseInfo.vue'),
+			meta: {
+				title: '病情详情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/transferInfo',
 			name:　"transferInfo",
 			component: () => import('@/view/transfer/info.vue'),
+			meta: {
+				title: '转舍详情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		
+		{
+			path: '/transferAdd',
+			name:　"transferAdd",
+			component: () => import('@/view/transfer/add.vue'),
 			meta: {
 				title: '新增转舍',
 				keepAlive: true,
@@ -115,6 +177,16 @@ export default new Router({
 			component: () => import('@/view/home.vue'),
 			meta: {
 				title: '首页',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/weightInfo',
+			name:　"weightInfo",
+			component: () => import('@/view/cultivation/weightInfo.vue'),
+			meta: {
+				title: '牛只称重详情',
 				keepAlive: true,
 				keepheaderAlive: true,
 			}
