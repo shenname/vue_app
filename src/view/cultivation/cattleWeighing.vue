@@ -1,7 +1,8 @@
 <template>
+<!--  牛只称重 -->
 	<div>
 		<van-form @submit="onSubmit">
-	<van-cell title="牛只信息" center >
+	<van-cell title="牛只信息" center style="background-color:#f5f5f5">
 	 
 	  <template #right-icon>
 			<van-icon name="plus" size="2rem" @click="add"/>
@@ -9,19 +10,22 @@
 	  </template>
 	</van-cell>
 	<van-row type="flex" justify="center">
-		<van-col span="22">
+		<van-col span="22" style="border:1px solid #cccccc">
 	<van-cell-group v-for="(item, index) of eaList" :key="index">
-	  <van-field v-model="item.earTradeNo"  center  label="牛耳号" bind:blur="getEaName" right-icon="close" @click-right-icon="deleteFun(index)"  required :rules="[{ required: true, message: '' }]"  placeholder="请选择牛耳号或扫描电子耳标获取">
+	  <van-field v-model="item.earTradeNo"  center  label="牛耳号" @blur="getEaName(item.earTradeNo,index)" clearable  required :rules="[{ required: true, message: '' }]"  placeholder="请选择牛耳号或扫描电子耳标获取">
 			</van-field>
+			<template #right>
+                   <van-button square text="删除" type="danger" class="delete-button" @click="deleteFun(index)" />
+      </template>
 	</van-cell-group>
 	</van-col>
 	</van-row>
-	<van-cell title="体重信息"  center />
+	<van-cell title="体重信息"  center  style="background-color:#f5f5f5;height:2.8rem"/>
 	<van-row type="flex" justify="center">
-		<van-col span="22">
+		<van-col span="22" style="border:1px solid #cccccc">
 	<van-cell-group>
 	  <van-field v-model="ruleForm.cowHouse" label="牛舍" required :rules="[{ required: true, message: '' }]"  placeholder="根据牛耳号获取" disabled />
-		<van-field v-model="ruleForm.weight" label="重量" required :rules="[{ required: true, message: '' }]"  placeholder="请输入重量(KG)"/>
+		<van-field v-model="ruleForm.weight" label="重量" required :rules="[{ required: true, message: '' }]" clearable  placeholder="请输入重量(KG)"/>
 		<van-field v-model="ruleForm.weighTime" label="称重时间" required :rules="[{ required: true, message: '' }]"  @click="show1=true"/>
 		<van-field v-model="ruleForm.remark" label="备注"   placeholder="请输入备注"/>
 	</van-cell-group>
@@ -83,25 +87,30 @@
 			deleteFun(key){
             this.eaList.splice(key,1);
         },
-			getEaName(val){
-				console.log(val)
+			getEaName(earTradeNo,index){
         this.$json({
-                url: `/mhj/getCowWeighLogList?earTradeNo=${item.earTradeNo}`,
+                url: `/mhj/getCowWeighLogList?earTradeNo=${earTradeNo}`,
                 method: "get"
             }).then(res => {
 							if (res.resp.length==0) {
 								 Notify({ type: 'danger', message: '请输入正确的牛耳号!' });
                     return;
 							}
-                 let type = false,htype = false;
+								 let type = false,htype = false;
+								 let num=0;
                 for(let item of this.eaList){
-                    if(item.earTradeNo == res.resp[0].earTradeNo){
-                        type = true;
+                    if(item.earTradeNo == earTradeNo){
+                            num++;
 										}
-										if(res.resp[0].cowHouse != item.cowHouse){
+                    if (item.cowHouse!="") {
+												if(res.resp[0].cowHouse != item.cowHouse){
                         htype = true
                     }
-                }
+										}
+								}
+								if(num>1){
+									 type = true;
+								}
                 if(type){
 										Notify({ type: 'danger', message: '该牛只已存在!' });
                     return;
@@ -109,10 +118,9 @@
 								if(htype){
 										Notify({ type: 'danger', message: '请输入同一个牛舍的牛只!' });
                     return;
-                }
-                this.eaList.push({
-                    earTradeNo: res.resp[0].earTradeNo,    
-								})
+								}
+								this.eaList[index].cowHouse=res.resp[0].cowHouse
+                this.eaList[index].cowHouseId=res.resp[0].cowHouseId
                 this.ruleForm.cowHouse = res.resp[0].cowHouse;
                 this.ruleForm.cowHouseId = res.resp[0].cowHouseId;
             })
@@ -135,7 +143,9 @@
     },
 			add(){
             this.eaList.push({
-                earTradeNo: '',
+								earTradeNo: '',
+								cowHouse: '',
+                cowHouseId: '',    
             })
         },
 			buttonClick(){
@@ -190,7 +200,9 @@
                     return;
                 }
                 this.eaList.push({
-                    earTradeNo: res.resp[0].earTradeNo,    
+										earTradeNo: res.resp[0].earTradeNo,
+										cowHouse: res.resp[0].cowHouse,
+                    cowHouseId: res.resp[0].cowHouseId,    
 								})
                 this.ruleForm.cowHouse = res.resp[0].cowHouse;
                 this.ruleForm.cowHouseId = res.resp[0].cowHouseId;
@@ -207,8 +219,7 @@
 	.van-col{
 	 border: 1px solid #e4e4e4;
 	}
-	.van-field{
-		position: static;
-		border-bottom: 1px solid #E4E4E4;
-	}
+	.delete-button {
+    height: 100%;
+}
 </style>

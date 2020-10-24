@@ -121,6 +121,16 @@ export default new Router({
 			}
 		},
 		{
+			path: '/diseaseInfo',
+			name:　"diseaseInfo",
+			component: () => import('@/view/cultivation/diseaseInfo.vue'),
+			meta: {
+				title: '病情详情',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/transferInfo',
 			name:　"transferInfo",
 			component: () => import('@/view/transfer/info.vue'),
@@ -147,6 +157,16 @@ export default new Router({
 			component: () => import('@/view/home.vue'),
 			meta: {
 				title: '首页',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/weightInfo',
+			name:　"weightInfo",
+			component: () => import('@/view/cultivation/weightInfo.vue'),
+			meta: {
+				title: '牛只称重详情',
 				keepAlive: true,
 				keepheaderAlive: true,
 			}
