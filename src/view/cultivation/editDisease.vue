@@ -1,11 +1,12 @@
 <template>
+<!--   编辑病情 -->
   <div>
     <van-form ref="formData" @submit="onSubmit">
     <van-cell title="单据信息" center style="background-color:#f5f5f5;height:2.8rem"></van-cell>
     <van-row type="flex" justify="center">
 		<van-col span="22"  class="col">
 	<van-cell-group>
-	  <van-field v-model="ruleForm.earTradeNo"  label="牛耳号" required :rules="[{ required: true, message: '' }]"  placeholder="请选择牛耳号或扫描电子耳标获取" right-icon="scan" @click-right-icon="show1 = true" >
+	  <van-field v-model="ruleForm.earTradeNo" @blur="geterinfo"  label="牛耳号" required :rules="[{ required: true, message: '' }]"  placeholder="请选择牛耳号或扫描电子耳标获取" right-icon="scan" @click-right-icon="show1 = true" >
 			</van-field>
 		<van-field :value="ruleForm.oncomeTime"  label="发病日期" required :rules="[{ required: true, message: '' }]"  placeholder="" @click="show2 = true"/>
 		<van-field v-model="ruleForm.symptom" label="症状" required :rules="[{ required: true, message: '' }]"  placeholder="请填写症状"/>
@@ -84,6 +85,22 @@ export default {
 	 this.ruleForm.userName = JSON.parse(localStorage.getItem("userInfo")).userName;
 	  },
   methods: {
+    geterinfo(){
+          if (this.ruleForm.earTradeNo=='') {
+        return
+      }
+      this.$json({
+                url: `/mhj/getAddCowDiseaseLogCowBox?earTradeNo=${this.ruleForm.earTradeNo}`,
+                method: "get"
+            }).then(res => {
+              if (res.resp.length==0) {
+                    Notify({ type: 'danger', message: '请输入正确的牛耳号!' });
+                    this.ruleForm.earTradeNo='';
+                    return;
+              }
+              this.ruleForm=res.resp[0];
+            })
+    },
     getInfo(){
             this.$json({
                 url: `/mhj/getCowDiseaseLogList`,

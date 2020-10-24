@@ -1,4 +1,5 @@
 <template>
+<!-- 称重管理列表 -->
 	<div class="record">
 		<van-pull-refresh v-model="refreshing"   @refresh="onRefresh">
 			<van-row>
@@ -16,7 +17,7 @@
 			 <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onSearch">
             <van-empty v-if="list.length <= 0" description="暂无数据" />
 		<van-row>
-		  <van-col  span="24" v-for="(item, index) of list" :key="index" @click="getInfo(item.earTradeNo)">
+		  <van-col  span="24" v-for="(item, index) of list" :key="index" @click="getInfo(item.earTradeNo,item.cwlId)">
 			<van-field :border="false" label-width='4rem' label="牛耳号:" :value="item.earTradeNo" readonly />
 			<van-field :border="false" label-width='4rem' label="牛舍:" :value="item.cowHouse" readonly />
 			<van-field :border="false" label-width='4rem' label="重量:" :value="item.weight" readonly />
@@ -61,9 +62,10 @@
 	    };
 	  },
 	  methods: {
-			getInfo(val){
+			getInfo(val,id){
          this.$router.push({path:'/weightInfo',query:{
-           tradeNo:val,
+					 tradeNo:val,
+					 cwlId:id
       }});
 			},
 			search(){

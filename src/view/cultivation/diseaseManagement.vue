@@ -1,4 +1,5 @@
 <template>
+<!--  病情管理列表 -->
   <div class="disease">
 		
 					<van-row>
@@ -86,15 +87,20 @@ export default {
                 url: `/mhj/getCowDiseaseLogList?size=4&current=${this.current}${this.searchText != '' ? `&searchContext=${this.searchText}` : ''}`,
                 method: "get",
             }).then(res => {
-								this.list.push.apply(this.list,res.resp);
+							let shuzu=[];
+						   for(let i in res.resp){
+                    if (res.resp[i].recovery==0) {
+											 shuzu.push(res.resp[i])
+										}
+							 }
+								this.list.push.apply(this.list,shuzu);
 								// this.list=res.resp;
 								this.loading = false;
 								setTimeout(()=>{
 									this.refreshing = false;
 									this.show=false;
 								},500)
-
-                if (this.list.length >= res.totalCount) {
+                if (this.list.length >= shuzu.length) {
                     this.finished = true;
                 }
             })

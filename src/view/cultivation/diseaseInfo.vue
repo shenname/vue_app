@@ -1,4 +1,5 @@
 <template>
+<!-- 病情详情 -->
   <div>
     <van-cell title="牛只信息" center style="background-color:#f5f5f5;height:2.8rem">
 	</van-cell>

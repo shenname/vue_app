@@ -1,4 +1,5 @@
 <template>
+<!-- 牛只称重详情 -->
   <div>
     <van-cell title="牛只信息" center style="background-color:#f5f5f5;height:2.8rem">
 	</van-cell>
@@ -55,7 +56,12 @@ export default {
                 url: `/mhj/getCowWeighLogList?earTradeNo=${this.$route.query.tradeNo}`,
                 method: "get",
             }).then(res => {
-               this.ruleForm=res.resp[0];
+              for(let i in res.resp){
+                 if( this.$route.query.cwlId==res.resp[i].cwlId){
+                       this.ruleForm=res.resp[i];
+                 }
+              }
+               
             })
     },
      },  
