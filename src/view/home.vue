@@ -15,7 +15,7 @@
 					<van-row>
 						<router-link to='/pFproducts'><van-col span="8">产成品装箱</van-col></router-link>
 						<router-link to='/fgWarehousing'><van-col span="8">产成品入库</van-col></router-link>
-						<router-link to=''><van-col span="8">货位调拨</van-col></router-link>
+						<router-link to='/goodsAllocate'><van-col span="8">货位调拨</van-col></router-link>
 						<router-link to=''><van-col span="8">销售出库</van-col></router-link>
 					</van-row>
 				</van-collapse-item>

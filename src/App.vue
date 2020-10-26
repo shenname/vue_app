@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form action="/" v-if="$route.meta.keepAlive">
+    <form action="/" v-if="$route.meta.keepAlive" class="head">
 	  	<van-nav-bar
 		  v-if="$route.meta.title != '首页'"
 		  :title="$route.meta.title"
@@ -11,7 +11,7 @@
 		  />
 		<p class="header" v-else>{{$route.meta.title}}</p>
 	</form>
-    <div :id="$route.meta.keepAlive ? 'app' : 'app1'">
+    <div :id="$route.meta.keepAlive && $route.meta.keepheaderAlive ? 'app' : !this.$route.meta.keepAlive && this.$route.meta.keepheaderAlive ? 'app1' : !this.$route.meta.keepAlive && !this.$route.meta.keepheaderAlive ? 'app2' : ''">
       <router-view></router-view>
     </div>
     <van-tabbar v-model="active" v-if="$route.meta.keepheaderAlive">
@@ -33,19 +33,26 @@ export default {
 	},
   // 加载执行
 	created(){
-  },
-  mounted(){
-  },
-  methods: {
-    onClickLeft() {
-		let routers = localStorage.getItem('routers');
-		this.$router.push({path: routers})
-    },
-  },
+  	},
+  	mounted(){
+  	},
+  	methods: {
+		onClickLeft() {
+			let routers = localStorage.getItem('routers');
+			this.$router.push({path: routers})
+			// this.$router.go(-1);
+		},
+  	},
 }
 </script>
 <style lang="less" scoped>
-	@heights: 44px;
+	@heights: 46px;
+	.head{
+		// width: 100vw;
+		// position: fixed;
+		// top: 0;
+		// left: 0;
+	}
 	.header{
 		height: 45px;
 		line-height: 45px;
@@ -66,6 +73,11 @@ export default {
 	#app1{
 		height: calc(100vh - 50px) !important;
 		overflow-y: scroll;
-		background-color: rgb(73, 65, 65);
+		background-color: #FFF;
+	}
+	#app2{
+		height: 100vh !important;
+		overflow-y: scroll;
+		background-color: #FFF;
 	}
 </style>
