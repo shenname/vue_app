@@ -1,8 +1,9 @@
 <template>
 <!--  新增出库单 -->
   <div>
-    <!--  新增病情 -->
-    <van-form @submit="onSubmit">
+     <navTopS :types="typest" v-if="navtop" class="navtopst"></navTopS>
+    <div v-if="moduleShow">
+<van-form @submit="onSubmit">
     <van-cell title="单据信息" center style="height:2.8rem" ></van-cell>
     <van-row type="flex" justify="center">
 		<van-col span="22"  class="col">
@@ -20,11 +21,19 @@
 	</van-col>
 	</van-row>
      <div v-for="(item, index) of list" :key="index">
-       	<van-cell title="产品信息" center style="height:2.8rem"></van-cell>
+       	<van-cell title="产品信息" center style="height:2.8rem">
+           <template #right-icon>
+    <van-icon name="scan" size="2rem"  />
+  </template>
+         </van-cell>
   	<van-row type="flex" justify="center">
-		  <van-col span="21" class="col" >
+		  <van-col span="22" class="col" >
         <van-cell-group>
-			<van-field :label="item.zxTradeNo==null ? '无' :'' " label-width='4rem' :value="item.bpCode+item.bpName+' '+' '+' '+item.weight+'KG'" readonly />
+			<van-field  @click="skipInfo(item)" :label="item.zxTradeNo==null ? '无' :'' "   label-width='4rem' :value="item.bpCode+item.bpName+' '+' '+' '+item.weight+'KG'" readonly >
+        <template #right-icon>
+    <van-icon name="close" size="1.5rem"  color="red" @click="deleteList(index)"/>
+  </template>
+			</van-field>
       </van-cell-group>
 			</van-col>
 		 
@@ -53,6 +62,10 @@
  </van-popup>
    
     </van-form>
+    </div>
+    <div v-if="!moduleShow">
+          <product :list="listInfo">  </product> 
+    </div>
   </div>
 </template>
 <script>
@@ -64,28 +77,47 @@ import { Field } from 'vant';
 	import { DatetimePicker } from 'vant';
 	import { Form } from 'vant';
   import { Calendar } from 'vant';
+  import product from './productDetails'
+  import navTopS from '../navTopS'
 export default {
     data() {
       return {
          minDate: new Date(2020, 0, 1),
       currentDate: new Date(),
-     text:'',
-     text1:'',
+     typest:1,
      show: false,
      show2:false,
      date:'',
      minDate: new Date(2020, 0, 1),
-     ruleForm:{
-         
-     },
-     value:'',
+     ruleForm:{},
+     navtop:true,
      list:[],
+     listInfo:{},
+     moduleShow:true,
       }
     },
+    components:{
+     product,
+     navTopS
+  },
      mounted(){
 	 this.ruleForm.userName = JSON.parse(localStorage.getItem("userInfo")).userName;
 	  },
     methods: {
+      guanb(){
+      this.moduleShow=true;
+      this.typest=1;
+    },
+      skipInfo(val){
+          this.moduleShow=false;
+          this.listInfo=val;
+          this.typest=2;
+          // this.navtop=true;
+      },
+      // 删除数组数据
+      deleteList(val){
+         this.list.splice(val,1);
+      },
       confirm() {
       this.show2 = false;
       this.ruleForm.soTime=
@@ -126,7 +158,6 @@ export default {
                     this.ruleForm.dlTradeNo='';
                     return;
               }
-              console.log(res.resp)
               this.ruleForm=res.resp;
               this.list=res.resp.salesOutgoingBillsDetailsList;
             })
@@ -143,6 +174,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.navtopst{position: absolute;top: 0;}
 .col{
 	 border: 1px solid #e4e4e4;
 	}
