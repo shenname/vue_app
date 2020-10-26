@@ -41,6 +41,26 @@ export default new Router({
 			}
 		},
 		{
+			path: '/addMarketSingle',
+			name:　"addMarketSingle",
+			component: () => import('@/view/marketWarehouse/addMarketSingle.vue'),
+			meta: {
+				title: '新增出库单',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
+			path: '/marketSingle',
+			name:　"marketSingle",
+			component: () => import('@/view/marketWarehouse/marketSingle.vue'),
+			meta: {
+				title: '销售出库单',
+				keepAlive: true,
+				keepheaderAlive: true,
+			}
+		},
+		{
 			path: '/pFproducts',
 			name:　"pFproducts",
 			component: () => import('@/view/PackingofFinishedProducts/pFproducts.vue'),

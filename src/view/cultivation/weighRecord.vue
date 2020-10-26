@@ -1,7 +1,6 @@
 <template>
 <!-- 称重管理列表 -->
 	<div class="record">
-		<van-pull-refresh v-model="refreshing"   @refresh="onRefresh">
 			<van-row>
          <van-search
     v-model="searchText"
@@ -14,6 +13,7 @@
   </template>
 </van-search>
 				</van-row>
+					<van-pull-refresh v-model="refreshing"   @refresh="onRefresh">
 			 <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onSearch">
             <van-empty v-if="list.length <= 0" description="暂无数据" />
 		<van-row>
