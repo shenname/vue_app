@@ -37,7 +37,7 @@
                     
                     />
                 </van-popup>
-                 <van-field label="包材重量" label-width="22%"	name="materialWeight" placeholder="" v-model="formes.materialWeight"/>
+                 <van-field label="包材重量" label-width="22%" colon	name="materialWeight" placeholder="" v-model="formes.materialWeight"/>
             <van-field label="总重"  name="totalWeight"  label-width="22%" colon v-model="formes.totalWeight"/>
             <van-field label="备注"  name="remark" label-width="22%" colon v-model="formes.remark"/>
 
@@ -50,9 +50,9 @@
            
             <!--牛只信息-->
               <ul>
-                <li v-for="(item,index) in formes.detailList" :key="index" class="eartCss">
+                <li v-for="(item,index) in list" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
-                    <span>{{item.labelCode}}</span>
+                    <span>{{item.labelCode}}</span><br>
                     &nbsp;<span>{{item.bpCode}}</span>
                     &nbsp;<span>{{item.bpName}}</span>
                     &nbsp;<span>{{item.weight}}KG</span>
@@ -63,7 +63,7 @@
                 </li>
             </ul>
               <div style="margin: 16px;">
-                    <van-button round block type="info" native-type="submit">
+                    <van-button round block type="info" @click="onSubmit" native-type="submit">
                     提交
                     </van-button>
                 </div>
@@ -81,7 +81,7 @@
                 <van-field
                      name="sellWeight"
                     v-model="context"
-                    placeholder="请输入出场重"
+                    placeholder="死数据直接确定就OK"
                 
                 />
             
@@ -128,7 +128,7 @@ export default {
     return {
       context:"",
       tableData1:[],
-      zhuangxcp:"",
+      zhuangxcp:"装箱产品根据扫码获得暂无数据",
       navtop:true,
       typest:1,
       showPopup:false,
@@ -155,7 +155,7 @@ export default {
   methods:{
      guanb(){
       this.onVif=true;
-      this.typest=1;
+      this.typest=2;
     },
     getMuc(values){
       this.formes.materialName=values
@@ -189,8 +189,9 @@ export default {
         }
            this.list.push(this.tableData1[0])
            this.formes.detailList=this.list
+           console.log( this.formes.detailList,'表单数组')
             this.show= false;
-            console.log(this.tableData1[0])
+         
             this.zhuangxcp=this.tableData1[0].bpCode+this.tableData1[0].bpName;
 
           
@@ -235,29 +236,34 @@ export default {
       },
       //删除牛耳号
       onEart(item,index){
+        console.log(item);
+        console.log( this.formes.detailList);
          this.formes.detailList.splice(index,1)
+           this.list.splice(index,1)
       },
       //表单提交
         onSubmit(values){
-           if (this.formes.packingTime==""||this.formes.zhuangxcp==""||this.formes.materialName=="") {
-          Toast.fail('请确保数据的完整性');
-          return
-        }
+          
+           if (this.formes.packingTime==null||this.zhuangxcp==null||this.formes.materialName==null) {
+              Toast.fail('请确保数据的完整性');
+          
+              return false;
+            }
           this.formes.status=0; 
           this.formes.bpId=38;
         
           console.log(this.formes,'表单提交')
-            // this.$json({
-            //     url: `/mhj/PackingList/addOrUpdateBill`,
-            //     method: 'post',
-            //     data:this.formes
-            // }).then((res) => {
-            //     Toast.success('提交成功');
-            //     setTimeout(()=>{
-            //               this.$router.push('/pFproducts')
-            //     },1000)
+            this.$json({
+                url: `/mhj/PackingList/addOrUpdateBill`,
+                method: 'post',
+                data:this.formes
+            }).then((res) => {
+                Toast.success('提交成功');
+                setTimeout(()=>{
+                          this.$router.push('/pFproducts')
+                },1000)
             
-            // });
+            });
       },
       //时间控件
       editTime(){

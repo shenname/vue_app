@@ -52,7 +52,7 @@
             <ul>
                 <li v-for="(item,index) in formes.detailVoList" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
-                    <span>{{item.labelCode}}</span>
+                    <span>{{item.labelCode}}</span><br>
                     &nbsp;<span>{{item.bpCode}}</span>
                     &nbsp;<span>{{item.bpName}}</span>
                     &nbsp;<span>{{item.weight}}KG</span>
@@ -188,6 +188,7 @@ export default {
           return
         }
            this.list.push(this.tableData1[0]);
+           console.log(this.list,'这是list')
             this.show= false;
             console.log(this.tableData1[0]);
           this.zhuangxcp=this.tableData1[0].bpCode+this.tableData1[0].bpName;
@@ -276,8 +277,11 @@ export default {
             this.formes=res.resp
               this.formes.materialName= this.$route.query.materialName;
               this.list= this.formes.detailVoList;
-              this.zhuangxcp=this.list[0].bpCode+this.list[0].bpName;
-              this.formes.detailList=[];
+              if (this.list[0].bpCode!==null&&this.list[0].bpName!==null) {
+                  this.zhuangxcp=this.list[0].bpCode+this.list[0].bpName;
+              }
+            
+              console.log(this.formes,'返回的表单')
           
         });
       }

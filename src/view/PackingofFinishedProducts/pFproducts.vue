@@ -114,6 +114,7 @@ export default {
   props:{},
   data(){
     return {
+   
       zhezhaoc:false,
       aasts:"",
         page: {
@@ -175,6 +176,7 @@ export default {
                 url: `/mhj/PackingList/getBillList?${params}`,
                 method: 'get'
             }).then((res) => {
+             
                setTimeout(() => {
                  if (type==1) {
                       Toast('已刷新');
@@ -228,15 +230,11 @@ export default {
     
     //下拉加载
     onRefresh() {
-  
-      // 清空列表数据
-       this.finished = false;
-
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
-      this.loading = true;
-      this.onsarch(1);
-    
+        this.page.current = 0;
+        this.list = [];
+        this.finished = false;
+        this.loading = false;
+        this.onsarch(1); 
     },
   
   },
