@@ -18,7 +18,7 @@ switch (process.env.srconfig) {
     break;
   default: //默认开发
     baseUrl = '';
-    break;
+    break; 
 }
 // console.log("xxx",process.env.srconfig, process.env.NODE_ENV)
 // baseUrl = "http://172.16.0.23:8080";
