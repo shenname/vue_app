@@ -1,13 +1,13 @@
 <template>
 <div>
-  <!-- <navTopS :types="typest" v-if="navtop"></navTopS> -->
+  <navTopS :types="typest" v-if="navtop" class="navtops"></navTopS>
   <div class="wrappers">
    
     <div v-if="onVif">  
          
        
         <div class="documentInformation">
-        <van-form @submit="onSubmit">
+         <van-form @submit="onSubmit">
             <div class="formes_top">
             <van-field label="单据编号" label-width="22%"	 required colon v-model="formes.tradeNo" disabled placeholder=""/>
             <van-field label="装箱日期"  name="packingTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.packingTime"/>
@@ -25,8 +25,8 @@
                         />
                     </div>
                 </van-popup>
-             <van-field label="装箱产品" label-width="22%" required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="包材"  name="sellFactoryName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.sellFactoryName" />
+             <van-field label="装箱产品" label-width="22%" required colon v-model="zhuangxcp" disabled placeholder=""/>
+            <van-field label="包材"  name="materialName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.materialName" />
                  <van-popup v-model="showPopup" round position="bottom">
                   <van-picker
                    
@@ -37,9 +37,9 @@
                     
                     />
                 </van-popup>
-             <van-field label="包材重量" label-width="22%"	name="materialWeight" required colon v-model="formes.materialWeight" disabled placeholder=""/>
-            <van-field label="总重"  name="totalWeight" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.totalWeight"/>
-            <van-field label="备注"  name="remark" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.remark"/>
+                 <van-field label="包材重量" label-width="22%" colon	name="materialWeight" placeholder="" v-model="formes.materialWeight"/>
+            <van-field label="总重"  name="totalWeight"  label-width="22%" colon v-model="formes.totalWeight"/>
+            <van-field label="备注"  name="remark" label-width="22%" colon v-model="formes.remark"/>
 
         
             </div>
@@ -49,10 +49,10 @@
             </van-row>
            
             <!--牛只信息-->
-            <ul>
-                <li v-for="(item,index) in formes.details" :key="index" class="eartCss">
+              <ul>
+                <li v-for="(item,index) in list" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
-                    <span>{{item.labelCode}}</span>
+                    <span>{{item.labelCode}}</span><br>
                     &nbsp;<span>{{item.bpCode}}</span>
                     &nbsp;<span>{{item.bpName}}</span>
                     &nbsp;<span>{{item.weight}}KG</span>
@@ -63,7 +63,7 @@
                 </li>
             </ul>
               <div style="margin: 16px;">
-                    <van-button round block type="info" native-type="submit">
+                    <van-button round block type="info" @click="onSubmit" native-type="submit">
                     提交
                     </van-button>
                 </div>
@@ -74,47 +74,17 @@
     
         
         <van-overlay :show="show" @click="show = false">
-        <div class="wrapper" @click.stop>
-      <div class="block" >
+        <div class="niuerhzt" @click.stop>
+      <div class="niurblock" >
           <p style="line-height: 40px;">牛耳号1234568</p>
           <van-form @submit="onSubmits" class="niuerCss">
                 <van-field
                      name="sellWeight"
-                    v-model="erform.sellWeight"
-                    placeholder="请输入出场重"
+                    v-model="context"
+                    placeholder="死数据直接确定就OK"
                 
                 />
-                <!-- <van-field
-                        readonly
-                        clickable
-                          name="chusfs"
-                        :value="value"
-                        
-                        placeholder="点击选择出售方式"
-                        @click="showPicker = true"
-                        />
-                        <van-popup v-model="showPicker" position="bottom">
-                            <van-picker
-                                show-toolbar
-                                :columns="columns"
-                                @confirm="onConfirm"
-                                @cancel="showPicker = false"
-                            />
-                        </van-popup>
-                <van-field
-                v-if="jbmc"
-                  name="illness"
-                    v-model="erform.illness"
-                    placeholder="请输入疾病名称"
-                
-                />
-                <van-field
-                
-                  name="systemIllness"
-                    v-model="erform.systemIllness"
-                    placeholder="请输入系统疾病"
-                
-                />
+            
                 <div style="margin: 16px;display: flex;justify-content: space-between;height:20%">
                     <van-button round block type="info" class="anniu" native-type="submit">
                     提交
@@ -122,7 +92,7 @@
                      <div class="anniu"  @click="cancelEaret">
                     取消
                     </div>
-                </div> -->
+                </div> 
          </van-form>
         
       </div>
@@ -130,32 +100,35 @@
        </van-overlay>
     </div>
     
-    <!-- <div v-if="!onVif">
-       <eartDetails :lists="list">  </eartDetails> 
-    </div> -->
+    <div v-if="!onVif">
+       <pFproductsDetails :lists="list">  </pFproductsDetails> 
+    </div>
   </div>
   </div>
 </template>
 
 <script>
-// import navTopS from './navTopS'
+import navTopS from '../navTopS'
 
 import { Toast } from 'vant';
 
 Vue.use(Toast);
-// import eartDetails from './eartDetails'
+import pFproductsDetails from './pFproductsDetails'
 import Vue from 'vue';
 import { Overlay } from 'vant';
 
 Vue.use(Overlay);
 export default {
-//   components:{
-//       eartDetails,
-//       navTopS
-//   },
+  components:{
+      pFproductsDetails,
+      navTopS
+  },
   props:{},
   data(){
     return {
+      context:"",
+      tableData1:[],
+      zhuangxcp:"装箱产品根据扫码获得暂无数据",
       navtop:true,
       typest:1,
       showPopup:false,
@@ -163,18 +136,13 @@ export default {
         onVif:true,
         erform:{},
        value: '',
-      columns: ['正常', '非正常'],
+      list:[],  
       showPicker: false,
        show: false,
         timeC:false,
         time:new Date,
         formes:{
-        tradeNo:"",
-        sellTime:"",
-        sellFactoryName:"",
-        sellType:"",
-        remark:"",
-        details:[]
+      
         },
       factorylist:[],
         muc:[],
@@ -187,73 +155,46 @@ export default {
   methods:{
      guanb(){
       this.onVif=true;
-      this.typest=1;
+      this.typest=2;
     },
     getMuc(values){
-      this.formes.sellFactoryName=values
+      this.formes.materialName=values
       this.showPopup=false;
-      this.formes.sellFactoryId=this.muc.filter(item=>item.name==values)[0].id;
-    },
+      this.formes.materialId=this.muc.filter(item=>item.name==values)[0].id;
+    },  
     //牧场选择
-    onMuc(){
+   onMuc(){
          this.$json({
-                url: `/mhj/dispatchCowBills/getFactoryBox`,
+                url: `/mhj/getPackingMaterialsBox`,
                 method: 'get'
             }).then((res) => {
               this.muc=res.resp;
+              console.log(this.muc)
               for( let i in res.resp){
                     this.factorylist.push(res.resp[i].name)
               }
                 //  this.factorylist=res.resp;  
                
-                  console.log(res)
+                  console.log(this.factorylist)
             });
     },
    
-     //提交表单
-      ssst(types){
-        if (this.formes.sellTime==""||this.formes.sellFactoryName==""||this.formes.sellType=="") {
-          Toast.fail('请确保数据的完整性');
+  
+    
+      onSubmits(valuest){
+         if (this.tableData1.length<1) {
+            Toast.fail('暂无数据');
+             this.show= false;
           return
         }
-          this.formes.status=Number(types) 
-          console.log(this.formes,'另外提交')
-            this.$json({
-                url: `/mhj/cowSellBills/addOrUpdateBill`,
-                method: 'post',
-                data:this.formes
-            }).then((res) => {
-                Toast.success('提交成功');
-                setTimeout(()=>{
-                          this.$router.push('/sellingCattle')
-                },1000)
-            
-            });
-      },
-      onSubmits(valuest){
-     
-          
-        
-            this.$json({
-                url: `/mhj/cowSellBills/getCowDetail?earTradeNo=GN0WL200001`,
-                method: 'get'
-            }).then((res) => {
-               
-                 this.list=res.resp;
-                 if (valuest.chusfs=="正常") {
-                      this.list.sellStatus=0
-                 }else if (valuest.chusfs=="非正常") {
-                     this.list.sellStatus=1
-                 }
-                 this.list.chusfs=valuest.chusfs;
-                 this.list.sellWeight=valuest.sellWeight;
-                 this.list.systemIllness=valuest.systemIllness
-                 this.list.illness=valuest.illness
+           this.list.push(this.tableData1[0])
+           this.formes.detailList=this.list
+           console.log( this.formes.detailList,'表单数组')
+            this.show= false;
+         
+            this.zhuangxcp=this.tableData1[0].bpCode+this.tableData1[0].bpName;
 
-                console.log(this.list)
-                 this.formes.details.push(this.list)
-                this.show=false
-            });
+          
       },
       //取消新增牛耳号
       cancelEaret(){
@@ -271,13 +212,23 @@ export default {
       this.showPicker = false;
     },
     //二维码添加牛耳号
-      addEarts(){
-         this.show=true
+        addEarts(){
+          this.show=true
+          let params = `?bpId=${38}`;
+              params += `${this.context != '' ? `&context=${this.context}` : ''}`;
+              let lplIds = [];
+             
+              params += `&lplIds=${lplIds}${this.context != '' ? `&context=${this.context}` : ''}`;
+              this.$json({
+                  url: `/mhj/PackingList/getChildLabelCodeSelectVo${params}`,
+                  method: 'get',
+              }).then(res => {
+                  this.tableData1 = res.resp;
+              })
       },
       //进入牛耳号详情
-      eartDetails(item){
-        //   let aast= this.formes.details.filter(ite=>ite.tradeNo==item.tradeNo)[0]
-        //   console.log(aast)
+    eartDetails(item){
+          this.list= this.formes.detailList.filter(ite=>ite.lplId==item.lplId)[0]
           this.onVif=false;
           this.typest=2;
           this.navtop=false;
@@ -285,9 +236,34 @@ export default {
       },
       //删除牛耳号
       onEart(item,index){
-         this.formes.details.splice(index,1)
+        console.log(item);
+        console.log( this.formes.detailList);
+         this.formes.detailList.splice(index,1)
+           this.list.splice(index,1)
       },
-      onSubmit(values){
+      //表单提交
+        onSubmit(values){
+          
+           if (this.formes.packingTime==null||this.zhuangxcp==null||this.formes.materialName==null) {
+              Toast.fail('请确保数据的完整性');
+          
+              return false;
+            }
+          this.formes.status=0; 
+          this.formes.bpId=38;
+        
+          console.log(this.formes,'表单提交')
+            this.$json({
+                url: `/mhj/PackingList/addOrUpdateBill`,
+                method: 'post',
+                data:this.formes
+            }).then((res) => {
+                Toast.success('提交成功');
+                setTimeout(()=>{
+                          this.$router.push('/pFproducts')
+                },1000)
+            
+            });
       },
       //时间控件
       editTime(){
@@ -296,7 +272,7 @@ export default {
     
       addTime(){
          this.timeC=false;
-         this.formes.sellTime=`${this.time.getFullYear()}-${(this.time.getMonth() + 1).toString().padStart(2, "0")}-${(this.time.getDate()).toString().padStart(2, "0")} `+
+         this.formes.packingTime=`${this.time.getFullYear()}-${(this.time.getMonth() + 1).toString().padStart(2, "0")}-${(this.time.getDate()).toString().padStart(2, "0")} `+
      `${(this.time.getHours()).toString().padStart(2, "0")}:${(this.time.getMinutes()).toString().padStart(2, "0")}:${(this.time.getSeconds()).toString().padStart(2, "0")}`;
       },
       //查询
@@ -322,6 +298,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.navtops{position: absolute;;top: 0;}
 .pasture{
   width: 100%;
   position: absolute;bottom: 0;
@@ -333,6 +310,7 @@ export default {
          margin: 5% auto;
 }
 .eartCss{
+    font-size: 12px;
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
@@ -362,17 +340,17 @@ export default {
      padding-top: 16%;
       
 }
- .wrapper {
-   display: flex;
+  .niuerhzt {
+ display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
    
   }
 
-  .block {
-    width: 95%;
-    height: 45%;
+  .niurblock {
+    width: 90%;
+    padding: 2%;
     background-color: #fff;
   }
 </style>

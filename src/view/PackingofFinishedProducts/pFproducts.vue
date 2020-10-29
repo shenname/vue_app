@@ -32,7 +32,7 @@
       </van-overlay>
     </div>
     <div style="padding-top:20%">
-        <van-swipe-cell right-width	="50"	v-for="(item,index) in list" :key="index">
+        <van-swipe-cell right-width	="65"	v-for="(item,index) in list" :key="index">
           <div  @click="formesDetails(item)">
             
             <van-form class="forms">
@@ -83,12 +83,10 @@
         <template slot="right" v-solt="{index,item}">
             <van-row class="bianj">
               <van-col span="24" class="xuanZ">
-                <van-icon name="edit" @click="onAddCattle(2,item)" />
-                <!-- <p class="xigTitile">修改</p> -->
+                <van-button type="info" icon="edit" size="small" @click="onAddCattle(2,item)">修改</van-button>
               </van-col>
               <van-col span="24" class="xuanZ">
-                <van-icon name="close" @click="operation(index,item,2)"/>
-                <!-- <p class="xigTitile">删除</p> -->
+                    <van-button type="danger" icon="close" size="small" @click="operation(index,item,2)">删除</van-button>
               </van-col>
             </van-row>
           </template>
@@ -116,6 +114,7 @@ export default {
   props:{},
   data(){
     return {
+   
       zhezhaoc:false,
       aasts:"",
         page: {
@@ -154,7 +153,7 @@ export default {
     onAddCattle(type,item){
      
       if (type==1) {
-         this.$router.push('/editpFproducts')
+         this.$router.push('/addPfproducts')
       } else  if(type==2) {
            if (item.status!==0) {
         Toast.fail("该数据已不能编辑")
@@ -177,6 +176,7 @@ export default {
                 url: `/mhj/PackingList/getBillList?${params}`,
                 method: 'get'
             }).then((res) => {
+             
                setTimeout(() => {
                  if (type==1) {
                       Toast('已刷新');
@@ -207,7 +207,7 @@ export default {
           .then(() => {
            
                 this.$json({
-                    url: `/mhj/cowSellBills/delBill?tradeNo=${this.list[aast].tradeNo}`,
+                    url: `/mhj/PackingList/delBill?tradeNo=${this.list[aast].tradeNo}`,
                     method: 'delete',
                 }).then((res) => {
                   
@@ -230,15 +230,11 @@ export default {
     
     //下拉加载
     onRefresh() {
-  
-      // 清空列表数据
-       this.finished = false;
-
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
-      this.loading = true;
-      this.onsarch(1);
-    
+        this.page.current = 0;
+        this.list = [];
+        this.finished = false;
+        this.loading = false;
+        this.onsarch(1); 
     },
   
   },
@@ -271,7 +267,8 @@ export default {
   font-size: 15px;
 }
 .xuanZ{
-  padding: 30%;
+  width: 100%;
+  padding: 20% 0;
 }
 .bianj{
   font-size: 25px;

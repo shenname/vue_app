@@ -10,7 +10,7 @@
         <van-form @submit="onSubmit">
             <div class="formes_top">
             <van-field label="单据编号" label-width="22%"	 required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="装箱日期"  name="packingTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.packingTime"/>
+            <van-field label="装箱日期" disabled name="packingTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.packingTime"/>
                  <van-popup v-model="timeC" round position="bottom">
                      <div class="times">
                         <van-datetime-picker
@@ -25,8 +25,8 @@
                         />
                     </div>
                 </van-popup>
-             <van-field label="装箱产品" label-width="22%" required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="包材"  name="materialName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.materialName" />
+             <van-field label="装箱产品"  label-width="22%" required colon v-model="formes.tradeNo" disabled placeholder=""/>
+            <van-field label="包材" disabled name="materialName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.materialName" />
                  <van-popup v-model="showPopup" round position="bottom">
                   <van-picker
                    
@@ -37,43 +37,43 @@
                     
                     />
                 </van-popup>
-             <van-field label="包材重量" label-width="22%"	name="materialWeight" required colon v-model="formes.materialWeight"  placeholder=""/>
-            <van-field label="总重"  name="totalWeight" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.totalWeight"/>
-            <van-field label="备注"  name="remark" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.remark"/>
+             <van-field label="包材重量" disabled label-width="22%"	name="materialWeight" required colon v-model="formes.materialWeight"  placeholder=""/>
+            <van-field label="总重"  disabled name="totalWeight" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.totalWeight"/>
+            <van-field label="备注" disabled name="remark" required :rules="[{ required: true, message: '' }]" label-width="22%" colon v-model="formes.remark"/>
 
         
             </div>
             <van-row style="margin: 2% auto;width: 96%;">
                 <van-col span="12"><p style="  line-height: 30px;">产品信息</p></van-col>
-                <van-col span="12" style="font-size:30px ;text-align: right;"><van-icon name="scan" @click="addEarts"/></van-col>
+                <van-col span="12" style="font-size:30px ;text-align: right;"><van-icon name="scan"/></van-col>
             </van-row>
            
             <!--牛只信息-->
             <ul>
                 <li v-for="(item,index) in formes.detailVoList" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
-                    <span>{{item.labelCode}}</span>
+                    <span>{{item.labelCode}}</span><br>
                     &nbsp;<span>{{item.bpCode}}</span>
                     &nbsp;<span>{{item.bpName}}</span>
                     &nbsp;<span>{{item.weight}}KG</span>
                     </div>
                     <div style="font-size:30px;line-height: 40px;padding-top:2%">
-                <span  ><van-icon name="close" @click="onEart(item,index)"/></span>
+                <span  ><van-icon name="close" /></span>
                 </div>
                 </li>
             </ul>
-              <div style="margin: 16px;">
+              <!-- <div style="margin: 16px;">
                     <van-button round block type="info" native-type="submit">
                     提交
                     </van-button>
-                </div>
+                </div> -->
         
         </van-form>
            
         </div>
     
         
-        <van-overlay :show="show" @click="show = false">
+        <!-- <van-overlay :show="show" @click="show = false">
         <div class="niuerhzt" @click.stop>
       <div class="niurblock" >
           <p style="line-height: 40px;">牛耳号1234568</p>
@@ -97,7 +97,7 @@
         
       </div>
        </div>
-       </van-overlay>
+       </van-overlay> -->
     </div>
     
     <div v-if="!onVif">
@@ -225,35 +225,8 @@ export default {
       cancelEaret(){
         this.show= false
       },
-     //选择牛耳号健康状态
-       onConfirm(value) {
-      this.value = value;
-      if (value=="非正常") {
-          this.jbmc=true;
-      }
-      else{
-           this.jbmc=false;
-      }
-      this.showPicker = false;
-    },
-    //二维码添加牛耳号
-      addEarts(){
-         this.show=true
-          let params = `?bpId=${38}`;
-            params += `${this.context != '' ? `&context=${this.context}` : ''}`;
-            let lplIds = [];
-            for(let item of this.formes.detailVoList){
-                lplIds.push(item.lplId);
-            }
-            params += `&lplIds=${lplIds}${this.context != '' ? `&context=${this.context}` : ''}`;
-            this.$json({
-                url: `/mhj/PackingList/getChildLabelCodeSelectVo${params}`,
-                method: 'get',
-            }).then(res => {
-                this.tableData1 = res.resp;
-            })
-      },
-      //进入牛耳号详情
+   
+   
       eartDetails(item){
           this.list= this.formes.detailVoList.filter(ite=>ite.lplId==item.lplId)[0]
           this.onVif=false;
@@ -261,10 +234,7 @@ export default {
           this.navtop=false;
           this.navtop=true;
       },
-      //删除牛耳号
-      onEart(item,index){
-         this.formes.details.splice(index,1)
-      },
+  
       onSubmit(values){
       },
       //时间控件

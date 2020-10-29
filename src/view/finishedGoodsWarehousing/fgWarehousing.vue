@@ -1,5 +1,5 @@
 <template>
- <!--出售牛只-->
+ <!--产成品入库单-->
   <div class="wrappers">
    
     <div class="addCattle"><van-icon name="add-o" @click="onAddCattle(1)"/></div>
@@ -49,27 +49,27 @@
             colon
             disabled
           label-width="22%"
-            v-model="item.sellTime"
+            v-model="item.storageTime"
             name="1"
-            label="出售日期" 
+            label="入库日期" 
           />
           <van-field
             colon
             disabled
           label-width="22%"
-            v-model="item.sellFactoryName"
+            v-model="item.warehouseName"
             name="1"
-            label="出售场名" 
+            label="仓库" 
           />
           <van-field
             colon
             disabled
           label-width="20%"
-            v-model="item.sellType"
+            v-model="item.dname"
             name="1"
-            label="出售方" 
+            label="部门" 
           />
-          <van-field
+            <van-field
           label-width="22%"
             colon
             disabled
@@ -83,14 +83,10 @@
         <template slot="right" v-solt="{index,item}">
             <van-row class="bianj">
               <van-col span="24" class="xuanZ">
-             
-                  <van-button type="info" icon="edit" size="small" @click="onAddCattle(2,item)">修改</van-button>
-                <!-- <p class="xigTitile">修改</p> -->
+                <van-button type="info" icon="edit" size="small" @click="onAddCattle(2,item)">修改</van-button>
               </van-col>
               <van-col span="24" class="xuanZ">
-            
-                      <van-button type="danger" icon="close" size="small" @click="operation(index,item,2)">删除</van-button>
-                <!-- <p class="xigTitile">删除</p> -->
+                    <van-button type="danger" icon="close" size="small" @click="operation(index,item,2)">删除</van-button>
               </van-col>
             </van-row>
           </template>
@@ -118,22 +114,22 @@ export default {
   props:{},
   data(){
     return {
-      zhezhaoc:false,
-      aasts:"",
-      page: {
-        size: 4,
-        current: 0,
-        total: 0
-      },
-      reluform:{
-        username:"",
-        password:"",
-      },
-      list: [],
-      refreshing: false,
-      loading: false,
-      totalCount: 0,
-      finished: false,
+        zhezhaoc:false,
+        aasts:"",
+        page: {
+            size: 4,
+            current: 0,
+            total: 0
+        },
+        reluform:{
+            username:"",
+            password:"",
+        },
+        list: [],
+        refreshing: false,
+        loading: false,
+        totalCount: 0,
+        finished: false,
     }
   },
   watch:{},
@@ -141,12 +137,14 @@ export default {
   methods:{
     aastst(){
       this.zhezhaoc=true;
-    
+     
     },
     //牛只详情
     formesDetails(item){
-         this.$router.push({path:'/sellingDDetails',query:{
+         this.$router.push({path:'/fgWarehousingChak',query:{
            tradeNo:item.tradeNo,
+           warehouseName:item.warehouseName,
+           dname:item.dname
       }});
      
     },
@@ -154,29 +152,30 @@ export default {
     onAddCattle(type,item){
      
       if (type==1) {
-         this.$router.push('/sellingCattleAdd')
+         this.$router.push('/fgWarehousingAdd')
       } else  if(type==2) {
            if (item.status!==0) {
         Toast.fail("该数据已不能编辑")
         return
       }
-         this.$router.push({path:'/sellingCattleEdit',query:{
+         this.$router.push({path:'/fgWarehousingEdit',query:{
            tradeNo:item.tradeNo,
+           warehouseName:item.warehouseName,
+           dname:item.dname
       }});
       }
      
     },
-    //加载牛只
+    //加载产品列表
     onsarch(type){
         this.page.current += 1;
         this.loading = false;
         let params =
                 `current=${this.page.current}&size=${this.page.size}` 
             this.$json({
-                url: `/mhj/cowSellBills/getBillList?${params}`,
+                url: `/mhj/warehouseWarrant/getBillList?${params}`,
                 method: 'get'
             }).then((res) => {
-          
                setTimeout(() => {
                  if (type==1) {
                       Toast('已刷新');
@@ -207,12 +206,13 @@ export default {
           .then(() => {
            
                 this.$json({
-                    url: `/mhj/cowSellBills/delBill?tradeNo=${this.list[aast].tradeNo}`,
+                    url: `/mhj/warehouseWarrant/delBill?tradeNo=${this.list[aast].tradeNo}`,
                     method: 'delete',
                 }).then((res) => {
                   
                     Toast.success('已成功删除');
-                  this.onRefresh()
+                  this.onRefresh();
+
                 });
              
             // on confirm
