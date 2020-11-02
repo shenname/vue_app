@@ -9,8 +9,8 @@
         <div class="documentInformation">
         <van-form @submit="onSubmit">
             <div class="formes_top">
-            <van-field label="单据编号" label-width="22%"	 required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="入库日期"  name="storageTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.storageTime"/>
+            <van-field label="单据编号" label-width="22%"	disabled required colon v-model="formes.tradeNo"  placeholder=""/>
+            <van-field label="入库日期"  name="storageTime" disabled  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.storageTime"/>
                  <van-popup v-model="timeC" round position="bottom">
                      <div class="times">
                         <van-datetime-picker
@@ -25,7 +25,7 @@
                         />
                     </div>
                 </van-popup>
-            <van-field label="仓库"  name="warehouseName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.warehouseName" />
+            <van-field label="仓库"  name="warehouseName" required disabled :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.warehouseName" />
                  <van-popup v-model="showPopup" round position="bottom">
                   <van-picker
                    
@@ -36,7 +36,7 @@
                     
                     />
                 </van-popup>
-                <van-field label="部门"  name="dname" label-width="22%" @focus="showPopupBm=true" colon v-model="formes.dname" />
+                <van-field label="部门"  name="dname" label-width="22%" disabled @focus="showPopupBm=true" colon v-model="formes.dname" />
                  <van-popup v-model="showPopupBm" round position="bottom">
                   <van-picker
                    
@@ -47,16 +47,16 @@
                     
                     />
                 </van-popup>
-                   <van-field label="巷道" label-width="22%"  colon v-model="formes.roadway" disabled placeholder="请选择巷道"/>
-              <van-field label="入库类别" label-width="22%"	name="storageType" placeholder="请选择入库类别" v-model="formes.storageType"/>
+                   <van-field label="巷道" label-width="22%" disabled colon v-model="formes.roadway"  placeholder="请选择巷道"/>
+              <van-field label="入库类别" label-width="22%" disabled	name="storageType" placeholder="请选择入库类别" v-model="formes.storageType"/>
        
-            <van-field label="备注"  name="remark" label-width="22%" colon v-model="formes.remark"/>
+            <van-field label="备注"  name="remark" label-width="22%" disabled colon v-model="formes.remark"/>
 
         
             </div>
             <van-row style="margin: 2% auto;width: 96%;">
                 <van-col span="12"><p style="  line-height: 30px;">产品信息</p></van-col>
-                <van-col span="12" style="font-size:30px ;text-align: right;"><van-icon name="scan" @click="addEarts"/></van-col>
+                <van-col span="12" style="font-size:30px ;text-align: right;"><van-icon name="scan" /></van-col>
             </van-row>
            
             <!--牛只信息-->
@@ -69,21 +69,21 @@
                     &nbsp;<span>{{item.weight}}KG</span>
                     </div>
                     <div style="font-size:30px;line-height: 40px;padding-top:2%">
-                <span  ><van-icon name="close" @click="onEart(item,index)"/></span>
+                <!-- <span  ><van-icon name="close" @click="onEart(item,index)"/></span> -->
                 </div>
                 </li>
             </ul>
              
         
         </van-form>
-            <div class="tijn"  v-if="!timeC">
+            <!-- <div class="tijn"  v-if="!timeC">
                 <van-button round block type="info" @click="ssst(0)" >
                     保存
                 </van-button>
                 <van-button round block type="info"  @click="ssst(1)" >
                     提交
                 </van-button>
-            </div>
+            </div> -->
         </div>
         </div>
     
@@ -101,14 +101,14 @@
                 
                 />
               
-                <div style="margin: 16px;display: flex;justify-content: space-between;height:20%">
+                <!-- <div style="margin: 16px;display: flex;justify-content: space-between;height:20%">
                     <van-button round block type="info" class="anniu" native-type="submit">
                     提交
                     </van-button>
                      <div class="anniu"  @click="cancelEaret">
                     取消
                     </div>
-                </div>
+                </div> -->
          </van-form>
         
       </div>

@@ -1,5 +1,5 @@
 <template>
- <!--出售牛只-->
+ <!--产成品入库单-->
   <div class="wrappers">
    
     <div class="addCattle"><van-icon name="add-o" @click="onAddCattle(1)"/></div>
@@ -32,6 +32,7 @@
       </van-overlay>
     </div>
     <div style="padding-top:20%">
+         <van-empty v-if="list.length <= 0" description="暂无数据" />
         <van-swipe-cell right-width	="65"	v-for="(item,index) in list" :key="index">
           <div  @click="formesDetails(item)">
             
@@ -141,7 +142,7 @@ export default {
     },
     //牛只详情
     formesDetails(item){
-         this.$router.push({path:'/chakpFproducts',query:{
+         this.$router.push({path:'/fgWarehousingChak',query:{
            tradeNo:item.tradeNo,
            warehouseName:item.warehouseName,
            dname:item.dname
@@ -152,7 +153,7 @@ export default {
     onAddCattle(type,item){
      
       if (type==1) {
-         this.$router.push('/addPfproducts')
+         this.$router.push('/fgWarehousingAdd')
       } else  if(type==2) {
            if (item.status!==0) {
         Toast.fail("该数据已不能编辑")
@@ -190,18 +191,19 @@ export default {
                 if(this.list.length >= res.resp.total){
                   this.finished = true;
                 }
+             
             });
     },
     //删除牛只
     operation(aast,ssta){
     
-        if (this.list[aast].status==2||this.list[aast].status==3) {
-          Toast.fail('此数据已经审核不能删除');
+        if (this.list[aast].status==2) {
+          Toast.fail('此数据已经审核通过不能删除');
           return;
         }
         Dialog.confirm({
           title: '确认删除此数据',
-          message: '此数据已经删除无法找回是否删除？',
+          message: '此数据一经删除无法找回是否删除？',
         })
           .then(() => {
            
@@ -211,7 +213,8 @@ export default {
                 }).then((res) => {
                   
                     Toast.success('已成功删除');
-                  this.onRefresh()
+                  this.onRefresh();
+
                 });
              
             // on confirm
@@ -229,15 +232,11 @@ export default {
     
     //下拉加载
     onRefresh() {
-  
-      // 清空列表数据
-       this.finished = false;
-
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
-      this.loading = true;
-      this.onsarch(1);
-    
+        this.page.current = 0;
+        this.list = [];
+        this.finished = false;
+        this.loading = false;
+        this.onsarch(1); 
     },
   
   },

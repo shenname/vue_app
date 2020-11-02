@@ -36,6 +36,46 @@ export const routes = [
 		}
 	},
 	{
+		path: '/marketSingleInfo',
+		name:　"marketSingleInfo",
+		component: () => import('@/view/marketWarehouse/marketSingleInfo.vue'),
+		meta: {
+			title: '出库单详情',
+			keepAlive: true,
+			keepheaderAlive: true,
+		}
+	},
+	{
+		path: '/updateMarketSingle',
+		name:　"updateMarketSingle",
+		component: () => import('@/view/marketWarehouse/updateMarketSingle.vue'),
+		meta: {
+			title: '编辑出库单',
+			keepAlive: true,
+			keepheaderAlive: true,
+		}
+	},
+	{
+		path: '/addMarketSingle',
+		name:　"addMarketSingle",
+		component: () => import('@/view/marketWarehouse/addMarketSingle.vue'),
+		meta: {
+			title: '新增出库单',
+			keepAlive: true,
+			keepheaderAlive: true,
+		}
+	},
+	{
+		path: '/marketSingle',
+		name:　"marketSingle",
+		component: () => import('@/view/marketWarehouse/marketSingle.vue'),
+		meta: {
+			title: '销售出库单',
+			keepAlive: true,
+			keepheaderAlive: true,
+		}
+	},
+	{
 		path: '/treatmentAdd',
 		name:　"treatmentAdd",
 		component: () => import('@/view/treatment/add.vue'),
@@ -106,12 +146,32 @@ export const routes = [
 		}
 	},
 	{
+		path: '/fgWarehousingAdd',
+		name:　"fgWarehousingAdd",
+		component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingAdd.vue'),
+		meta: {
+			title: "新增入库单",
+			keepAlive: false,
+			keepheaderAlive: true,
+		}
+	},
+	{
+		path: '/fgWarehousingChak',
+		name:　"fgWarehousingChak",
+		component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingChak.vue'),
+		meta: {
+			title: "入库单详情",
+			keepAlive: false,
+			keepheaderAlive: true,
+		}
+	},
+	{
 		path: '/fgWarehousingEdit',
 		name:　"fgWarehousingEdit",
 		component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingEdit.vue'),
 		meta: {
 			title: "编辑入库单",
-			keepAlive: true,
+			keepAlive: false,
 			keepheaderAlive: true,
 		}
 	},

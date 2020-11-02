@@ -97,6 +97,7 @@
             }).then(res => {
 							if (res.resp.length==0) {
 								 Notify({ type: 'danger', message: '请输入正确的牛耳号!' });
+								 this.eaList[index].earTradeNo='';
                     return;
 							}
 								 let type = false,htype = false;
@@ -116,10 +117,12 @@
 								}
                 if(type){
 										Notify({ type: 'danger', message: '该牛只已存在!' });
+									this.eaList[index].earTradeNo='';
                     return;
 								}
 								if(htype){
 										Notify({ type: 'danger', message: '请输入同一个牛舍的牛只!' });
+										this.eaList[index].earTradeNo='';
                     return;
 								}
 								this.eaList[index].cowHouse=res.resp[0].cowHouse

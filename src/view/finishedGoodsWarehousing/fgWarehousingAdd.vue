@@ -1,31 +1,29 @@
 <template>
 <div >
   <navTopS :types="typest" v-if="navtop" class="navtops"></navTopS>
-  <div class="wrappers">
-   
-    <div v-if="onVif">  
-         
-       
+  <div class="wrappers">   
+    <div v-if="onVif">   
         <div class="documentInformation">
         <van-form @submit="onSubmit">
             <div class="formes_top">
             <van-field label="单据编号" label-width="22%"	 required colon v-model="formes.tradeNo" disabled placeholder=""/>
-            <van-field label="入库日期"  name="storageTime"  required :rules="[{ required: true, message: '' }]" label-width="22%" @focus="editTime" colon v-model="formes.storageTime"/>
+            <van-field label="入库日期"  name="storageTime"  required :rules="[{ required: true, message: '' }]"
+                       label-width="22%" @focus="editTime" colon v-model="formes.storageTime"
+                       placeholder="请选择入库日期"/>
                  <van-popup v-model="timeC" round position="bottom">
                      <div class="times">
                         <van-datetime-picker
-                        
-                        class="shij"
+                            class="shij"
                             v-model="time"
                             type="datehour"
-                     
                             @confirm="addTime"
                             @cancel="timeC=false"
-                            
                         />
                     </div>
                 </van-popup>
-            <van-field label="仓库"  name="warehouseName" required  :rules="[{ required: true, message: '' }]" label-width="22%" @focus="showPopup=true" colon v-model="formes.warehouseName" />
+            <van-field label="仓库"  name="warehouseName" required  :rules="[{ required: true, message: '' }]" label-width="22%"
+                       @focus="showPopup=true" colon v-model="formes.warehouseName" 
+                       placeholder="请选择仓库"/>
                  <van-popup v-model="showPopup" round position="bottom">
                   <van-picker
                    
@@ -36,24 +34,19 @@
                     
                     />
                 </van-popup>
-                <van-field label="部门"  name="dname" label-width="22%" @focus="showPopupBm=true" colon v-model="formes.dname" />
-                 <van-popup v-model="showPopupBm" round position="bottom">
-                  <van-picker
-                   
-                      show-toolbar
-                      :columns="bumen"
-                      @confirm="getBum"
-                      @cancel="showPopup=false"
-                    
+            <van-field label="部门"  name="dname" label-width="22%" @focus="showPopupBm=true" colon v-model="formes.dname" placeholder="请选择部门"/>
+                <van-popup v-model="showPopupBm" round position="bottom">
+                    <van-picker
+                        show-toolbar
+                        :columns="bumen"
+                        @confirm="getBum"
+                        @cancel="showPopup=false"
                     />
                 </van-popup>
-                   <van-field label="巷道" label-width="22%"  colon v-model="formes.roadway" disabled placeholder="请选择巷道"/>
-              <van-field label="入库类别" label-width="22%"	name="storageType" placeholder="请选择入库类别" v-model="formes.storageType"/>
-       
+            <van-field label="巷道" label-width="22%"  colon v-model="formes.roadway" disabled placeholder="巷道通过仓库自动获取"/>
+            <van-field label="入库类别" label-width="22%" colon name="storageType" placeholder="请选择入库类别" v-model="formes.storageType"/>
             <van-field label="备注"  name="remark" label-width="22%" colon v-model="formes.remark"/>
-
-        
-            </div>
+        </div>
             <van-row style="margin: 2% auto;width: 96%;">
                 <van-col span="12"><p style="  line-height: 30px;">产品信息</p></van-col>
                 <van-col span="12" style="font-size:30px ;text-align: right;"><van-icon name="scan" @click="addEarts"/></van-col>
@@ -116,7 +109,7 @@
        </van-overlay>
     </div>
     
-    <div v-if="!onVif">
+     <div v-if="!onVif">
        <fgWarehousingDetails :lists="list" :trken="formes.tradeNo">  </fgWarehousingDetails> 
     </div>
   </div>
@@ -168,7 +161,7 @@ export default {
   watch:{},
   computed:{},
   methods:{
-   
+   //提交扫码表单
      onSubmits(valuest){
         if (this.tableData1.length<1) {
             Toast.fail('暂无数据');
@@ -252,13 +245,13 @@ export default {
     
     //二维码添加牛耳号
       addEarts(){
-          //  this.$json({
-          //       url: `/mhj/goodsAllocateBill/getDetailByLabel?label=${1}&billType=0`,
-          //       method: 'get',
-          //   }).then(res => {
+        //  this.$json({
+        //         url: `/mhj/goodsAllocateBill/getDetailByLabel?label=${1}&billType=0`,
+        //         method: 'get',
+        //     }).then(res => {
               
-          //       console.log(res,'二维码参数接口')
-          //   })
+        //         console.log(res,'二维码参数接口')
+        //     })
          this.show=true
          //搜索类型 0新增整箱 / 1新增散件
            let params = `type=${this.xdPin}&selectType=1`;
@@ -278,7 +271,7 @@ export default {
       },
       //进入牛耳号详情
       eartDetails(item){
-          this.list= item
+          this.list= item;
           this.onVif=false;
           this.typest=2;
           this.navtop=false;
@@ -295,7 +288,7 @@ export default {
       },
          ssst(types){
        
-        if (this.formes.storageTime==""||this.formes.warehouseName=="") {
+        if (this.formes.storageTime==null||this.formes.warehouseName==null) {
           Toast.fail('请确保数据的完整性');
           return
         }
@@ -303,17 +296,17 @@ export default {
           this.formes.detailListVos=null;
           this.formes.status=types
           console.log(this.formes,'总提交')
-            // this.$json({
-            //     url: `/mhj/warehouseWarrant/addOrUpdateBill`,
-            //     method: 'post',
-            //     data:this.formes
-            // }).then((res) => {
-            //     Toast.success('提交成功');
-            //     setTimeout(()=>{
-            //               this.$router.push('/fgWarehousing')
-            //     },1000)
+            this.$json({
+                url: `/mhj/warehouseWarrant/addOrUpdateBill`,
+                method: 'post',
+                data:this.formes
+            }).then((res) => {
+                Toast.success('提交成功');
+                setTimeout(()=>{
+                          this.$router.push('/fgWarehousing')
+                },1000)
             
-            // });
+            });
       },
       //时间控件
       editTime(){
@@ -326,19 +319,19 @@ export default {
      `${(this.time.getHours()).toString().padStart(2, "0")}:${(this.time.getMinutes()).toString().padStart(2, "0")}:${(this.time.getSeconds()).toString().padStart(2, "0")}`;
       },
       //查询
-      onSearch(){
-        this.$json({
-            url: `/mhj/warehouseWarrant/getBillDetail?tradeNo=${this.formes.tradeNo}`,
-            method: 'get',
-        }).then((res) => {
-            this.formes=res.resp
-              this.formes.warehouseName= this.$route.query.warehouseName;
-            this.formes.dname= this.$route.query.dname;
-              this.listArr= this.formes.detailListVos;
-              console.log(this.formes,'表单数组')
-            //   this.zhuangxcp=this.list[0].bpCode+this.list[0].bpName;  
-        });
-      }
+    //   onSearch(){
+    //     this.$json({
+    //         url: `/mhj/warehouseWarrant/getBillDetail?tradeNo=${this.formes.tradeNo}`,
+    //         method: 'get',
+    //     }).then((res) => {
+    //         this.formes=res.resp
+    //           this.formes.warehouseName= this.$route.query.warehouseName;
+    //         this.formes.dname= this.$route.query.dname;
+    //           this.listArr= this.formes.detailListVos;
+    //           console.log(this.formes,'表单数组')
+    //         //   this.zhuangxcp=this.list[0].bpCode+this.list[0].bpName;  
+    //     });
+    //   }
   },
  
   created(){
@@ -348,11 +341,11 @@ export default {
   mounted(){
       this.onBmen();
     this.onMuc();
-    this.formes.tradeNo=this.$route.query.tradeNo;
+    // this.formes.tradeNo=this.$route.query.tradeNo;
   
  
 
-      this.onSearch();
+    //   this.onSearch();
   }
 }
 </script>
@@ -407,7 +400,7 @@ export default {
 }
 .wrappers{
     position: relative;
-    padding-top: 20%;
+      padding-top: 20%;
     
 
 }

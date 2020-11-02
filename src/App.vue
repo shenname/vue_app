@@ -33,16 +33,17 @@ export default {
 	},
   // 加载执行
 	created(){
-  	},
-  	mounted(){
-  	},
-  	methods: {
-		onClickLeft() {
-			let routers = localStorage.getItem('routers');
-			this.$router.push({path: routers})
-			// this.$router.go(-1);
-		},
-  	},
+  },
+  mounted(){
+  },
+  methods: {
+    onClickLeft() {
+		// let routers = localStorage.getItem('routers');
+		// this.$router.push({path: routers})
+		
+		this.$router.go(-1)
+    },
+  },
 }
 </script>
 <style lang="less" scoped>

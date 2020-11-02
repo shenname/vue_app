@@ -52,7 +52,7 @@
             <ul>
                 <li v-for="(item,index) in formes.detailVoList" :key="index" class="eartCss">
                     <div @click="eartDetails(item)">
-                    <span>{{item.labelCode}}</span>
+                    <span>{{item.labelCode}}</span><br>
                     &nbsp;<span>{{item.bpCode}}</span>
                     &nbsp;<span>{{item.bpName}}</span>
                     &nbsp;<span>{{item.weight}}KG</span>
