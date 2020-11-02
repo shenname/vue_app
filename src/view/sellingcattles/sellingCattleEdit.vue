@@ -265,6 +265,13 @@ export default {
     },
     //二维码添加牛耳号
       addEarts(){
+           //  this.$json({
+          //       url: `/mhj/goodsAllocateBill/getDetailByLabel?label=${1}&billType=0`,
+          //       method: 'get',
+          //   }).then(res => {
+              
+          //       console.log(res,'二维码参数接口')
+          //   })
          this.show=true
       },
       //进入牛耳号详情

@@ -161,7 +161,7 @@ export default {
   watch:{},
   computed:{},
   methods:{
-   
+   //提交扫码表单
      onSubmits(valuest){
         if (this.tableData1.length<1) {
             Toast.fail('暂无数据');
@@ -245,6 +245,13 @@ export default {
     
     //二维码添加牛耳号
       addEarts(){
+        //  this.$json({
+        //         url: `/mhj/goodsAllocateBill/getDetailByLabel?label=${1}&billType=0`,
+        //         method: 'get',
+        //     }).then(res => {
+              
+        //         console.log(res,'二维码参数接口')
+        //     })
          this.show=true
          //搜索类型 0新增整箱 / 1新增散件
            let params = `type=${this.xdPin}&selectType=1`;
