@@ -1,20 +1,20 @@
 <template>
-<!--  新增出库单 -->
+<!-- 编辑销售出库单 -->
   <div>
-     <navTopS :types="typest" v-if="navtop" class="navtopst"></navTopS>
+    <navTopS :types="typest" v-if="navtop" class="navtopst"></navTopS>
     <div v-if="moduleShow">
 <van-form @submit="onSubmit">
     <van-cell title="单据信息" center style="height:2.8rem" ></van-cell>
     <van-row type="flex" justify="center">
 		<van-col span="22"  class="col">
 	<van-cell-group>
-	  <van-field v-model="ruleForm.tradeNo"   label="单据编号" required   placeholder="自动生成" readonly >
+	  <van-field v-model="ruleForm.tradeNo"  disabled  label="单据编号" required   placeholder="自动生成" readonly >
 			</van-field>
 		<van-field :value="ruleForm.soTime"  label="出库日期" required :rules="[{ required: true, message: '' }]"   placeholder="" @click="show2 = true"/>
-		<van-field :value="ruleForm.warehouseNameList" label="仓库"  required  readonly  placeholder="读取发货单仓库"/>
-    <van-field v-model="ruleForm.dlTradeNo" label="发货单号" required :rules="[{ required: true, message: '' }]" @blur="getinfo()"  clearable placeholder="请输入发货单号"/>
-    <van-field v-model="ruleForm.custName" label="客户" readonly  placeholder="根据发货单获取"/>
-    <van-field v-model="ruleForm.deliverAddress" label="发货地址" readonly  placeholder="根据发货单获取"/>
+		<van-field label="仓库" :value="ruleForm.warehouseNameList" disabled required  readonly  placeholder="读取发货单仓库"/>
+    <van-field v-model="ruleForm.dlTradeNo" label="发货单号" required :rules="[{ required: true, message: '' }]" @blur="getform()"  clearable placeholder="请输入发货单号"/>
+    <van-field v-model="ruleForm.custName" label="客户" disabled readonly  placeholder="根据发货单获取"/>
+    <van-field v-model="ruleForm.deliverAddress" label="发货地址" disabled readonly  placeholder="根据发货单获取"/>
 		<van-field v-model="ruleForm.remark" label="备注"   placeholder="请输入备注"/>
 
 	</van-cell-group>
@@ -80,9 +80,9 @@ import { Field } from 'vant';
   import product from './productDetails'
   import navTopS from '../navTopS'
 export default {
-    data() {
-      return {
-         minDate: new Date(2020, 0, 1),
+  data() {
+    return {
+       minDate: new Date(2020, 0, 1),
       currentDate: new Date(),
      typest:1,
      show: false,
@@ -94,21 +94,32 @@ export default {
      list:[],
      listInfo:{},
      moduleShow:true,
-      }
-    },
-    components:{
+    }
+  },
+   components:{
      product,
      navTopS
   },
      mounted(){
-	 this.ruleForm.userName = JSON.parse(localStorage.getItem("userInfo")).userName;
-	  },
+   this.ruleForm.userName = JSON.parse(localStorage.getItem("userInfo")).userName;
+   this.ruleForm.tradeNo=this.$route.query.tradeNo;
+   this.getInfo();
+    },
     methods: {
-      guanb(){
+      getInfo(){
+            this.$json({
+                url: `/mhj/getSalesOutgoingBillsDetail?tradeNo=${this.ruleForm.tradeNo}`,
+                method: "get",
+            }).then(res => {
+              this.ruleForm=res.resp;
+              this.list=res.resp.salesOutgoingBillsDetailsList;
+            })
+    },
+       guanb(){
       this.moduleShow=true;
       this.typest=1;
     },
-      skipInfo(val){
+    skipInfo(val){
           this.moduleShow=false;
           this.listInfo=val;
           this.typest=2;
@@ -118,7 +129,7 @@ export default {
       deleteList(val){
          this.list.splice(val,1);
       },
-      confirm() {
+       confirm() {
       this.show2 = false;
       this.ruleForm.soTime=
         this.currentDate.getFullYear() +"-"+
@@ -129,8 +140,8 @@ export default {
     },
 			cancel() {
       this.show2 = false;
-		},
-    onSubmit(values) {
+    },
+     onSubmit(values) {
 	        //  this.buttonClick();
 		
     },
@@ -139,8 +150,8 @@ export default {
          params.status=type;
          params.salesOutgoingBillsDetailsList=this.list;
 				this.$json({
-                url: `/mhj/addSalesOutgoingBills`,
-								method: `put`,
+                url: `/mhj/modifySalesOutgoingBills`,
+								method: `post`,
 								 data: params,
             }).then(res => {
                 	 if (type==0) {
@@ -157,7 +168,7 @@ export default {
 				 this.$router.push('/marketSingle');
             })
     },
-    getinfo(){
+    getform(){
           this.$json({
                 url: `/mhj/getSalesOutgoingBillsTemp?fhTradeNo=${this.ruleForm.dlTradeNo}`,
                 method: "get"
@@ -179,7 +190,7 @@ export default {
       this.show = false;
       this.ruleForm.soTime = this.formatDate(date);
     },
-    },  
+    },
 }
 </script>
 <style lang="less" scoped>

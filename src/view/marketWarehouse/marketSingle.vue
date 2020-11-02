@@ -19,15 +19,15 @@
 						
     	<van-row  span="24" class="listDiv" v-for="(item, index) of list" :key="index" >
 				<van-swipe-cell>
-		  <van-cell-group  @click="getInfo(item.earTradeNo)" style="width:100%">
+		  <van-cell-group  @click="getInfo(item.tradeNo)" style="width:100%">
 			<van-field :border="false" label="单据编号:" label-width='4rem' :value="item.tradeNo" readonly />
 			<van-field :border="false" label="出库日期:" label-width='4rem' :value="item.soTime" readonly />
-			<van-field :border="false" label="仓库:" label-width='4rem' :value="item" readonly />
+			<van-field :border="false" label="仓库:" label-width='4rem' :value="item.warehouseNameList" readonly />
 			<van-field :border="false" label="单据状态:" label-width='4rem' :value="item.status==0 ? '未提交' : item.status==1 ? '审核中' : item.status==2 ? '已审核' :'退回'" readonly />
 			</van-cell-group>
 			<template #right>
                             <div style="height: 50%;">
-                                <van-button square type="primary" icon="edit" text="" @click="updateList(item.earTradeNo)" style="height: 100%;" />
+                                <van-button square type="primary" icon="edit" text="" @click="updateList(item.tradeNo)" style="height: 100%;" />
                             </div>
                             <div style="height: 50%;">
                                 <van-button square type="danger" icon="close" text="" @click="deleteList(item.tradeNo)" style="height: 100%;" />
@@ -71,12 +71,12 @@ export default {
     },
     methods:{
        getInfo(val){
-          this.$router.push({path:'/diseaseInfo',query:{
+          this.$router.push({path:'/marketSingleInfo',query:{
            tradeNo:val,
       }});
 			},
 			updateList(val){
-          this.$router.push({path:'/editDisease',query:{
+          this.$router.push({path:'/updateMarketSingle',query:{
            tradeNo:val,
       }});
 			},
@@ -90,8 +90,8 @@ export default {
                 url: `/mhj/getSalesOutgoingBillsList?size=4&current=${this.current}${this.searchText != '' ? `&searchContext=${this.searchText}` : ''}`,
                 method: "get",
             }).then(res => {
-								this.list.push.apply(this.list,res.resp);
-								// this.list=res.resp;
+								// this.list.push.apply(this.list,res.resp);
+								this.list=res.resp;
 								this.loading = false;
 								setTimeout(()=>{
 									this.refreshing = false;
@@ -120,18 +120,21 @@ export default {
   message: '确定删除吗？？？',
 })
   .then(() => {
+    let params={};
     params={
         tradeNo:val,
         logicDelete:1
     }
     this.$json({
-                url: `/mhj/authSalesOutgoingBills?${params}`,
+                url: `/mhj/authSalesOutgoingBills`,
                 method: `post`,
+                data: params 
             }).then(res => {
 							Toast({
 				   message: '单据删除成功',
 				   icon: 'success',
-				 });
+         });
+             this.current=0;
              this.onSearch();
             })
   })
