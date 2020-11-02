@@ -146,12 +146,32 @@ export const routes = [
 		}
 	},
 	{
+		path: '/fgWarehousingAdd',
+		name:　"fgWarehousingAdd",
+		component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingAdd.vue'),
+		meta: {
+			title: "新增入库单",
+			keepAlive: false,
+			keepheaderAlive: true,
+		}
+	},
+	{
+		path: '/fgWarehousingChak',
+		name:　"fgWarehousingChak",
+		component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingChak.vue'),
+		meta: {
+			title: "入库单详情",
+			keepAlive: false,
+			keepheaderAlive: true,
+		}
+	},
+	{
 		path: '/fgWarehousingEdit',
 		name:　"fgWarehousingEdit",
 		component: () => import('@/view/finishedGoodsWarehousing/fgWarehousingEdit.vue'),
 		meta: {
 			title: "编辑入库单",
-			keepAlive: true,
+			keepAlive: false,
 			keepheaderAlive: true,
 		}
 	},

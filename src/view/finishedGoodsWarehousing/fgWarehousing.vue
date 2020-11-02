@@ -32,6 +32,7 @@
       </van-overlay>
     </div>
     <div style="padding-top:20%">
+         <van-empty v-if="list.length <= 0" description="暂无数据" />
         <van-swipe-cell right-width	="65"	v-for="(item,index) in list" :key="index">
           <div  @click="formesDetails(item)">
             
@@ -190,18 +191,19 @@ export default {
                 if(this.list.length >= res.resp.total){
                   this.finished = true;
                 }
+             
             });
     },
     //删除牛只
     operation(aast,ssta){
     
-        if (this.list[aast].status==2||this.list[aast].status==3) {
-          Toast.fail('此数据已经审核不能删除');
+        if (this.list[aast].status==2) {
+          Toast.fail('此数据已经审核通过不能删除');
           return;
         }
         Dialog.confirm({
           title: '确认删除此数据',
-          message: '此数据已经删除无法找回是否删除？',
+          message: '此数据一经删除无法找回是否删除？',
         })
           .then(() => {
            
