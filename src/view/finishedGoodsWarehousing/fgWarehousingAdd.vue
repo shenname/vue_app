@@ -288,7 +288,7 @@ export default {
       },
          ssst(types){
        
-        if (this.formes.storageTime==""||this.formes.warehouseName=="") {
+        if (this.formes.storageTime==null||this.formes.warehouseName==null) {
           Toast.fail('请确保数据的完整性');
           return
         }
