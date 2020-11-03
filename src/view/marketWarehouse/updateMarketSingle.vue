@@ -21,17 +21,23 @@
 	</van-col>
 	</van-row>
      <div v-for="(item, index) of list" :key="index">
-       	<van-cell title="产品信息" center style="height:2.8rem">
+       	<van-cell center style="height:3.5rem">
+            <template #title>
+    <span class="custom-title">产品信息</span>
+    <span style="margin-left:0.5rem">( {{item.bpCode+item.bpName}}&nbsp;&nbsp;{{item.foodType}}&nbsp;&nbsp;{{item.weight}}kg )</span>
+  </template>
            <template #right-icon>
-    <van-icon name="scan" size="2rem"  />
+    <van-icon name="scan" size="2rem" @click="scan(item.bpId)" />
   </template>
          </van-cell>
   	<van-row type="flex" justify="center">
 		  <van-col span="22" class="col" >
         <van-cell-group>
-			<van-field  @click="skipInfo(item)"   label-width='4rem' :value="item.bpCode+item.bpName+' '+' '+' '+item.weight+'KG'" readonly >
-        <template #right-icon>
-    <van-icon name="close" size="1.5rem"  color="red" @click="deleteList(index)"/>
+			<!-- <van-field  @click="skipInfo(item)"   label-width='4rem' :value="item.bpCode+item.bpName+' '+' '+' '+item.weight+'KG'" readonly >
+			</van-field> -->
+       <van-field   v-for="(it, idx) of item.salesOutgoingBillsDetails" :label="it.zxTradeNo || it.labelCode" :key="idx"   label-width='7rem' :value="it.bpCode+it.bpName+' '+' '+' '+it.weight+'KG'" readonly  @click="skipInfo(it)" >
+         <template #right-icon>
+    <van-icon name="close" size="1.5rem"  color="red" @click="deleteList(index,idx)" />
   </template>
 			</van-field>
       </van-cell-group>
@@ -63,6 +69,9 @@
    
     </van-form>
     </div>
+     <van-dialog v-model="show1" title="扫码" show-cancel-button @confirm="getCowByEarTag">
+        <van-field label="单号" label-width="3rem" v-model="value" placeholder="请输入装箱单号或者产品标签" />
+    </van-dialog>
     <div v-if="!moduleShow">
           <product :list="listInfo">  </product> 
     </div>
@@ -86,7 +95,9 @@ export default {
       currentDate: new Date(),
      typest:1,
      show: false,
+     show1:false,
      show2:false,
+     value:'',
      date:'',
      minDate: new Date(2020, 0, 1),
      ruleForm:{},
@@ -106,6 +117,22 @@ export default {
    this.getInfo();
     },
     methods: {
+      getCowByEarTag(){
+            this.$json({
+                url: `/mhj/getSalesOutgoingBillsBp?bpId=${this.bpid}&searchContext=${this.value}`,
+                method: "get"
+            }).then(res => {
+               for(let i in this.list){
+                     if(this.list[i].bpId==this.bpid){
+                         this.list[i].salesOutgoingBillsDetails.push(res.resp[0])
+                     }
+               }
+            })
+        },
+      scan(id){
+        this.show1=true;   
+        this.bpid=id;
+      },
       getInfo(){
             this.$json({
                 url: `/mhj/getSalesOutgoingBillsDetail?tradeNo=${this.ruleForm.tradeNo}`,
@@ -113,6 +140,14 @@ export default {
             }).then(res => {
               this.ruleForm=res.resp;
               this.list=res.resp.salesOutgoingBillsDetailsList;
+              this.list.map((item,key)=>{
+                 this.$json({
+                      url: `/mhj/getSalesOutgoingBillsDetailUnfold?sobdId=${item.sobdId}`,
+                      method: "get",
+                 }).then(res=>{
+                     item.salesOutgoingBillsDetails=res.resp;
+                 })
+              })
             })
     },
        guanb(){
@@ -126,8 +161,8 @@ export default {
           // this.navtop=true;
       },
       // 删除数组数据
-      deleteList(val){
-         this.list.splice(val,1);
+      deleteList(i,val){
+         this.list[i].salesOutgoingBillsDetails.splice(val,1);
       },
        confirm() {
       this.show2 = false;

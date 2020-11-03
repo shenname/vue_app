@@ -21,20 +21,30 @@
 	</van-col>
 	</van-row>
      <div v-for="(item, index) of list" :key="index">
-       	<van-cell title="产品信息" center style="height:2.8rem">
+       	<van-cell center style="height:3.5rem">
+            <template #title>
+    <span class="custom-title">产品信息</span>
+    <span style="margin-left:0.5rem">( {{item.bpCode+item.bpName}}&nbsp;&nbsp;{{item.foodType}}&nbsp;&nbsp;{{item.weight}}kg )</span>
+  </template>
            <template #right-icon>
-    <van-icon name="scan" size="2rem"  />
+    <van-icon name="scan" size="2rem" @click="scan(item.bpId)" />
   </template>
          </van-cell>
   	<van-row type="flex" justify="center">
 		  <van-col span="22" class="col" >
         <van-cell-group>
-			<van-field  @click="skipInfo(item)"   label-width='4rem' :value="item.bpCode+item.bpName+' '+' '+' '+item.weight+'KG'" readonly >
+			<!-- <van-field  @click="skipInfo(item)"   label-width='4rem' :value="item.bpCode+item.bpName+' '+' '+' '+item.weight+'KG'" readonly >
+       
+			</van-field> -->
+      
+<van-field   v-for="(it, idx) of item.salesOutgoingBillsDetails" :label="it.zxTradeNo || it.labelCode" :key="idx"   label-width='6.1rem' :value="it.bpCode+it.bpName+' '+' '+' '+it.weight+'KG'" readonly @click="skipInfo(it)"  >
         <template #right-icon>
-    <van-icon name="close" size="1.5rem"  color="red" @click="deleteList(index)"/>
+    <van-icon name="close" size="1.5rem"  color="red" @click="deleteList(index,idx)" />
   </template>
 			</van-field>
+
       </van-cell-group>
+
 			</van-col>
 		 
 		</van-row>
@@ -63,6 +73,9 @@
    
     </van-form>
     </div>
+    <van-dialog v-model="show1" title="扫码" show-cancel-button @confirm="getCowByEarTag">
+        <van-field label="单号" label-width="3rem" v-model="value" placeholder="请输入装箱单号或者产品标签" />
+    </van-dialog>
     <div v-if="!moduleShow">
           <product :list="listInfo">  </product> 
     </div>
@@ -86,6 +99,7 @@ export default {
       currentDate: new Date(),
      typest:1,
      show: false,
+     show1:false,
      show2:false,
      date:'',
      minDate: new Date(2020, 0, 1),
@@ -93,7 +107,11 @@ export default {
      navtop:true,
      list:[],
      listInfo:{},
+     bpid:'',
+     value:'',
+     eaList:[],
      moduleShow:true,
+     namelist:[],
       }
     },
     components:{
@@ -104,6 +122,34 @@ export default {
 	 this.ruleForm.userName = JSON.parse(localStorage.getItem("userInfo")).userName;
 	  },
     methods: {
+      scan(id){
+        this.show1=true;   
+        this.bpid=id;
+      },
+      getCowByEarTag(){
+            this.$json({
+                url: `/mhj/getSalesOutgoingBillsBp?bpId=${this.bpid}&searchContext=${this.value}`,
+                method: "get"
+            }).then(res => {
+               for(let i in this.list){
+                     if(this.list[i].bpId==this.bpid){
+                         this.list[i].salesOutgoingBillsDetails.push(res.resp[0])
+                        //  this.ruleForm.warehouseNameList=res.resp[0].warehouseName
+                         this.namelist.push(res.resp[0])
+                     }
+               }
+               let hash={};
+				this.namelist = this.namelist.reduce(function(item, next) {
+         hash[next.warehouseName] ? '' : hash[next.warehouseName] = true && item.push(next);
+         return item
+				}, [])
+				let namelist1='';
+				for(let i in this.namelist){
+						 namelist1+=this.namelist[i].warehouseName+','
+				}
+				this.ruleForm.warehouseNameList=namelist1.substring(0,namelist1.length-1);
+            })
+        },
       guanb(){
       this.moduleShow=true;
       this.typest=1;
@@ -115,8 +161,8 @@ export default {
           // this.navtop=true;
       },
       // 删除数组数据
-      deleteList(val){
-         this.list.splice(val,1);
+      deleteList(i,val){
+         this.list[i].salesOutgoingBillsDetails.splice(val,1);
       },
       confirm() {
       this.show2 = false;
