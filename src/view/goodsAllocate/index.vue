@@ -70,7 +70,7 @@ export default {
         onLoad() {
             this.current += 1;
             this.$json({
-                url: `/mhj/earTag/getList?size=4&current=${this.current}`,
+                url: `/mhj/goodsAllocateBill/getBillList?size=4&current=${this.current}`,
                 method: "get",
             }).then(res => {
                 this.list.push.apply(this.list,res.resp.records);
@@ -92,7 +92,7 @@ export default {
             this.onLoad();
         },
         add(){
-            this.$router.push({path: '/earMarkersAdd'})
+            this.$router.push({path: '/goodsAllocateAdd'})
         },
         getInfo(row){
             this.$router.push({

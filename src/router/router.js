@@ -422,7 +422,7 @@ export const routes = [
 	{
 		path: '/share',
 		name:　"share",
-		component: () => import('@/view/404.vue'),
+		component: () => import('@/view/share.vue'),
 		meta: {
 			title: 'share',
 			keepAlive: false,

@@ -25,6 +25,7 @@ switch (process.env.srconfig) {
 // baseUrl = "http://172.16.38.252:8080";
 baseUrl = "http://testapi.paycore.cc";
 
+
 export const api = {
   baseUrl: baseUrl,
   type: process.env.srconfig
